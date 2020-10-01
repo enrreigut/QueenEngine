@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QueenEngine", "QueenEngine\QueenEngine.vcxproj", "{3B3BBC02-EBE4-4609-80E8-DEA6B07E4E19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B3BBC02-EBE4-4609-80E8-DEA6B07E4E19}.Debug|x64.ActiveCfg = Debug|x64
+		{3B3BBC02-EBE4-4609-80E8-DEA6B07E4E19}.Debug|x64.Build.0 = Debug|x64
+		{3B3BBC02-EBE4-4609-80E8-DEA6B07E4E19}.Release|x64.ActiveCfg = Release|x64
+		{3B3BBC02-EBE4-4609-80E8-DEA6B07E4E19}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A08326A9-7307-42B0-8B66-817E70ED850C}
+	EndGlobalSection
+EndGlobal
