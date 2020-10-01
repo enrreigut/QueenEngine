@@ -10,32 +10,39 @@
 #include "../Manager/Manager.h"
 #include "../Utils/Timer.h"
 
-struct LevelColorChannel
+namespace Queen
 {
-	const char* WHITE;
-	const char* YELLOW;
-	const char* RED;
-};
+	namespace System
+	{
 
-class Log
-{
-public:
+		struct LevelColorChannel
+		{
+			const char* WHITE;
+			const char* YELLOW;
+			const char* RED;
+		};
 
-	Log() {}
-	~Log() {}
+		class Log
+		{
+		public:
 
-	enum class Level{TRACE = 0, INFO = 1, WARN = 2, ERROR = 3};
+			Log() {}
+			~Log() {}
 
-	void setName(const char* name) { m_Name = name; }
-	const char* getLevelRepresentation(Level& l);
-	void LogMsg(Level l, const char* msg);
+			enum class Level { TRACE = 0, INFO = 1, WARN = 2, ERROR = 3 };
 
-	void LogMsgParam(Level l, const char* msg, const std::initializer_list<const char*> &il);
+			void setName(const char* name) { m_Name = name; }
+			const char* getLevelRepresentation(Level& l);
+			void LogMsg(Level l, const char* msg);
 
-private:
+			void LogMsgParam(Level l, const char* msg, const std::initializer_list<const char*>& il);
 
-	Timer m_T;
-	const char* m_Name = "DEFAULT";
-	LevelColorChannel m_ColorChannels = { "\x1B[97m" ,"\x1B[93m" ,"\x1B[91m" };
-	const char* m_Color = m_ColorChannels.WHITE;
-};
+		private:
+
+			Utils::Timer m_T;
+			const char* m_Name = "DEFAULT";
+			LevelColorChannel m_ColorChannels = { "\x1B[97m" ,"\x1B[93m" ,"\x1B[91m" };
+			const char* m_Color = m_ColorChannels.WHITE;
+		};
+	}
+}

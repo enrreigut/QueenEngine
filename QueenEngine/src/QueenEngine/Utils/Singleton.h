@@ -1,21 +1,28 @@
 #pragma once
 
-template<class T>
-class Singleton
+namespace Queen
 {
-public:
-
-	Singleton(const Singleton&) = delete;
-	Singleton& operator=(const Singleton) = delete;
-
-	static T& Get() 
+	namespace Utils
 	{
-		static T s_Instance;
-		return s_Instance; 
+
+		template<class T>
+		class Singleton
+		{
+		public:
+
+			Singleton(const Singleton&) = delete;
+			Singleton& operator=(const Singleton) = delete;
+
+			static T& Get()
+			{
+				static T s_Instance;
+				return s_Instance;
+			}
+
+		protected:
+
+			Singleton<T>() {};
+			~Singleton<T>() {};
+		};
 	}
-
-protected:
-
-	Singleton<T>() {};
-	~Singleton<T>() {};
-};
+}

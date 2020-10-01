@@ -4,12 +4,12 @@
 
 int main()
 {
-	LogManager::Get().Start();
+	Queen::Managers::LogManager::Get().Start();
 
-	LogManager::Get().CreateLog("Test");
-	LogManager::Get().GetLog("Test").LogMsg(Log::Level::WARN, "Hola Mundo!");
+	Queen::Managers::LogManager::Get().CreateLog("Test");
+	Queen::Managers::LogManager::Get().GetLog("Test").LogMsg(Queen::System::Log::Level::WARN, "Hola Mundo!");
 
-	LogManager::Get().Shutdown();
+	Queen::Managers::LogManager::Get().Shutdown();
 	
 	return 0;
 }

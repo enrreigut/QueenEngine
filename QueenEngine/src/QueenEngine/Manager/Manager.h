@@ -1,17 +1,22 @@
 #pragma once
 
-class Manager
+namespace Queen 
 {
-public:
+	namespace Managers
+	{
+		class Manager
+		{
+		public:
 
-	virtual void Start() {}
-	virtual void Shutdown() {}
+			virtual void Start() {}
+			virtual void Shutdown() {}
 
-protected:
+		protected:
 
-	Manager() {}
-	~Manager() {}
+			Manager() {}
+			~Manager() {}
 
-	bool m_Running = false;
-};
-
+			bool m_Running = false;
+		};
+	}
+}
