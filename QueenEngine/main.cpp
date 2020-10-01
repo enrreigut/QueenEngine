@@ -7,7 +7,7 @@ int main()
 	LogManager::Get().Start();
 
 	LogManager::Get().CreateLog("Test");
-	LogManager::Get().GetLog("Test").LogMsg(Log::Level::INFO, "Hola Mundo!");
+	LogManager::Get().GetLog("Test").LogMsg(Log::Level::WARN, "Hola Mundo!");
 
 	LogManager::Get().Shutdown();
 	
