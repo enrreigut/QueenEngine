@@ -2,23 +2,30 @@
 
 #include <ctime>
 
-#include "StringUtils.h"
 
-class Timer
+namespace Queen
 {
-public:
+	namespace Utils
+	{
 
-	Timer();
-	~Timer();
+		class Timer
+		{
+		public:
 
-	void Update();
+			Timer();
+			~Timer();
 
-	auto& getDateAndTime() { Update();  return m_TimeDate_s; }
-		
-private:
+			void Update();
 
-	struct tm m_TimeInfo;
-	time_t m_TimeDate;
-	char m_TimeDate_s[20];
-};
+			auto& getDateAndTime() { Update();  return m_TimeDate_s; }
+
+		private:
+
+			struct tm m_TimeInfo;
+			time_t m_TimeDate;
+			char m_TimeDate_s[20];
+		};
+
+	}
+}
 

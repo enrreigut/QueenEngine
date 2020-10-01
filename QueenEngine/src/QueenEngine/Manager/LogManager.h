@@ -6,25 +6,33 @@
 #include "../Utils/Singleton.h"
 #include "../Logger/Log.h"
 
-class LogManager : public Manager, public Singleton<LogManager>
+namespace Queen
 {
+	namespace Managers
+	{
 
-	friend class Singleton<LogManager>;
+		class LogManager : public Manager, public Utils::Singleton<LogManager>
+		{
 
-public:
+			friend class Utils::Singleton<LogManager>;
 
-	void Start() override;
-	void Shutdown() override;
+		public:
 
-	void CreateLog(const char* name);
-	inline Log GetLog(const char* name) { return m_loggers[name]; }
+			void Start() override;
+			void Shutdown() override;
 
-private:
+			void CreateLog(const char* name);
+			inline System::Log GetLog(const char* name) { return m_loggers[name]; }
 
-	LogManager();
-	~LogManager();
+		private:
 
-	Log m_logger;
-	std::unordered_map<const char*, Log> m_loggers;
-};
+			LogManager();
+			~LogManager();
 
+			System::Log m_logger;
+			std::unordered_map<const char*, System::Log> m_loggers;
+		};
+
+	}
+
+}
