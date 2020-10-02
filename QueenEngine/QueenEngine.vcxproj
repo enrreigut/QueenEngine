@@ -85,12 +85,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\QueenEngine\Logger\Log.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\LogManager.cpp" />
+    <ClCompile Include="src\QueenEngine\Manager\MemoryManager.cpp" />
     <ClCompile Include="src\QueenEngine\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\QueenEngine\Logger\Log.h" />
     <ClInclude Include="src\QueenEngine\Manager\LogManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\Manager.h" />
+    <ClInclude Include="src\QueenEngine\Manager\MemoryManager.h" />
     <ClInclude Include="src\QueenEngine\Utils\Singleton.h" />
     <ClInclude Include="src\QueenEngine\Utils\Timer.h" />
   </ItemGroup>
