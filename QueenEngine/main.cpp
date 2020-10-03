@@ -6,12 +6,10 @@
 int main()
 {
 	Queen::Managers::LogManager::Get().Start();
-	Queen::Managers::LogManager::Get().Start();
 	Queen::Managers::MemoryManager::Get().Start();
 	
-
-	Queen::Managers::MemoryManager::Get().Shutdown();
-	Queen::Managers::LogManager::Get().Shutdown();
 	
+	Queen::Managers::MemoryManager::Get().Shutdown();	
+	Queen::Managers::LogManager::Get().Shutdown();
 	return 0;
 }

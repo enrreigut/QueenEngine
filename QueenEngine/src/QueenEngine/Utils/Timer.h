@@ -7,6 +7,7 @@ namespace Queen
 {
 	namespace Utils
 	{
+		/*Timer class used to get the moment of Log for the Log class. No much magic here.*/
 
 		class Timer
 		{
