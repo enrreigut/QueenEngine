@@ -18,8 +18,7 @@ namespace Queen
 
 		MemoryManager::~MemoryManager()
 		{
-			if (LogManager::Get().isRunning())
-				LogManager::Get().Log(System::Log::Level::TRACE, g_DESTROY_MEM);
+			LogManager::Get().Log(System::Log::Level::TRACE, g_DESTROY_MEM);
 		}
 
 		void MemoryManager::Start()
@@ -28,13 +27,11 @@ namespace Queen
 			{
 				m_Running = true;
 
-				if(LogManager::Get().isRunning())
-					LogManager::Get().Log(System::Log::Level::TRACE, g_START_MEM);
+				LogManager::Get().Log(System::Log::Level::TRACE, g_START_MEM);
 			}
 			else
 			{
-				if (LogManager::Get().isRunning())
-					LogManager::Get().Log(System::Log::Level::ERROR, g_ERROR_MEM_ALREADY_STARTED);
+				LogManager::Get().Log(System::Log::Level::ERROR, g_ERROR_MEM_ALREADY_STARTED);
 			}
 		}
 
@@ -42,13 +39,11 @@ namespace Queen
 		{
 			if (!m_Running)
 			{
-				if (LogManager::Get().isRunning())
-					LogManager::Get().Log(System::Log::Level::ERROR, g_ERROR_MEM_NOT_STARTED);
+				LogManager::Get().Log(System::Log::Level::ERROR, g_ERROR_MEM_NOT_STARTED);
 			}
 			else
 			{
-				if (LogManager::Get().isRunning())
-					LogManager::Get().Log(System::Log::Level::WARN, g_SHUTDOWN_MEM);
+				LogManager::Get().Log(System::Log::Level::WARN, g_SHUTDOWN_MEM);
 
 				m_Running = false;
 			}
