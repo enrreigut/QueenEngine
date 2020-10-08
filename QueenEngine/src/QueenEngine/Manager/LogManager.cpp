@@ -30,8 +30,6 @@ namespace Queen
 
 		LogManager::~LogManager()
 		{
-			if (m_Running)
-				this->Log(System::Log::Level::WARN, g_DESTROY_LOG);
 		}
 
 		/*Mainly print a msg of start if Manager can start. If it was already started Logger outputs an error*/

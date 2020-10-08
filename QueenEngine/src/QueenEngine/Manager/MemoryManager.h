@@ -1,8 +1,11 @@
 #pragma once
 
+#include <vector>
+
+#include "../Utils/Singleton.h"
+
 #include "Manager.h"
 #include "LogManager.h"
-#include "../Utils/Singleton.h"
 
 namespace Queen
 {
