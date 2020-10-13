@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include <chrono>
 #include <ctime>
-#include <string>
-#include <initializer_list>
+#include <sstream>
 
 #include "../Manager/Manager.h"
 #include "../Utils/Timer.h"
+#include "../Utils/StringUtils.h"
 
 /*
 This file is the Log header which is just an interface for the class which handles the Log console outputing with an established format.
@@ -24,6 +24,7 @@ namespace Queen
 			const char* WHITE;
 			const char* YELLOW;
 			const char* RED;
+			const char* GREEN;
 		};
 
 		class Log
@@ -34,7 +35,7 @@ namespace Queen
 			~Log() {}
 
 			/*Levels of the Logger*/
-			enum class Level { TRACE = 0, INFO = 1, WARN = 2, ERROR = 3 };
+			enum class Level { TRACE = 0, INFO = 1, WARN = 2, ERROR = 3, SUCCESS = 4 };
 
 			/*Set name for the Logger in other to identify them if more than one is created. For Logger Management go to Manager/LogManager.cpp/h */
 			void setName(const char* name) { m_Name = name; }
@@ -50,8 +51,43 @@ namespace Queen
 			Way of usage:
 			"Hello my name is {v}"and {v} is where the parameter would be displayed
 			*/
-			void LogMsgParam(Level l, const char* msg, const std::initializer_list<const char*>& il);
 
+			template<typename Arg>
+			std::ostream& getParams(std::ostream& o, Arg&& arg) { return o << std::forward<Arg>(arg); }
+
+			template<typename Arg, typename ...Args>
+			std::ostream& getParams(std::ostream& o, Arg&& arg, Args&&... args)
+			{
+				o << std::forward<Arg>(arg) << "#";
+				return getParams(o, std::forward<Args>(args)...);
+			}
+
+			//TODO: ADD Support for differente types not only string representation
+			template<typename Arg, typename... Args>
+			void LogMsgParam(Level l, const char* msg, Arg&& w, Args&&... li)
+			{
+				std::ostringstream o;
+				getParams(o, w, li...);
+
+				std::stringstream ss;
+				std::string param;
+				std::string s = msg;
+				size_t pos = 0;
+
+				/*for to replace the {v} with the correct parameters*/
+				for (auto elem : Split(o.str(), "#"))
+				{
+					pos = s.find("{v}");
+
+					if (pos == std::string::npos)
+						break;
+
+					s.replace(pos, 3, elem);
+				}
+
+				printf("%s[%s] %s(%s): %s\033[0m\n", m_Color, m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), s.c_str());
+			}
+			
 		private:
 
 			/*To establish moment of Log*/
@@ -63,12 +99,14 @@ namespace Queen
 			/*Colors of output in ANSI depending on the level. The colors are BRIGHT WHITE, YELLOW AND RED
 			97m = BRIGHT WHITE
 			93m = BRIGHT YELLOW
-			91 m = BRIGHT RED
+			91m = BRIGHT RED
+			37m = BRIGHT GREEN
 			*/
-			LevelColorChannel m_ColorChannels = { "\x1B[97m" ,"\x1B[93m" ,"\x1B[91m" };
+			LevelColorChannel m_ColorChannels = { "\x1B[97m" ,"\x1B[93m" ,"\x1B[91m", "\x1B[92m"};
 
 			/*Default established color*/
 			const char* m_Color = m_ColorChannels.WHITE;
 		};
+
 	}
 }

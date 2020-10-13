@@ -36,8 +36,20 @@ namespace Queen
 			/*Log making us of desired or default Log*/
 			void Log(System::Log::Level l, const char* msg);
 			void Log(const char* log_name, System::Log::Level l, const char* msg);
-			void LogParams(System::Log::Level l, const char* msg, std::initializer_list<const char*> li);
-			void LogParams(const char* log_name, System::Log::Level l, const char* msg, std::initializer_list<const char*> li);
+
+			template<typename... Args>
+			void LogParams(System::Log::Level l, const char* msg, Args&&... li)
+			{
+				if (m_Running && ExistsLog("DEFAULT"))
+					this->GetLog("DEFAULT").LogMsgParam(l, msg, li...);
+			}
+			
+			template<typename... Args>
+			void LogParams(const char* log_name, System::Log::Level l, const char* msg, Args&&... li)
+			{
+				if (m_Running && ExistsLog(log_name))
+					this->GetLog(log_name).LogMsgParam(l, msg, li);
+			}
 
 		private:
 
