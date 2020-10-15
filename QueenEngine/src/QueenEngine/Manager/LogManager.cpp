@@ -30,8 +30,6 @@ namespace Queen
 
 		LogManager::~LogManager()
 		{
-			if (m_Running)
-				this->Log(System::Log::Level::WARN, g_DESTROY_LOG);
 		}
 
 		/*Mainly print a msg of start if Manager can start. If it was already started Logger outputs an error*/
@@ -73,7 +71,7 @@ namespace Queen
 					{
 						if (!this->ExistsLog(g_DEFAULT_LOGGER_NAME))
 							this->CreateLog(g_DEFAULT_LOGGER_NAME);
-						this->LogParams(System::Log::Level::ERROR, "Error deleting logger: {v}", { name });
+						this->LogParams(System::Log::Level::ERROR, "Error deleting logger: {v}", name);
 						break;
 					}
 				}
@@ -103,7 +101,7 @@ namespace Queen
 					l.setName(name);
 					m_loggers[name] = l;
 
-					this->LogParams(System::Log::Level::TRACE, g_CREATE, { name });
+					this->LogParams(System::Log::Level::TRACE, g_CREATE, name);
 					return true;
 				}
 			}
@@ -121,13 +119,13 @@ namespace Queen
 			{
 				if (m_loggers.find(name) != m_loggers.end())
 				{
-					this->LogParams(System::Log::Level::TRACE, g_DELETE, { name });
+					this->LogParams(System::Log::Level::TRACE, g_DELETE, name);
 					m_loggers.erase(name);
 					return true;
 				}
 				else
 				{
-					this->LogParams(System::Log::Level::ERROR, g_ERROR_DONT_EXIST, { name });
+					this->LogParams(System::Log::Level::ERROR, g_ERROR_DONT_EXIST, name);
 					return false;
 				}
 			}
@@ -144,18 +142,6 @@ namespace Queen
 		{
 			if (m_Running && ExistsLog(log_name))
 				this->GetLog(log_name).LogMsg(l, msg);
-		}
-
-		void LogManager::LogParams(System::Log::Level l, const char* msg, std::initializer_list<const char*> li)
-		{
-			if (m_Running && ExistsLog(g_DEFAULT_LOGGER_NAME))
-				this->GetLog(g_DEFAULT_LOGGER_NAME).LogMsgParam(l, msg, li);
-		}
-
-		void LogManager::LogParams(const char* log_name, System::Log::Level l, const char* msg, std::initializer_list<const char*> li)
-		{
-			if (m_Running && ExistsLog(log_name))
-				this->GetLog(log_name).LogMsgParam(l, msg, li);
 		}
 	}
 }

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "../Utils/Singleton.h"
 
 #include "Manager.h"
@@ -11,20 +9,23 @@ namespace Queen
 {
 	namespace Managers
 	{
-		class MemoryManager : public Manager, public Utils::Singleton<MemoryManager>
+		class EventManager : public Manager, public Utils::Singleton<EventManager>
 		{
-			friend class Singleton<MemoryManager>;
+			friend class Singleton<EventManager>;
 
 		public:
+
+			EventManager();
+			~EventManager();
 
 			void Start() override;
 			void Shutdown() override;
 
+			
 		private:
 
-			MemoryManager();
-			~MemoryManager();
 		};
 	}
 }
+
 

@@ -22,6 +22,9 @@ namespace Queen
 			case Log::Level::ERROR:
 				m_Color = m_ColorChannels.RED;
 				return "ERROR";
+			case Log::Level::SUCCESS:
+				m_Color = m_ColorChannels.GREEN;
+				return "SUCCESS";
 			default:
 				m_Color = m_ColorChannels.WHITE;
 				return "TRACE";
@@ -36,24 +39,7 @@ namespace Queen
 			printf("%s[%s] %s(%s): %s\033[0m\n", m_Color, m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), msg);
 		}
 
-		//TODO: ADD Support for differente types not only string representation
-		void Log::LogMsgParam(Level l, const char* msg, const std::initializer_list<const char*>& il)
-		{
-			std::string s = msg;
-			size_t pos = 0;
-
-			/*for to replace the {v} with the correct parameters*/
-			for (auto elem : il)
-			{
-				pos = s.find("{v}");
-
-				if (pos == std::string::npos)
-					break;
-
-				s.replace(pos, 3, elem);
-			}
-
-			printf("%s[%s] %s(%s): %s\033[0m\n", m_Color, m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), s.c_str());
-		}
+		//Additional Functions for Logging Params
+		//To be added in here: Link Erros due to templates
 	}
 }
