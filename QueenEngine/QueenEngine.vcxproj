@@ -83,7 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\QueenEngine\Event\Event.cpp" />
+    <ClCompile Include="src\QueenEngine\Layer\Layer.cpp" />
     <ClCompile Include="src\QueenEngine\Logger\Log.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\EventManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\LogManager.cpp" />
@@ -93,7 +93,9 @@
     <ClCompile Include="src\QueenEngine\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\QueenEngine\Event\ApplicationEvent.h" />
     <ClInclude Include="src\QueenEngine\Event\Event.h" />
+    <ClInclude Include="src\QueenEngine\Layer\Layer.h" />
     <ClInclude Include="src\QueenEngine\Logger\Log.h" />
     <ClInclude Include="src\QueenEngine\Manager\EventManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\LogManager.h" />
@@ -103,6 +105,7 @@
     <ClInclude Include="src\QueenEngine\Utils\Singleton.h" />
     <ClInclude Include="src\QueenEngine\Utils\StringUtils.h" />
     <ClInclude Include="src\QueenEngine\Utils\Timer.h" />
+    <ClInclude Include="src\QueenEngine\Utils\Tuple.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

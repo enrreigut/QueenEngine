@@ -3,7 +3,6 @@
 #include "../Utils/Singleton.h"
 
 #include "Manager.h"
-
 #include "LogManager.h"
 
 namespace Queen
@@ -22,9 +21,8 @@ namespace Queen
 			void Start() override;
 			void Shutdown() override;
 
+			
 		private:
-
-
 
 		};
 	}

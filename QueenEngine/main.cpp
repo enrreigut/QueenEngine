@@ -6,6 +6,7 @@
 
 //For test purposes only
 #include "src/QueenEngine/MemoryPool/Pool.h"
+#include "src/QueenEngine/Event/ApplicationEvent.h"
 
 int main()
 {
@@ -60,32 +61,17 @@ int main()
 	*/
 	//END TESTING POOL MANAGER
 
-	//Test Events
-	//sizeof(int) = 4 bytes = 32 bits -> 2^32 - 1 = 4294967295 too many indexes 
-	//sizeof(uint16_t) = 16 bits -> 2^16 - 1 = 65536 indexes which i still consider too many but not as expensive as an int
-
-	typedef uint16_t typeId;
-
-	struct Event
-	{
-		const char* msg;
-		typeId id = 0;
-	};
-
-	//Test Event
-	struct TestEvent : public Event
-	{
-		TestEvent(const char* m)
-		{
-			msg = m;
-			id++;
-		}
-	};
-
-	TestEvent t("Test Event Released!");
+	//TESTIN EVENTS
+	/*
 	Queen::System::Log l;
-	l.setName("TEST");
-	l.LogMsgParam(Queen::System::Log::Level::SUCCESS, "Event Msg #ID:{v}: '{v}'", t.id, t.msg);
+	l.setName("EVENTS");
+
+	Queen::Event::WindowResizeEvent e(1080, 720);
+
+	if(e.IsInCategory(Queen::Event::EventCategory::EC_APPLICATION))
+		l.LogMsgParam(Queen::System::Log::Level::SUCCESS, "{v}.", e);
+	*/
+	//END TESTING EVENTS
 
 	Queen::Managers::EventManager::Get().Shutdown();
 	Queen::Managers::MemoryManager::Get().Shutdown();	

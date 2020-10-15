@@ -58,7 +58,7 @@ namespace Queen
 			template<typename Arg, typename ...Args>
 			std::ostream& getParams(std::ostream& o, Arg&& arg, Args&&... args)
 			{
-				o << std::forward<Arg>(arg) << "#";
+				o << std::forward<Arg>(arg) << "~";
 				return getParams(o, std::forward<Args>(args)...);
 			}
 
@@ -75,7 +75,7 @@ namespace Queen
 				size_t pos = 0;
 
 				/*for to replace the {v} with the correct parameters*/
-				for (auto elem : Split(o.str(), "#"))
+				for (auto elem : Split(o.str(), "~"))
 				{
 					pos = s.find("{v}");
 
