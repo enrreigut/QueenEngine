@@ -8,6 +8,10 @@
 #include "src/QueenEngine/MemoryPool/Pool.h"
 #include "src/QueenEngine/Event/ApplicationEvent.h"
 
+//Test GLFW and GLEW
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 int main()
 {
 	Queen::Managers::LogManager::Get().Start();
@@ -72,6 +76,20 @@ int main()
 		l.LogMsgParam(Queen::System::Log::Level::SUCCESS, "{v}.", e);
 	*/
 	//END TESTING EVENTS
+
+	if (!glfwInit())
+		std::cout << "Error Starting GLFW!" << std::endl;
+
+	GLFWwindow* window = glfwCreateWindow(1080, 720, "Test", 0, 0);
+
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+	
+	if(!glewInit())
+		std::cout << "Error Starting GLEW!" << std::endl;
 
 	Queen::Managers::EventManager::Get().Shutdown();
 	Queen::Managers::MemoryManager::Get().Shutdown();	
