@@ -10,9 +10,16 @@
 #include "../Utils/Timer.h"
 #include "../Utils/StringUtils.h"
 
-/*
-This file is the Log header which is just an interface for the class which handles the Log console outputing with an established format.
-*/
+
+//This file is the Log header which is just an interface for the class which handles the Log console outputing with an established format.
+
+
+//Some defines to help with code clearness, coherence and cohesion
+#define QE_TRACE	Queen::System::Log::Level::TRACE
+#define QE_INFO		Queen::System::Log::Level::INFO
+#define QE_SUCCESS	Queen::System::Log::Level::SUCCESS
+#define QE_WARN		Queen::System::Log::Level::WARN
+#define QE_ERROR		Queen::System::Log::Level::ERROR
 
 namespace Queen
 {

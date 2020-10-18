@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Messages/Messages.h"
+
 namespace Queen 
 {
 	namespace Managers

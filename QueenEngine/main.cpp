@@ -1,22 +1,14 @@
 #include <iostream>
 
-#include "src/QueenEngine/Manager/LogManager.h"
-#include "src/QueenEngine/Manager/MemoryManager.h"
-#include "src/QueenEngine/Manager/EventManager.h"
+#include "src/QueenEngine/Application/Application.h"
 
 //For test purposes only
 #include "src/QueenEngine/MemoryPool/Pool.h"
 #include "src/QueenEngine/Event/ApplicationEvent.h"
 
-//Test GLFW and GLEW
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 int main()
 {
-	Queen::Managers::LogManager::Get().Start();
-	Queen::Managers::MemoryManager::Get().Start();
-	Queen::Managers::EventManager::Get().Start();
+	
 	
 	//TESING POOL MANAGER = Test of how Pool Manager Works
 	/*
@@ -77,23 +69,16 @@ int main()
 	*/
 	//END TESTING EVENTS
 
-	if (!glfwInit())
-		std::cout << "Error Starting GLFW!" << std::endl;
+	//TESTING WINDOW
 
-	GLFWwindow* window = glfwCreateWindow(1080, 720, "Test", 0, 0);
+	Queen::Application::Application app("Main", 1080, 720);
 
-	while (!glfwWindowShouldClose(window))
-	{
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
+	app.Start();
+
+	app.Run();
+
+	app.Shutdown();
 	
-	if(!glewInit())
-		std::cout << "Error Starting GLEW!" << std::endl;
-
-	Queen::Managers::EventManager::Get().Shutdown();
-	Queen::Managers::MemoryManager::Get().Shutdown();	
-	Queen::Managers::LogManager::Get().Shutdown();
 
 	return 0;
 }
