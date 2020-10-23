@@ -167,7 +167,9 @@ namespace Queen
 				glfwSetKeyCallback(wind, InputManager::Get().Window_Keyscan_Callback);
 
 				//Mouse Input
-				glfwSetMouseButtonCallback(wind, InputManager::Get().Window_Mouse_button_callback);
+				glfwSetMouseButtonCallback(wind, InputManager::Get().Window_Mouse_Button_callback);
+				glfwSetCursorPosCallback(wind, InputManager::Get().Window_Mouse_Position_Callback);
+				glfwSetScrollCallback(wind, InputManager::Get().Window_Mouse_Scroll_Callback);
 			}
 			else
 			{

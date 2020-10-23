@@ -33,16 +33,22 @@ namespace Queen
 			bool IsKeyReleased(int&& key);
 			bool IsKeyPressed(int&& key);
 
-			//Moouse
+			//Mouse
 
 			bool IsMouseButtonDown(int&& mouseBut);
 			bool IsMouseButtonUp(int&& mouseBut);
 			bool IsMouseButtonPressed(int&& mouseBut);
 
+			inline double GetMousePosX()& { m_MouseInput->GetXPos(); }
+			inline double GetMousePosY()& { m_MouseInput->GetYPos(); }
+
 			//Callbacks
 
 			static void Window_Keyscan_Callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-			static void Window_Mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+			static void Window_Mouse_Button_callback(GLFWwindow* window, int button, int action, int mods);
+			static void Window_Mouse_Position_Callback(GLFWwindow* window, double xpos, double ypos);
+			static void Window_Mouse_Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset);
+
 		private:
 
 			Input::KeyInput* m_KeyInput;

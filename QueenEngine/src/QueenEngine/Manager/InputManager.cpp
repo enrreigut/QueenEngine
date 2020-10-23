@@ -63,7 +63,7 @@ namespace Queen
 		{
 			if (mouseInp->GetMouseButton() == button)
 			{
-				if (mouseInp->GetMouseButton() == status)
+				if (mouseInp->GetMouseStatus() == status)
 					return true;
 				else
 					return false;
@@ -124,7 +124,7 @@ namespace Queen
 			QE_LOG_PARAMS(QE_TRACE, g_WIN_CALLBACK_KEYINPUT, key, TranslateAction(action));
 		}
 
-		void InputManager::Window_Mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+		void InputManager::Window_Mouse_Button_callback(GLFWwindow* window, int button, int action, int mods)
 		{
 			InputManager::Get().m_MouseInput->SetMouseButton(button);
 			InputManager::Get().m_MouseInput->SetMouseStatus(action);
@@ -132,5 +132,20 @@ namespace Queen
 			QE_LOG_PARAMS(QE_TRACE, "Mouse Button {v} is {v}", button, TranslateAction(action));
 		}
 
+		void InputManager::Window_Mouse_Position_Callback(GLFWwindow* window, double xpos, double ypos)
+		{
+			InputManager::Get().m_MouseInput->SetXPos(xpos);
+			InputManager::Get().m_MouseInput->SetYPos(ypos);
+
+			QE_LOG_PARAMS(QE_TRACE, "Mouse Pos: ({v}, {v})", xpos, ypos);
+		}
+
+		void InputManager::Window_Mouse_Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset)
+		{
+			InputManager::Get().m_MouseInput->SetXOffset(xoffset);
+			InputManager::Get().m_MouseInput->SetYOffset(yoffset);
+
+			QE_LOG_PARAMS(QE_TRACE, "Mouse Scroll: ({v}, {v})", xoffset, yoffset);
+		}
 	}
 }

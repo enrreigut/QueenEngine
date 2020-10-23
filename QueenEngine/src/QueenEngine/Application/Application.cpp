@@ -55,6 +55,10 @@ namespace Queen
 
 			if(Queen::Managers::InputManager::Get().IsMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
 				QE_LOG(QE_SUCCESS, "LEFT CLICK");
+			else if(Queen::Managers::InputManager::Get().IsMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
+				QE_LOG(QE_SUCCESS, "RIGHT CLICK");
+			else if(Queen::Managers::InputManager::Get().IsMouseButtonDown(GLFW_MOUSE_BUTTON_MIDDLE))
+				QE_LOG(QE_SUCCESS, "WHEEL CLICK");
 		}
 
 		void Application::Run()
