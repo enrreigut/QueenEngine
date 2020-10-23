@@ -49,7 +49,8 @@ msg g_WIN_ERROR_NOT_EXIST =					"Window with name '{v}' do not exist";
 msg g_WIN_ERROR_UNEXPECTED =				"Unexpected deleting error occcured!";
 
 //Callbacks msgs
-msg g_WIN_CALLBACK_RESIZE =					"Window Resize Event: w({v}), h({v})!";
+msg g_WIN_CALLBACK_RESIZE =					"Window Resize Event: w({v}), h({v})";
+msg g_WIN_CALLBACK_KEYINPUT =				"Window Key Event: Keycode {v}: {v}";
 
 //Event Manager
 msg g_EVENT_MAN_INFO_START =				"Event Manager has started... Hello!";
@@ -58,3 +59,11 @@ msg g_EVENT_MAN_INFO_SHUTDOWN =				"Event Manager is shutted down... Bye!";
 
 msg g_EVENT_MAN_ERROR_ALREADY_STARTED =		"Event Manager has already been started!";
 msg g_EVENT_MAN_ERROR_NOT_STARTED =			"Event Manager has not been started!";
+
+//Input Manager
+msg g_INPUT_MAN_INFO_START = "Input Manager has started... Hello!";
+msg g_INPUT_MAN_INFO_DESTROYED = "Input Manager has been destroyed.";
+msg g_INPUT_MAN_INFO_SHUTDOWN = "Input Manager is shutted down... Bye!";
+
+msg g_INPUT_MAN_ERROR_ALREADY_STARTED = "Input Manager has already been started!";
+msg g_INPUT_MAN_ERROR_NOT_STARTED = "Input Manager has not been started!";

@@ -90,9 +90,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\QueenEngine\Application\Application.cpp" />
+    <ClCompile Include="src\QueenEngine\Inputs\keyInput.cpp" />
     <ClCompile Include="src\QueenEngine\Layer\Layer.cpp" />
     <ClCompile Include="src\QueenEngine\Logger\Log.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\EventManager.cpp" />
+    <ClCompile Include="src\QueenEngine\Manager\InputManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\LogManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\MemoryManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\WindowManager.cpp" />
@@ -105,9 +107,11 @@
     <ClInclude Include="src\QueenEngine\Application\Application.h" />
     <ClInclude Include="src\QueenEngine\Event\ApplicationEvent.h" />
     <ClInclude Include="src\QueenEngine\Event\Event.h" />
+    <ClInclude Include="src\QueenEngine\Inputs\keyInput.h" />
     <ClInclude Include="src\QueenEngine\Layer\Layer.h" />
     <ClInclude Include="src\QueenEngine\Logger\Log.h" />
     <ClInclude Include="src\QueenEngine\Manager\EventManager.h" />
+    <ClInclude Include="src\QueenEngine\Manager\InputManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\LogManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\Manager.h" />
     <ClInclude Include="src\QueenEngine\Manager\MemoryManager.h" />

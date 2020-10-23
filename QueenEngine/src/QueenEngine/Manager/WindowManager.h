@@ -6,6 +6,8 @@
 
 #include "../Window/Window.h"
 
+#include "InputManager.h"
+
 namespace Queen
 {
 	namespace Managers
@@ -28,14 +30,20 @@ namespace Queen
 			bool DestroyWWindow(const char* title);
 			bool DestroyAllWWindows();
 
+
+			void SetWindowWidth(Window::Window& wnd, Window::uint& width);
+			void SetWindowHeight(Window::Window& wnd, Window::uint& width);
+			void SetWindowWidth(const char* wndName, Window::uint& width);
+			void SetWindowHeight(const char* wndName, Window::uint& height);
+
 			//TODO
 			void NotifyEvents(GLFWwindow* w, bool debug);
 
 		private:
 
 			bool m_GlwfInitialised = false;
-
-			std::unordered_map<const char*, Window::Window*> m_Windows;			
+			
+			std::unordered_map<const char*, Window::Window*> m_Windows;		
 		};
 	}
 }

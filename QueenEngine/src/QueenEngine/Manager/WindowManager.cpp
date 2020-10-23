@@ -6,7 +6,7 @@ namespace Queen
 	{
 		//callbacks
 		void Window_Resize_Callback(GLFWwindow* window, int width, int height);
-
+		
 		WindowManager::WindowManager()
 		{
 
@@ -23,6 +23,8 @@ namespace Queen
 			{
 				m_Running = true;
 				QE_LOG(QE_TRACE, g_WIN_MAN_INFO_START);
+
+				InputManager::Get().Start();
 			}
 			else
 			{
@@ -38,6 +40,8 @@ namespace Queen
 			}
 			else
 			{
+				InputManager::Get().Shutdown();
+
 				if (!DestroyAllWWindows())
 					QE_LOG(QE_ERROR, "Error!");
 				else
@@ -131,12 +135,39 @@ namespace Queen
 			return true;
 		}
 
+		void WindowManager::SetWindowWidth(Window::Window& wnd, Window::uint& width) 
+		{
+			wnd.SetWidth(width);
+		}
+		
+		void WindowManager::SetWindowHeight(Window::Window& wnd, Window::uint& width)
+		{
+			wnd.SetHeight(width);
+		}
+
+		void WindowManager::SetWindowWidth(const char* wndName, Window::uint& width)
+		{
+			m_Windows[wndName]->SetWidth(width);
+		}
+
+		void WindowManager::SetWindowHeight(const char* wndName, Window::uint& height)
+		{
+			m_Windows[wndName]->SetHeight(height);
+		}
+
 		void WindowManager::NotifyEvents(GLFWwindow* wind, bool debug)
 		{
 			if (debug)
 			{
 				//Resize
 				glfwSetWindowSizeCallback(wind, Window_Resize_Callback);
+
+				//keyscan
+				glfwSetKeyCallback(wind, InputManager::Get().Window_Keyscan_Callback);
+			}
+			else
+			{
+				QE_LOG(QE_INFO, "Ddebug mode is not enable. Events will not be outputed at console");
 			}
 		}
 

@@ -53,6 +53,10 @@ namespace Queen
 			{
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
+
+				Input::KeyInput w_Key;
+				if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_W))
+					QE_LOG(QE_SUCCESS, "FORWARD");
 			}
 		}
 	}
