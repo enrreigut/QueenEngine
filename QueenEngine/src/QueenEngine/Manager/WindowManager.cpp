@@ -86,6 +86,7 @@ namespace Queen
 					return false;
 				}
 
+				//Set To false if no debug is wanted!
 				NotifyEvents(w->GetWindowHandler(), true);
 
 				m_Windows[title] = w;
@@ -164,6 +165,9 @@ namespace Queen
 
 				//keyscan
 				glfwSetKeyCallback(wind, InputManager::Get().Window_Keyscan_Callback);
+
+				//Mouse Input
+				glfwSetMouseButtonCallback(wind, InputManager::Get().Window_Mouse_button_callback);
 			}
 			else
 			{

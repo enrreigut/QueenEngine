@@ -44,7 +44,17 @@ namespace Queen
 
 		void Application::OnEvent()
 		{
+			if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_W))
+				QE_LOG(QE_SUCCESS, "FORWARD");
+			else if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_A))
+				QE_LOG(QE_SUCCESS, "LEFT");
+			else if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_S))
+				QE_LOG(QE_SUCCESS, "BACK");
+			else if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_D))
+				QE_LOG(QE_SUCCESS, "RIGHT");
 
+			if(Queen::Managers::InputManager::Get().IsMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+				QE_LOG(QE_SUCCESS, "LEFT CLICK");
 		}
 
 		void Application::Run()
@@ -54,9 +64,7 @@ namespace Queen
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
 
-				Input::KeyInput w_Key;
-				if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_W))
-					QE_LOG(QE_SUCCESS, "FORWARD");
+				this->OnEvent();
 			}
 		}
 	}

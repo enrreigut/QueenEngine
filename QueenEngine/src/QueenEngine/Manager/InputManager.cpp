@@ -4,8 +4,6 @@ namespace Queen
 {
 	namespace Managers
 	{
-		void Window_Keyscan_Callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
 		InputManager::InputManager()
 		{
 
@@ -22,6 +20,7 @@ namespace Queen
 				m_Running = true;
 
 				m_KeyInput = new Input::KeyInput;
+				m_MouseInput = new Input::MouseInput;
 
 				QE_LOG(QE_TRACE, g_INPUT_MAN_INFO_START);
 			}
@@ -42,12 +41,13 @@ namespace Queen
 				QE_LOG(QE_WARN, g_INPUT_MAN_INFO_SHUTDOWN);
 
 				delete m_KeyInput;
+				delete m_MouseInput;
 
 				m_Running = false;
 			}
 		}
 
-		bool checkStatus(Input::KeyInput* keyInp, int key, int status)
+		bool checkStatusKey(Input::KeyInput* keyInp, int key, int status)
 		{
 			if (keyInp->GetKeycode() == key)
 			{
@@ -59,19 +59,47 @@ namespace Queen
 			return false;
 		}
 
+		bool checkStatusMouse(Input::MouseInput* mouseInp, int button, int status)
+		{
+			if (mouseInp->GetMouseButton() == button)
+			{
+				if (mouseInp->GetMouseButton() == status)
+					return true;
+				else
+					return false;
+			}
+			return false;
+		}
+
 		bool InputManager::IsKeyDown(int&& key)
 		{
-			return checkStatus(m_KeyInput, key, 1);
+			return checkStatusKey(m_KeyInput, key, 1);
 		}
 		
 		bool InputManager::IsKeyReleased(int&& key)
 		{
-			return checkStatus(m_KeyInput, key, 0);
+			return checkStatusKey(m_KeyInput, key, 0);
 		}
 
 		bool InputManager::IsKeyPressed(int&& key)
 		{
-			return checkStatus(m_KeyInput, key, 2);
+			return checkStatusKey(m_KeyInput, key, 2);
+		}
+
+		// Mouse
+		bool InputManager::IsMouseButtonDown(int&& mouseBut)
+		{
+			return checkStatusMouse(m_MouseInput, mouseBut, 1);
+		}
+
+		bool InputManager::IsMouseButtonUp(int&& mouseBut)
+		{
+			return checkStatusMouse(m_MouseInput, mouseBut, 0);
+		}
+
+		bool InputManager::IsMouseButtonPressed(int&& mouseBut)
+		{
+			return checkStatusMouse(m_MouseInput, mouseBut, 2);
 		}
 
 		const char* TranslateAction(int& action)
@@ -95,5 +123,14 @@ namespace Queen
 
 			QE_LOG_PARAMS(QE_TRACE, g_WIN_CALLBACK_KEYINPUT, key, TranslateAction(action));
 		}
+
+		void InputManager::Window_Mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+		{
+			InputManager::Get().m_MouseInput->SetMouseButton(button);
+			InputManager::Get().m_MouseInput->SetMouseStatus(action);
+
+			QE_LOG_PARAMS(QE_TRACE, "Mouse Button {v} is {v}", button, TranslateAction(action));
+		}
+
 	}
 }
