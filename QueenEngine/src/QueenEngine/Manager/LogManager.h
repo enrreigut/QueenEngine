@@ -13,6 +13,13 @@ namespace Queen
 		/*Class which manages the Loggers (Log Objects). This is a Singleton thus only one can be created and handles all the logging and loggers.
 		The picked strategy is to have a default Logger which Logs mostly everything but you are free to create more loggers to handle things independently.
 		*/
+
+		//Some defines to help with code clearness, coherence and cohesion
+		#define QE_LOG(x,y) Queen::Managers::LogManager::Get().Log(x,y)
+		#define QE_LOG_NAME(x,y,z) Queen::Managers::LogManager::Get().Log(x,y,z)
+		#define QE_LOG_PARAMS(x,y,...) Queen::Managers::LogManager::Get().LogParams(x,y,__VA_ARGS__)
+		#define QE_LOG_NAME_PARAMS(x,y,z,...) Queen::Managers::LogManager::Get().LogParams(x,y,z,__VA_ARGS__)
+
 		class LogManager : public Manager, public Utils::Singleton<LogManager>
 		{
 
@@ -60,5 +67,4 @@ namespace Queen
 		};
 
 	}
-
 }

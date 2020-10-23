@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "src/QueenEngine/Manager/LogManager.h"
-#include "src/QueenEngine/Manager/MemoryManager.h"
-#include "src/QueenEngine/Manager/EventManager.h"
+#include "src/QueenEngine/Application/Application.h"
 
 //For test purposes only
 #include "src/QueenEngine/MemoryPool/Pool.h"
@@ -10,9 +8,7 @@
 
 int main()
 {
-	Queen::Managers::LogManager::Get().Start();
-	Queen::Managers::MemoryManager::Get().Start();
-	Queen::Managers::EventManager::Get().Start();
+	
 	
 	//TESING POOL MANAGER = Test of how Pool Manager Works
 	/*
@@ -73,9 +69,16 @@ int main()
 	*/
 	//END TESTING EVENTS
 
-	Queen::Managers::EventManager::Get().Shutdown();
-	Queen::Managers::MemoryManager::Get().Shutdown();	
-	Queen::Managers::LogManager::Get().Shutdown();
+	//TESTING WINDOW
+
+	Queen::Application::Application app("Main", 1080, 720);
+
+	app.Start();
+
+	app.Run();
+
+	app.Shutdown();
+	
 
 	return 0;
 }
