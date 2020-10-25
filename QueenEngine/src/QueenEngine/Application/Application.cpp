@@ -28,14 +28,19 @@ namespace Queen
 			Managers::MemoryManager::Get().Start();
 			Managers::WindowManager::Get().Start();
 			Managers::EventManager::Get().Start();
+			Managers::ImGUIManager::Get().Start();
 
 			//Create Window Application
-			Queen::Managers::WindowManager::Get().CreateWWindow(m_Title, m_Width, m_Height);
+			if (!Queen::Managers::WindowManager::Get().CreateWWindow(m_Title, m_Width, m_Height))
+				exit(-1);
+
 			m_Window = Queen::Managers::WindowManager::Get().GetWWindow(m_Title);
+			Managers::ImGUIManager::Get().Init(m_Window, "#version 410");
 		}
 
 		void Application::Shutdown()
 		{
+			Managers::ImGUIManager::Get().Shutdown();
 			Managers::EventManager::Get().Shutdown();
 			Managers::WindowManager::Get().Shutdown();
 			Managers::MemoryManager::Get().Shutdown();
@@ -63,12 +68,16 @@ namespace Queen
 
 		void Application::Run()
 		{
+
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
-				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
+				
+				Queen::Managers::ImGUIManager::Get().OnRender();
 
 				this->OnEvent();
+
+				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
 			}
 		}
 	}

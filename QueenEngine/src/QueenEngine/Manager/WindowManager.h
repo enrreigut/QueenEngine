@@ -25,7 +25,8 @@ namespace Queen
 
 			inline Window::Window* GetWWindow(const char* title)& { return m_Windows[title]; }
 
-			bool InitLibraries();
+			bool InitGLFW();
+			bool InitGLEW();
 			bool CreateWWindow(const char* title, Window::uint& width, Window::uint& height);
 			bool DestroyWWindow(const char* title);
 			bool DestroyAllWWindows();
@@ -42,6 +43,7 @@ namespace Queen
 		private:
 
 			bool m_GlwfInitialised = false;
+			bool m_GlewInitialised = false;
 			
 			std::unordered_map<const char*, Window::Window*> m_Windows;		
 		};

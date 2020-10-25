@@ -50,24 +50,52 @@ namespace Queen
 			}
 		}
 
-		bool WindowManager::InitLibraries()
+		bool WindowManager::InitGLFW()
 		{
-			QE_LOG(QE_TRACE, g_INIT_WIN_GLFW);
-			if (!glfwInit())
+			if (!m_GlwfInitialised)
 			{
-				QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLFW);
-				return false;
-			}
-			QE_LOG(QE_TRACE, g_INIT_SUCCESS_WIN_GLFW);
+				QE_LOG(QE_TRACE, g_INIT_WIN_GLFW);
+				if (!glfwInit())
+				{
+					QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLFW);
+					return false;
+				}
+				QE_LOG(QE_SUCCESS, g_INIT_SUCCESS_WIN_GLFW);
 
-			m_GlwfInitialised = true;
-			return true;
+				m_GlwfInitialised = true;
+			}
+
+			return m_GlwfInitialised;
+		}
+
+		bool  WindowManager::InitGLEW()
+		{
+			if (!m_GlewInitialised)
+			{
+				QE_LOG(QE_TRACE, g_INIT_WIN_GLEW);
+				GLenum err = glewInit();
+				if (GLEW_OK != err)
+				{
+					QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLEW);
+					return false;
+				}
+				QE_LOG(QE_SUCCESS, g_INIT_SUCCESS_WIN_GLEW);
+
+				m_GlewInitialised = true;
+			}
+
+			return m_GlewInitialised;
 		}
 
 		bool WindowManager::CreateWWindow(const char* title, Window::uint& width, Window::uint& height)
 		{
 			if (!m_GlwfInitialised)
-				InitLibraries();
+			{
+				if (!InitGLFW())
+				{
+					return false;
+				}
+			}
 
 			if (m_Windows.find(title) != m_Windows.end())
 			{
@@ -86,10 +114,18 @@ namespace Queen
 					return false;
 				}
 
+				if (!m_GlewInitialised)
+				{
+					if (!InitGLEW())
+					{
+						return false;
+					}
+				}					
+
 				//Set To false if no debug is wanted!
 				NotifyEvents(w->GetWindowHandler(), true);
-
 				m_Windows[title] = w;
+
 				QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
 			}
 
@@ -112,6 +148,7 @@ namespace Queen
 				}
 
 				m_Windows[title]->Shutdown();
+				delete m_Windows[title];
 
 				return m_Windows.erase(title);
 			}

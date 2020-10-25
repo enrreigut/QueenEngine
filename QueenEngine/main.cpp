@@ -7,9 +7,7 @@
 #include "src/QueenEngine/Event/ApplicationEvent.h"
 
 int main()
-{
-	
-	
+{	
 	//TESING POOL MANAGER = Test of how Pool Manager Works
 	/*
 

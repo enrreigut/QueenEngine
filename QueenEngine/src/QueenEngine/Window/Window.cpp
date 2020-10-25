@@ -53,7 +53,10 @@ namespace Queen
 
 		void Window::Update()
 		{
+			glfwSwapBuffers(m_Window);
 			glfwPollEvents();
+
+			std::this_thread::sleep_for(std::chrono::microseconds(5));
 		}
 
 		void Window::Render()
@@ -61,10 +64,6 @@ namespace Queen
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
 			glClearColor(0.0f, 0.5f, 0.2f, 1.0f);
-
-			glfwSwapBuffers(m_Window);
-			
-			std::this_thread::sleep_for(std::chrono::microseconds(5));
 		}
 
 
