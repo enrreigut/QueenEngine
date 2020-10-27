@@ -49,14 +49,27 @@ namespace Queen
 
 		void Application::OnEvent()
 		{
+			bool draw = true;
 			if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_W))
+			{
 				QE_LOG(QE_SUCCESS, "FORWARD");
+				QE_GUI_LOG(QE_SUCCESS, GUI::Logger::Get(), "FORWARD");
+			}
 			else if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_A))
+			{
 				QE_LOG(QE_SUCCESS, "LEFT");
+				QE_GUI_LOG(QE_SUCCESS, GUI::Logger::Get(), "LEFT");
+			}
 			else if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_S))
+			{
 				QE_LOG(QE_SUCCESS, "BACK");
+				QE_GUI_LOG(QE_SUCCESS, GUI::Logger::Get(), "BACK");
+			}
 			else if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_D))
+			{
 				QE_LOG(QE_SUCCESS, "RIGHT");
+				QE_GUI_LOG(QE_SUCCESS, GUI::Logger::Get(), "RIGHT");
+			}
 
 			if(Queen::Managers::InputManager::Get().IsMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
 				QE_LOG(QE_SUCCESS, "LEFT CLICK");

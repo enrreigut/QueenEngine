@@ -38,6 +38,11 @@ namespace Queen
 			*/
 			printf("%s[%s] %s(%s): %s\033[0m\n", m_Color, m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), msg);
 		}
+		
+		void Log::GUILogMsg(Level l, GUI::Logger& logger, const char* msg)
+		{
+			logger.AddLog("[%s] %s(%s): %s\n", m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), msg);
+		}
 
 		//Additional Functions for Logging Params
 		//To be added in here: Link Erros due to templates

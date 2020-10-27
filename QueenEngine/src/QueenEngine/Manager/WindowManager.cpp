@@ -62,6 +62,9 @@ namespace Queen
 				}
 				QE_LOG(QE_SUCCESS, g_INIT_SUCCESS_WIN_GLFW);
 
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+
 				m_GlwfInitialised = true;
 			}
 
@@ -89,47 +92,56 @@ namespace Queen
 
 		bool WindowManager::CreateWWindow(const char* title, Window::uint& width, Window::uint& height)
 		{
-			if (!m_GlwfInitialised)
+			if (m_Running)
 			{
-				if (!InitGLFW())
+				if (!m_GlwfInitialised)
 				{
-					return false;
-				}
-			}
-
-			if (m_Windows.find(title) != m_Windows.end())
-			{
-				QE_LOG_PARAMS(QE_ERROR, g_WIN_ERROR_DUPLICATE, title);
-				return false;
-			}
-			else
-			{
-				Window::Window* w = new Window::Window;
-
-				QE_LOG_PARAMS(QE_TRACE, g_WIN_INIT, title, width, height);
-
-				if (!w->Init(title, width, height))
-				{
-					QE_LOG(QE_ERROR, g_WIN_ERROR_INIT);
-					return false;
-				}
-
-				if (!m_GlewInitialised)
-				{
-					if (!InitGLEW())
+					if (!InitGLFW())
 					{
 						return false;
 					}
-				}					
+				}
 
-				//Set To false if no debug is wanted!
-				NotifyEvents(w->GetWindowHandler(), true);
-				m_Windows[title] = w;
+				if (m_Windows.find(title) != m_Windows.end())
+				{
+					QE_LOG_PARAMS(QE_ERROR, g_WIN_ERROR_DUPLICATE, title);
+					return false;
+				}
+				else
+				{
+					Window::Window* w = new Window::Window;
 
-				QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
+					QE_LOG_PARAMS(QE_TRACE, g_WIN_INIT, title, width, height);
+
+					if (!w->Init(title, width, height))
+					{
+						QE_LOG(QE_ERROR, g_WIN_ERROR_INIT);
+						return false;
+					}
+
+
+					if (!m_GlewInitialised)
+					{
+						if (!InitGLEW())
+						{
+							return false;
+						}
+					}
+
+					//Set To false if no debug is wanted!
+					NotifyEvents(w->GetWindowHandler(), true);
+					m_Windows[title] = w;
+
+					QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
+				}
+
+				return true;
 			}
-
-			return true;
+			else
+			{
+				QE_LOG(QE_ERROR, g_WIN_MAN_ERROR_NOT_STARTED);
+				return false;
+			}
 		}
 
 		bool WindowManager::DestroyWWindow(const char* title)

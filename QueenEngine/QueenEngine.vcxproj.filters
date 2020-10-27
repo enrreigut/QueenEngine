@@ -81,6 +81,9 @@
     <ClCompile Include="src\QueenEngine\Manager\ImGUIManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\QueenEngine\Logger\ImGuiLogger.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\QueenEngine\Manager\Manager.h">
@@ -173,8 +176,14 @@
     <ClInclude Include="src\QueenEngine\Manager\ImGUIManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\QueenEngine\Logger\ImGuiLogger.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="src\QueenEngine\ImGUI\imgui.natvis" />
   </ItemGroup>
 </Project>

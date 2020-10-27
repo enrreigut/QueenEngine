@@ -133,5 +133,11 @@ namespace Queen
 			if (m_Running && ExistsLog(log_name))
 				this->GetLog(log_name).LogMsg(l, msg);
 		}
+
+		void LogManager::LogGUI(System::Log::Level l, GUI::Logger& logger, const char* msg)
+		{
+			if (m_Running && ExistsLog(g_DEFAULT_LOGGER_NAME))
+				this->GetLog(g_DEFAULT_LOGGER_NAME).GUILogMsg(l, logger, msg);
+		}
 	}
 }

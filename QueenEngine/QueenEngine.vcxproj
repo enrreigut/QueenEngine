@@ -99,6 +99,7 @@
     <ClCompile Include="src\QueenEngine\Inputs\keyInput.cpp" />
     <ClCompile Include="src\QueenEngine\Inputs\MouseInput.cpp" />
     <ClCompile Include="src\QueenEngine\Layer\Layer.cpp" />
+    <ClCompile Include="src\QueenEngine\Logger\ImGuiLogger.cpp" />
     <ClCompile Include="src\QueenEngine\Logger\Log.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\EventManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\ImGUIManager.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="src\QueenEngine\Inputs\keyInput.h" />
     <ClInclude Include="src\QueenEngine\Inputs\MouseInput.h" />
     <ClInclude Include="src\QueenEngine\Layer\Layer.h" />
+    <ClInclude Include="src\QueenEngine\Logger\ImGuiLogger.h" />
     <ClInclude Include="src\QueenEngine\Logger\Log.h" />
     <ClInclude Include="src\QueenEngine\Manager\EventManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\ImGUIManager.h" />
@@ -145,6 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="src\QueenEngine\ImGUI\imgui.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

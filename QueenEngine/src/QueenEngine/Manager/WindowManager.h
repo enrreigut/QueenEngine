@@ -1,11 +1,10 @@
 #pragma once
 
 #include <unordered_map>
+
 #include "Manager.h"
 #include "LogManager.h"
-
 #include "../Window/Window.h"
-
 #include "InputManager.h"
 
 namespace Queen
