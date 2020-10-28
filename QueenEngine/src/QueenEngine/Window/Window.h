@@ -1,10 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <functional>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <thread>
+#include <iostream>
+#include <functional>
 
 namespace Queen
 {
@@ -24,7 +25,7 @@ namespace Queen
 			
 			void SetContext();
 			void Update();
-			void Render();
+			void Render(int vbo);
 
 			inline bool isRunning() { return m_Running && !glfwWindowShouldClose(m_Window); }
 			

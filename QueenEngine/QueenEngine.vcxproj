@@ -60,6 +60,9 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)include;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pchz.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName)_$(PlatformTarget).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -77,6 +80,9 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)include;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pchz.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName)_$(PlatformTarget).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +96,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\QueenEngine\Application\Application.cpp" />
+    <ClCompile Include="src\QueenEngine\ImGUI\imgui.cpp" />
+    <ClCompile Include="src\QueenEngine\ImGUI\imgui_demo.cpp" />
+    <ClCompile Include="src\QueenEngine\ImGUI\imgui_draw.cpp" />
+    <ClCompile Include="src\QueenEngine\ImGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\QueenEngine\ImGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\QueenEngine\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="src\QueenEngine\Inputs\keyInput.cpp" />
     <ClCompile Include="src\QueenEngine\Inputs\MouseInput.cpp" />
     <ClCompile Include="src\QueenEngine\Layer\Layer.cpp" />
@@ -108,6 +120,14 @@
     <ClInclude Include="src\QueenEngine\Application\Application.h" />
     <ClInclude Include="src\QueenEngine\Event\ApplicationEvent.h" />
     <ClInclude Include="src\QueenEngine\Event\Event.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imconfig.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imgui.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imgui_internal.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imstb_rectpack.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imstb_textedit.h" />
+    <ClInclude Include="src\QueenEngine\ImGUI\imstb_truetype.h" />
     <ClInclude Include="src\QueenEngine\Inputs\keyInput.h" />
     <ClInclude Include="src\QueenEngine\Inputs\MouseInput.h" />
     <ClInclude Include="src\QueenEngine\Layer\Layer.h" />

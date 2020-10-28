@@ -61,7 +61,18 @@ namespace Queen
 			QE_LOG(QE_TRACE, g_INIT_SUCCESS_WIN_GLFW);
 
 			m_GlwfInitialised = true;
-			return true;
+
+			QE_LOG(QE_TRACE, g_INIT_WIN_GLEW);
+			if(!glewInit())
+			{
+				QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLEW);
+				return false;
+			}
+			QE_LOG(QE_TRACE, g_INIT_SUCCESS_WIN_GLEW);
+
+			m_GlewInitialised = true;
+
+			return m_GlwfInitialised && m_GlewInitialised;
 		}
 
 		bool WindowManager::CreateWWindow(const char* title, Window::uint& width, Window::uint& height)

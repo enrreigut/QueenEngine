@@ -1,12 +1,12 @@
 #pragma once
 
 #include <unordered_map>
+
 #include "Manager.h"
 #include "LogManager.h"
-
+#include "InputManager.h"
 #include "../Window/Window.h"
 
-#include "InputManager.h"
 
 namespace Queen
 {
@@ -42,6 +42,7 @@ namespace Queen
 		private:
 
 			bool m_GlwfInitialised = false;
+			bool m_GlewInitialised = false;
 			
 			std::unordered_map<const char*, Window::Window*> m_Windows;		
 		};
