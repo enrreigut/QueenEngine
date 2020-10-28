@@ -67,7 +67,6 @@ namespace Queen
 
 				m_GlwfInitialised = true;
 			}
-
 			return m_GlwfInitialised;
 		}
 

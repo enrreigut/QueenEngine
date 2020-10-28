@@ -6,6 +6,8 @@
 #include <iostream>
 #include <functional>
 #include <thread>
+#include <iostream>
+#include <functional>
 
 namespace Queen
 {
@@ -25,7 +27,7 @@ namespace Queen
 			
 			void SetContext();
 			void Update();
-			void Render();
+			void Render(int vbo);
 
 			inline bool isRunning() { return m_Running && !glfwWindowShouldClose(m_Window); }
 			

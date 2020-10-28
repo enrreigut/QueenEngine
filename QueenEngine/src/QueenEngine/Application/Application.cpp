@@ -81,7 +81,6 @@ namespace Queen
 
 		void Application::Run()
 		{
-
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();

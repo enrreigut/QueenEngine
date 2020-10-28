@@ -1,10 +1,9 @@
 #include <iostream>
-
 #include "src/QueenEngine/Application/Application.h"
 
 //For test purposes only
-#include "src/QueenEngine/MemoryPool/Pool.h"
-#include "src/QueenEngine/Event/ApplicationEvent.h"
+//#include "src/QueenEngine/MemoryPool/Pool.h"
+//#include "src/QueenEngine/Event/ApplicationEvent.h"
 
 int main()
 {	
