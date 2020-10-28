@@ -60,28 +60,28 @@
     <ClCompile Include="src\QueenEngine\Inputs\MouseInput.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\QueenEngine\ImGUI\imgui.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QueenEngine\ImGUI\imgui_demo.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QueenEngine\ImGUI\imgui_draw.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QueenEngine\ImGUI\imgui_impl_glfw.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QueenEngine\ImGUI\imgui_impl_opengl3.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QueenEngine\ImGUI\imgui_widgets.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\QueenEngine\Manager\ImGUIManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\QueenEngine\Logger\ImGuiLogger.cpp">
+    <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_demo.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_draw.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_impl_glfw.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_impl_opengl3.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_widgets.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\GUI\ImGuiLogger.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,34 +149,34 @@
     <ClInclude Include="src\QueenEngine\Inputs\MouseInput.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imconfig.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imgui.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imgui_impl_glfw.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imgui_impl_opengl3.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imgui_internal.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imstb_rectpack.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imstb_textedit.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\ImGUI\imstb_truetype.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="src\QueenEngine\Manager\ImGUIManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\QueenEngine\Logger\ImGuiLogger.h">
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imconfig.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui_impl_glfw.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui_impl_opengl3.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui_internal.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imstb_rectpack.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imstb_textedit.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imstb_truetype.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\GUI\ImGuiLogger.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -184,6 +184,6 @@
     <None Include="glew32.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="src\QueenEngine\ImGUI\imgui.natvis" />
+    <Natvis Include="src\QueenEngine\Vendor\ImGUI\imgui.natvis" />
   </ItemGroup>
 </Project>

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../ImGUI/imgui.h"
-#include "../ImGUI/imgui_impl_glfw.h"
-#include "../ImGUI/imgui_impl_opengl3.h"
+#include "../Vendor/ImGUI/imgui.h"
+#include "../Vendor/ImGUI/imgui_impl_glfw.h"
+#include "../Vendor/ImGUI/imgui_impl_opengl3.h"
 
 #include "Manager.h"
 #include "LogManager.h"
 #include "../Window/Window.h"
-#include "../Logger/ImGuiLogger.h"
+#include "../GUI/ImGuiLogger.h"
 
 namespace Queen
 {
@@ -33,10 +33,12 @@ namespace Queen
 
 			bool showDockspace = true;
 			bool showLog = true;
+			bool showConsole = true;
 			ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 			bool CreateDockspace(bool* p_open);
 			bool CreateLog(bool* p_open);
+			bool CreateConsole(bool* p_open);
 
 			ImGuiIO m_io;
 

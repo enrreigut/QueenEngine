@@ -11,7 +11,7 @@
 #include "../Utils/StringUtils.h"
 
 
-#include "ImGuiLogger.h"
+#include "../GUI/ImGuiLogger.h"
 
 //This file is the Log header which is just an interface for the class which handles the Log console outputing with an established format.
 

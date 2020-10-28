@@ -171,6 +171,15 @@ namespace Queen
 			return true;
 		}
 
+		bool ImGUIManager::CreateConsole(bool* p_open)
+		{
+			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+			ImGui::Begin("QueenConsole", p_open);
+			ImGui::End();
+
+			return true;
+		}
+
 		void ImGUIManager::OnRender()
 		{
 			//Start Frame
@@ -178,8 +187,9 @@ namespace Queen
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			CreateDockspace(&showDockspace);
-			CreateLog(&showLog);
+			//CreateDockspace(&showDockspace);
+			//CreateConsole(&showConsole);
+			//CreateLog(&showLog);
 
 			//Render
 			ImGui::Render();
