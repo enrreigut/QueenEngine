@@ -20,6 +20,9 @@ namespace Queen
 		#define QE_LOG_PARAMS(x,y,...) Queen::Managers::LogManager::Get().LogParams(x,y,__VA_ARGS__)
 		#define QE_LOG_NAME_PARAMS(x,y,z,...) Queen::Managers::LogManager::Get().LogParams(x,y,z,__VA_ARGS__)
 
+		#define QE_GUI_LOG(x,y,z) Queen::Managers::LogManager::Get().LogGUI(x,y,z)
+
+
 		class LogManager : public Manager, public Utils::Singleton<LogManager>
 		{
 
@@ -43,6 +46,7 @@ namespace Queen
 			/*Log making us of desired or default Log*/
 			void Log(System::Log::Level l, const char* msg);
 			void Log(const char* log_name, System::Log::Level l, const char* msg);
+			void LogGUI(System::Log::Level l, GUI::Logger& logger, const char* msg);
 
 			template<typename... Args>
 			void LogParams(System::Log::Level l, const char* msg, Args&&... li)

@@ -27,7 +27,6 @@ msg g_LOG_MAN_ERROR_DELETE_LOGGER =			"Error deleting logger: {v}";
 msg g_LOG_MAN_ERROR_DONT_EXIST =			"Logger with name {v} do not exist!";
 
 //Memory Manager
-
 msg g_MEM_MAN_INFO_START =					"Memory Manager has started... Hello!";
 msg g_MEM_MAN_INFO_SHUTDOWN=				"Memory Manager is shutted down... Bye!";
 msg g_MEM_MAN_INFO_DESTROYED =				"Memory Manager has been destroyed.";
@@ -36,7 +35,6 @@ msg g_MEM_MAN_ERROR_ALREADY_STARTED =		"Memory Manager has already been started!
 msg g_MEM_MAN_ERROR_NOT_STARTED =			"Memory Manager has not been started!";
 
 //Window Manager
-
 msg g_WIN_MAN_INFO_START =					"Window  Manager has started... Hello!";
 msg g_WIN_MAN_INFO_SHUTDOWN =				"Window  Manager is shutted down... Bye!";
 msg g_WIN_MAN_INFO_DESTROYED =				"Window  Manager has been destroyed";
@@ -72,3 +70,11 @@ msg g_INPUT_MAN_INFO_SHUTDOWN = "Input Manager is shutted down... Bye!";
 
 msg g_INPUT_MAN_ERROR_ALREADY_STARTED = "Input Manager has already been started!";
 msg g_INPUT_MAN_ERROR_NOT_STARTED = "Input Manager has not been started!";
+
+//ImGUI Manager
+msg g_IMGUI_MAN_INFO_START = "ImGUI Manager has started... Hello!";
+msg g_IMGUI_MAN_INFO_SHUTDOWN = "ImGUI Manager is shutted down... Bye!";
+msg g_IMGUI_MAN_INFO_DESTROYED = "ImGUI Manager has been destroyed.";
+
+msg g_IMGUI_MAN_ERROR_ALREADY_STARTED = "ImGUI Manager has already been started!";
+msg g_IMGUI_MAN_ERROR_NOT_STARTED = "ImGUI Manager has not been started!";

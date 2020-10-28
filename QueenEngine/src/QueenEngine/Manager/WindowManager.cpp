@@ -50,61 +50,97 @@ namespace Queen
 			}
 		}
 
-		bool WindowManager::InitLibraries()
+		bool WindowManager::InitGLFW()
 		{
-			QE_LOG(QE_TRACE, g_INIT_WIN_GLFW);
-			if (!glfwInit())
+			if (!m_GlwfInitialised)
 			{
-				QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLFW);
-				return false;
+				QE_LOG(QE_TRACE, g_INIT_WIN_GLFW);
+				if (!glfwInit())
+				{
+					QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLFW);
+					return false;
+				}
+				QE_LOG(QE_SUCCESS, g_INIT_SUCCESS_WIN_GLFW);
+
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+
+				m_GlwfInitialised = true;
 			}
-			QE_LOG(QE_TRACE, g_INIT_SUCCESS_WIN_GLFW);
+			return m_GlwfInitialised;
+		}
 
-			m_GlwfInitialised = true;
-
-			QE_LOG(QE_TRACE, g_INIT_WIN_GLEW);
-			if(!glewInit())
+		bool  WindowManager::InitGLEW()
+		{
+			if (!m_GlewInitialised)
 			{
-				QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLEW);
-				return false;
+				QE_LOG(QE_TRACE, g_INIT_WIN_GLEW);
+				GLenum err = glewInit();
+				if (GLEW_OK != err)
+				{
+					QE_LOG(QE_ERROR, g_ERROR_INIT_WIN_GLEW);
+					return false;
+				}
+				QE_LOG(QE_SUCCESS, g_INIT_SUCCESS_WIN_GLEW);
+
+				m_GlewInitialised = true;
 			}
-			QE_LOG(QE_TRACE, g_INIT_SUCCESS_WIN_GLEW);
 
-			m_GlewInitialised = true;
-
-			return m_GlwfInitialised && m_GlewInitialised;
+			return m_GlewInitialised;
 		}
 
 		bool WindowManager::CreateWWindow(const char* title, Window::uint& width, Window::uint& height)
 		{
-			if (!m_GlwfInitialised)
-				InitLibraries();
-
-			if (m_Windows.find(title) != m_Windows.end())
+			if (m_Running)
 			{
-				QE_LOG_PARAMS(QE_ERROR, g_WIN_ERROR_DUPLICATE, title);
-				return false;
+				if (!m_GlwfInitialised)
+				{
+					if (!InitGLFW())
+					{
+						return false;
+					}
+				}
+
+				if (m_Windows.find(title) != m_Windows.end())
+				{
+					QE_LOG_PARAMS(QE_ERROR, g_WIN_ERROR_DUPLICATE, title);
+					return false;
+				}
+				else
+				{
+					Window::Window* w = new Window::Window;
+
+					QE_LOG_PARAMS(QE_TRACE, g_WIN_INIT, title, width, height);
+
+					if (!w->Init(title, width, height))
+					{
+						QE_LOG(QE_ERROR, g_WIN_ERROR_INIT);
+						return false;
+					}
+
+
+					if (!m_GlewInitialised)
+					{
+						if (!InitGLEW())
+						{
+							return false;
+						}
+					}
+
+					//Set To false if no debug is wanted!
+					NotifyEvents(w->GetWindowHandler(), true);
+					m_Windows[title] = w;
+
+					QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
+				}
+
+				return true;
 			}
 			else
 			{
-				Window::Window* w = new Window::Window;
-
-				QE_LOG_PARAMS(QE_TRACE, g_WIN_INIT, title, width, height);
-
-				if (!w->Init(title, width, height))
-				{
-					QE_LOG(QE_ERROR, g_WIN_ERROR_INIT);
-					return false;
-				}
-
-				//Set To false if no debug is wanted!
-				NotifyEvents(w->GetWindowHandler(), true);
-
-				m_Windows[title] = w;
-				QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
+				QE_LOG(QE_ERROR, g_WIN_MAN_ERROR_NOT_STARTED);
+				return false;
 			}
-
-			return true;
 		}
 
 		bool WindowManager::DestroyWWindow(const char* title)
@@ -123,6 +159,7 @@ namespace Queen
 				}
 
 				m_Windows[title]->Shutdown();
+				delete m_Windows[title];
 
 				return m_Windows.erase(title);
 			}

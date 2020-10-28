@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <iostream>
+#include <functional>
 #include <thread>
 #include <iostream>
 #include <functional>

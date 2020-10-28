@@ -66,8 +66,6 @@ int main()
 	*/
 	//END TESTING EVENTS
 
-	//TESTING WINDOW
-
 	Queen::Application::Application app("Main", 1080, 720);
 
 	app.Start();
@@ -76,6 +74,5 @@ int main()
 
 	app.Shutdown();
 	
-
 	return 0;
 }

@@ -11,6 +11,8 @@
 #include "../Utils/StringUtils.h"
 
 
+#include "../GUI/ImGuiLogger.h"
+
 //This file is the Log header which is just an interface for the class which handles the Log console outputing with an established format.
 
 
@@ -53,6 +55,8 @@ namespace Queen
 			/*Method for outputing to console. We pass the desired level and the message*/
 			void LogMsg(Level l, const char* msg);
 
+			void GUILogMsg(Level l, GUI::Logger& logger, const char* msg);
+
 			/*Method for outputing to console with parameters if wanted.
 			The parameters are custom added and for now just supports only string parameters.
 			Way of usage:
@@ -69,7 +73,6 @@ namespace Queen
 				return getParams(o, std::forward<Args>(args)...);
 			}
 
-			//TODO: ADD Support for differente types not only string representation
 			template<typename Arg, typename... Args>
 			void LogMsgParam(Level l, const char* msg, Arg&& w, Args&&... li)
 			{

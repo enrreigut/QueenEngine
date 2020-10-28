@@ -4,9 +4,8 @@
 
 #include "Manager.h"
 #include "LogManager.h"
-#include "InputManager.h"
 #include "../Window/Window.h"
-
+#include "InputManager.h"
 
 namespace Queen
 {
@@ -25,7 +24,8 @@ namespace Queen
 
 			inline Window::Window* GetWWindow(const char* title)& { return m_Windows[title]; }
 
-			bool InitLibraries();
+			bool InitGLFW();
+			bool InitGLEW();
 			bool CreateWWindow(const char* title, Window::uint& width, Window::uint& height);
 			bool DestroyWWindow(const char* title);
 			bool DestroyAllWWindows();
