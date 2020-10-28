@@ -32,10 +32,24 @@ namespace Queen
 			//Create Window Application
 			Queen::Managers::WindowManager::Get().CreateWWindow(m_Title, m_Width, m_Height);
 			m_Window = Queen::Managers::WindowManager::Get().GetWWindow(m_Title);
+
+			//Create ImGUI context
+			const char* glsl_version = "#version 410";
+			ImGui::CreateContext();
+			ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+			ImGui::StyleColorsDark();
+
+			ImGui_ImplGlfw_InitForOpenGL(m_Window->GetWindowHandler(), true);
+			ImGui_ImplOpenGL3_Init(glsl_version);
 		}
 
 		void Application::Shutdown()
 		{
+			ImGui_ImplOpenGL3_Shutdown();
+			ImGui_ImplGlfw_Shutdown();
+			ImGui::DestroyContext();
+
 			Managers::EventManager::Get().Shutdown();
 			Managers::WindowManager::Get().Shutdown();
 			Managers::MemoryManager::Get().Shutdown();
@@ -63,10 +77,27 @@ namespace Queen
 
 		void Application::Run()
 		{
+			bool show_demo_window = true;
+
+			float vertex[] = {
+					-0.5f, -0.5f, 0.0f,
+					0.0f, 0.5f, 0.0f,
+					0.5f, -0.5f, 0.0f
+			};
+
+			GLuint vbo = 0;
+			glGenBuffers(1, &vbo);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vertex, GL_STATIC_DRAW);
+
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
-				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
+				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(vbo);
+
+				/*ImGui_ImplOpenGL3_NewFrame();
+				ImGui_ImplGlfw_NewFrame();
+				ImGui::NewFrame();*/
 
 				this->OnEvent();
 			}

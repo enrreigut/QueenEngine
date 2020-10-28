@@ -56,12 +56,26 @@ namespace Queen
 			glfwPollEvents();
 		}
 
-		void Window::Render()
+		void Window::Render(int vbo)
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
 			glClearColor(0.0f, 0.5f, 0.2f, 1.0f);
-
+			
+			glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			glVertexAttribPointer(
+				0,                  // atributo 0. No hay razón particular para el 0, pero debe corresponder en el shader.
+				3,                  // tamaño
+				GL_FLOAT,           // tipo
+				GL_FALSE,           // normalizado?
+				0,                    // Paso
+				(void*)0            // desfase del buffer
+			);
+			// Dibujar el triángulo !
+			glDrawArrays(GL_TRIANGLES, 0, 3); // Empezar desde el vértice 0S; 3 vértices en total -> 1 triángulo
+			glDisableVertexAttribArray(0);
+			
 			glfwSwapBuffers(m_Window);
 			
 			std::this_thread::sleep_for(std::chrono::microseconds(5));

@@ -2,7 +2,6 @@
 
 #include <ctime>
 
-
 namespace Queen
 {
 	namespace Utils
