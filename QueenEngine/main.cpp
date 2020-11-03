@@ -66,7 +66,6 @@ int main()
 	*/
 	//END TESTING EVENTS
 
-
 	Queen::Application::Application app("Main", 1080, 720);
 	app.InitEngine();
 
