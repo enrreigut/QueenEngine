@@ -22,7 +22,7 @@ namespace Queen
 
 		}
 
-		void Application::Start()
+		void Application::InitEngine()
 		{
 			Managers::LogManager::Get().Start();
 			Managers::MemoryManager::Get().Start();
@@ -42,15 +42,15 @@ namespace Queen
 
 			//Set 1 to Limit FPS to 60
 			glfwSwapInterval(1);
+		}
 
+		void Application::Start()
+		{
 			//===RENDER START==
 
 			//Render First Scene in Queue
-			if (m_Scenes.size() > 0)
-			{
-				m_CurrentScene = m_Scenes.begin()->second;
-				m_CurrentScene->Load();
-			}
+			m_CurrentScene = Queen::Managers::SceneManager::Get().GetDeafultScene();
+			m_CurrentScene->Load();
 
 			//=================
 			m_LastTime = glfwGetTime();
@@ -58,6 +58,7 @@ namespace Queen
 
 		void Application::Shutdown()
 		{
+			Managers::SceneManager::Get().Shutdown();
 			Managers::ImGUIManager::Get().Shutdown(); 
 			Managers::RendererManager::Get().Shutdown();
 			Managers::EventManager::Get().Shutdown();
@@ -68,10 +69,7 @@ namespace Queen
 
 		void Application::LoadScene(Scenes::Scene& scene)
 		{
-			if (m_Scenes.find(scene.GetSceneName()) == m_Scenes.end())
-			{
-				m_Scenes[scene.GetSceneName()] = &scene;
-			}
+			Managers::SceneManager::Get().AddScene(&scene);
 		}
 
 		void Application::OnEvent()
@@ -128,7 +126,7 @@ namespace Queen
 
 				xOffset += increment * 0.125f;
 
-				if (m_CurrentScene != nullptr)
+				if (m_CurrentScene != nullptr && m_CurrentScene->IsDefault())
 				{
 					m_CurrentScene->RenderScene();
 				}

@@ -15,14 +15,14 @@ namespace Queen
 			~Application();
 
 
-			void Start();
+			void InitEngine();
 			void Shutdown();
 
-			void LoadScene(Scenes::Scene& scene);
-			
+			void Start();
 			void OnEvent();
 			void Run();
 
+			void LoadScene(Scenes::Scene& scene);
 			void CalculateFPS();
 
 		private:
@@ -37,7 +37,6 @@ namespace Queen
 			double m_LastTime = 0.0;	
 
 			//RENDERER STUFF
-			std::unordered_map<std::string, Scenes::Scene*> m_Scenes;
 			Scenes::Scene* m_CurrentScene;
 
 			float xOffset = 0.0f;

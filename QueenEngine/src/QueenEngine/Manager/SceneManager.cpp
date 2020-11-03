@@ -126,8 +126,41 @@ namespace Queen
 			}
 			else
 			{
+				if (m_Scenes.find(name) == m_Scenes.end())
+				{
+					QE_LOG_PARAMS(QE_ERROR, "A scene with {v} as name, do not exist.", name);
+				}
+				else
+				{
+
+					for (auto& scene : m_Scenes)
+					{
+						if (scene.second->IsDefault() && scene.first != name)
+							scene.second->SetDefault(false);
+					}
+
+					m_Scenes[name]->SetDefault(true);
+				}
+			}
+		}
+
+		Scenes::Scene* SceneManager::GetDeafultScene()
+		{
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_SCN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				for (auto& scene : m_Scenes)
+				{
+					if (scene.second->IsDefault())
+						return scene.second;
+				}
 
 			}
+			
+			return nullptr;
 		}
 	}
 }

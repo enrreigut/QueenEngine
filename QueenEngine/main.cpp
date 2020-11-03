@@ -68,16 +68,23 @@ int main()
 
 
 	Queen::Application::Application app("Main", 1080, 720);
+	app.InitEngine();
 
 	//app.CreateQuad("quad01");
 	//intantiate a Quad with a transform component
 
 	Queen::Scenes::Scene test_scene("Test Scene");
+	test_scene.SetDefault(true);
 
 	Queen::Entity::Entity quad("Quad");
 	test_scene.AddEntity(&quad);
 
+	Queen::Scenes::Scene test_scene_two("Test Scene 2");
+	Queen::Scenes::Scene test_scene_three("Test Scene 3");
+
 	app.LoadScene(test_scene);
+	app.LoadScene(test_scene_two);
+	app.LoadScene(test_scene_three);
 
 	app.Start();
 	app.Run();
