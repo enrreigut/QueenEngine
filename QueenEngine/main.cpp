@@ -66,12 +66,21 @@ int main()
 	*/
 	//END TESTING EVENTS
 
+
 	Queen::Application::Application app("Main", 1080, 720);
 
+	//app.CreateQuad("quad01");
+	//intantiate a Quad with a transform component
+
+	Queen::Scenes::Scene test_scene("Test Scene");
+
+	Queen::Entity::Entity quad("Quad");
+	test_scene.AddEntity(&quad);
+
+	app.LoadScene(test_scene);
+
 	app.Start();
-
 	app.Run();
-
 	app.Shutdown();
 	
 	return 0;

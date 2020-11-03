@@ -49,6 +49,10 @@ namespace Queen
 			static void Window_Mouse_Position_Callback(GLFWwindow* window, double xpos, double ypos);
 			static void Window_Mouse_Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset);
 
+		public:
+
+			bool p_DebugEvents = true;
+
 		private:
 
 			Input::KeyInput* m_KeyInput;

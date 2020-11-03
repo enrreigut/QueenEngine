@@ -41,6 +41,5 @@ namespace Queen
 				m_Running = false;
 			}
 		}
-
 	}
 }

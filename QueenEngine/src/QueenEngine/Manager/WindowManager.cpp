@@ -128,7 +128,7 @@ namespace Queen
 					}
 
 					//Set To false if no debug is wanted!
-					NotifyEvents(w->GetWindowHandler(), true);
+					NotifyEvents(w->GetWindowHandler(), false);
 					m_Windows[title] = w;
 
 					QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
@@ -206,7 +206,11 @@ namespace Queen
 
 		void WindowManager::NotifyEvents(GLFWwindow* wind, bool debug)
 		{
-			if (debug)
+			InputManager::Get().p_DebugEvents = debug;
+
+			if(!InputManager::Get().p_DebugEvents)
+				QE_LOG(QE_INFO, "Ddebug mode is not enable. Events will not be outputed at console");
+			
 			{
 				//Resize
 				glfwSetWindowSizeCallback(wind, Window_Resize_Callback);
@@ -218,10 +222,6 @@ namespace Queen
 				glfwSetMouseButtonCallback(wind, InputManager::Get().Window_Mouse_Button_callback);
 				glfwSetCursorPosCallback(wind, InputManager::Get().Window_Mouse_Position_Callback);
 				glfwSetScrollCallback(wind, InputManager::Get().Window_Mouse_Scroll_Callback);
-			}
-			else
-			{
-				QE_LOG(QE_INFO, "Ddebug mode is not enable. Events will not be outputed at console");
 			}
 		}
 

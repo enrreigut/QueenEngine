@@ -78,3 +78,21 @@ msg g_IMGUI_MAN_INFO_DESTROYED = "ImGUI Manager has been destroyed.";
 
 msg g_IMGUI_MAN_ERROR_ALREADY_STARTED = "ImGUI Manager has already been started!";
 msg g_IMGUI_MAN_ERROR_NOT_STARTED = "ImGUI Manager has not been started!";
+
+//Renderer Manager
+msg g_REN_MAN_INFO_START = "Memory Manager has started... Hello!";
+msg g_REN_MAN_INFO_SHUTDOWN = "Memory Manager is shutted down... Bye!";
+msg g_REN_MAN_INFO_DESTROYED = "Memory Manager has been destroyed.";
+
+msg g_REN_MAN_ERROR_ALREADY_STARTED = "Memory Manager has already been started!";
+msg g_REN_MAN_ERROR_NOT_STARTED = "Memory Manager has not been started!";
+
+msg g_REN_MAN_TRACE_LOADING_SHADER = "Loading shaders : \n\t\t\t\t\t\t{v} \n\t\t\t\t\t\t{v}";
+
+//Scene Manager
+msg g_SCN_MAN_INFO_START = "Scene Manager has started... Hello!";
+msg g_SCN_MAN_INFO_SHUTDOWN = "Scene Manager is shutted down... Bye!";
+msg g_SCN_MAN_INFO_DESTROYED = "Scene Manager has been destroyed.";
+
+msg g_SCN_MAN_ERROR_ALREADY_STARTED = "Scene Manager has already been started!";
+msg g_SCN_MAN_ERROR_NOT_STARTED = "Scene Manager has not been started!";
