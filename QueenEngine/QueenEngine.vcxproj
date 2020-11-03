@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -96,6 +96,16 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\QueenEngine\Application\Application.cpp" />
+    <ClCompile Include="src\QueenEngine\Entity\Entity.cpp" />
+    <ClCompile Include="src\QueenEngine\Manager\RendererManager.cpp" />
+    <ClCompile Include="src\QueenEngine\Manager\SceneManager.cpp" />
+    <ClCompile Include="src\QueenEngine\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\QueenEngine\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\QueenEngine\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\QueenEngine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\QueenEngine\Renderer\VertexBufferLayout.cpp" />
+    <ClCompile Include="src\QueenEngine\Scene\Scenes.cpp" />
+    <ClCompile Include="src\QueenEngine\Utils\FileReader.cpp" />
     <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui.cpp" />
     <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_demo.cpp" />
     <ClCompile Include="src\QueenEngine\Vendor\ImGUI\imgui_draw.cpp" />
@@ -120,8 +130,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\QueenEngine\Application\Application.h" />
+    <ClInclude Include="src\QueenEngine\Entity\Entity.h" />
     <ClInclude Include="src\QueenEngine\Event\ApplicationEvent.h" />
     <ClInclude Include="src\QueenEngine\Event\Event.h" />
+    <ClInclude Include="src\QueenEngine\Manager\RendererManager.h" />
+    <ClInclude Include="src\QueenEngine\Manager\SceneManager.h" />
+    <ClInclude Include="src\QueenEngine\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\QueenEngine\Renderer\VertexArray.h" />
+    <ClInclude Include="src\QueenEngine\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\QueenEngine\Renderer\Shader.h" />
+    <ClInclude Include="src\QueenEngine\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="src\QueenEngine\Scene\Scenes.h" />
+    <ClInclude Include="src\QueenEngine\Utils\FileReader.h" />
     <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imconfig.h" />
     <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui.h" />
     <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui_impl_glfw.h" />
@@ -153,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
+    <None Include="Resources\Shaders\Test\FragmentShader.frag" />
+    <None Include="Resources\Shaders\Test\VertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="src\QueenEngine\Vendor\ImGUI\imgui.natvis" />

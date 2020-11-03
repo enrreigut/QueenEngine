@@ -59,11 +59,11 @@ namespace Queen
 			std::this_thread::sleep_for(std::chrono::microseconds(5));
 		}
 
-		void Window::Render(int vbo)
+		void Window::Render()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
-			glClearColor(0.0f, 0.5f, 0.2f, 1.0f);
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		}
 
 

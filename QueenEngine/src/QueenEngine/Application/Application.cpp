@@ -22,34 +22,58 @@ namespace Queen
 
 		}
 
-		void Application::Start()
+		void Application::InitEngine()
 		{
 			Managers::LogManager::Get().Start();
 			Managers::MemoryManager::Get().Start();
 			Managers::WindowManager::Get().Start();
 			Managers::EventManager::Get().Start();
+			Managers::RendererManager::Get().Start();
 			Managers::ImGUIManager::Get().Start();
+			Managers::SceneManager::Get().Start();
 
 			//Create Window Application
 			if (!Queen::Managers::WindowManager::Get().CreateWWindow(m_Title, m_Width, m_Height))
 				exit(-1);
 
+			//Init ImGUI
 			m_Window = Queen::Managers::WindowManager::Get().GetWWindow(m_Title);
 			Managers::ImGUIManager::Get().Init(m_Window, "#version 410");
+
+			//Set 1 to Limit FPS to 60
+			glfwSwapInterval(1);
+		}
+
+		void Application::Start()
+		{
+			//===RENDER START==
+
+			//Render First Scene in Queue
+			m_CurrentScene = Queen::Managers::SceneManager::Get().GetDeafultScene();
+			m_CurrentScene->Load();
+
+			//=================
+			m_LastTime = glfwGetTime();
 		}
 
 		void Application::Shutdown()
 		{
-			Managers::ImGUIManager::Get().Shutdown();
+			Managers::SceneManager::Get().Shutdown();
+			Managers::ImGUIManager::Get().Shutdown(); 
+			Managers::RendererManager::Get().Shutdown();
 			Managers::EventManager::Get().Shutdown();
 			Managers::WindowManager::Get().Shutdown();
 			Managers::MemoryManager::Get().Shutdown();
 			Managers::LogManager::Get().Shutdown();
 		}
 
+		void Application::LoadScene(Scenes::Scene& scene)
+		{
+			Managers::SceneManager::Get().AddScene(&scene);
+		}
+
 		void Application::OnEvent()
 		{
-			bool draw = true;
 			if (Queen::Managers::InputManager::Get().IsKeyDown(GLFW_KEY_W))
 			{
 				QE_LOG(QE_SUCCESS, "FORWARD");
@@ -84,12 +108,48 @@ namespace Queen
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
+
+				//Prototipe
+				//We have a scene
+				//Scene has all enetities
+				//for auto* ent: Scene.GeEntities()
+				//	ent->Draw();
+
+				//Process to draw an Entity
+				
+				//Managers::RendererManager::Get().UseProgram();
+
+				if (xOffset <= -1.0f)
+					increment += 0.1f;
+				else if(xOffset >= 1.0f)
+					increment = -0.1f;
+
+				xOffset += increment * 0.125f;
+
+				if (m_CurrentScene != nullptr && m_CurrentScene->IsDefault())
+				{
+					m_CurrentScene->RenderScene();
+				}
+
+				//Stop Here
 				
 				Queen::Managers::ImGUIManager::Get().OnRender();
-
 				this->OnEvent();
-
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
+				CalculateFPS();
+			}
+		}
+
+		void Application::CalculateFPS()
+		{
+			double currentTime = glfwGetTime();
+			m_Frames++;
+			if (currentTime - m_LastTime >= 1.0) {
+				// printf and reset
+				QE_LOG_PARAMS(QE_SUCCESS, "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
+
+				m_Frames = 0;
+				m_LastTime += 1.0;
 			}
 		}
 	}
