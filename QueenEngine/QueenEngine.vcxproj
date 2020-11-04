@@ -99,6 +99,7 @@
     <ClCompile Include="src\QueenEngine\Entity\Entity.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\RendererManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\SceneManager.cpp" />
+    <ClCompile Include="src\QueenEngine\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\QueenEngine\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\QueenEngine\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\QueenEngine\Renderer\VertexBuffer.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="src\QueenEngine\Event\Event.h" />
     <ClInclude Include="src\QueenEngine\Manager\RendererManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\SceneManager.h" />
+    <ClInclude Include="src\QueenEngine\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\QueenEngine\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\QueenEngine\Renderer\VertexArray.h" />
     <ClInclude Include="src\QueenEngine\Renderer\VertexBuffer.h" />
@@ -173,6 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
+    <None Include="Resources\Shaders\FrameRenderBuffer\FragmentShader.frag" />
+    <None Include="Resources\Shaders\FrameRenderBuffer\VertexShader.vert" />
     <None Include="Resources\Shaders\Test\FragmentShader.frag" />
     <None Include="Resources\Shaders\Test\VertexShader.vert" />
   </ItemGroup>

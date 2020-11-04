@@ -51,7 +51,13 @@ namespace Queen
 			//Render First Scene in Queue
 			m_CurrentScene = Queen::Managers::SceneManager::Get().GetDeafultScene();
 			m_CurrentScene->Load();
-
+			
+			//Frames
+			m_FBO.CreateFrameBuffer();
+			m_FBO.CreateTexture();
+			m_FBO.CreateRenderBuffer();
+			m_FBO.Check();
+			
 			//=================
 			m_LastTime = glfwGetTime();
 		}
@@ -107,6 +113,8 @@ namespace Queen
 		{
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
+				m_FBO.Bind();
+
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
 
 				//Prototipe
@@ -130,12 +138,16 @@ namespace Queen
 				{
 					m_CurrentScene->RenderScene();
 				}
-
+				
 				//Stop Here
 				
+				m_FBO.Unbind();
+
+				Queen::Managers::ImGUIManager::Get().SetFramebuffer(m_FBO.GetFBO());
 				Queen::Managers::ImGUIManager::Get().OnRender();
 				this->OnEvent();
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
+				
 				CalculateFPS();
 			}
 		}

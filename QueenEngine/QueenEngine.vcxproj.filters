@@ -114,6 +114,9 @@
     <ClCompile Include="src\QueenEngine\Manager\SceneManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\QueenEngine\Renderer\FrameBuffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\QueenEngine\Manager\Manager.h">
@@ -239,11 +242,16 @@
     <ClInclude Include="src\QueenEngine\Manager\SceneManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\QueenEngine\Renderer\FrameBuffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
     <None Include="Resources\Shaders\Test\VertexShader.vert" />
     <None Include="Resources\Shaders\Test\FragmentShader.frag" />
+    <None Include="Resources\Shaders\FrameRenderBuffer\FragmentShader.frag" />
+    <None Include="Resources\Shaders\FrameRenderBuffer\VertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="src\QueenEngine\Vendor\ImGUI\imgui.natvis" />
