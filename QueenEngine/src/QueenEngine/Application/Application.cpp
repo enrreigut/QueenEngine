@@ -158,7 +158,7 @@ namespace Queen
 			m_Frames++;
 			if (currentTime - m_LastTime >= 1.0) {
 				// printf and reset
-				QE_LOG_PARAMS(QE_SUCCESS, "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
+				QE_GUI_LOG_PARAMS(QE_SUCCESS, GUI::Logger::Get(), "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
 
 				m_Frames = 0;
 				m_LastTime += 1.0;
