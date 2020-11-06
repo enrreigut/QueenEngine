@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "GL/glew.h"
 
 namespace Queen
@@ -13,7 +15,7 @@ namespace Queen
 			IndexBuffer();
 			~IndexBuffer();
 
-			bool Create(unsigned int* indices, size_t& size);
+			bool Create(std::vector<unsigned int>& indices);
 			bool Bind();
 			bool Unbind();
 

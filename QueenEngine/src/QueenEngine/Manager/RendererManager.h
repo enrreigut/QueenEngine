@@ -10,6 +10,7 @@
 #include "../Renderer/VertexArray.h"
 #include "../Renderer/VertexBuffer.h"
 #include "../Renderer/IndexBuffer.h"
+#include "../Renderer/FrameBuffer.h"
 
 namespace Queen
 {

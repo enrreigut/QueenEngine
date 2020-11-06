@@ -5,6 +5,8 @@
 //#include "src/QueenEngine/MemoryPool/Pool.h"
 //#include "src/QueenEngine/Event/ApplicationEvent.h"
 
+#include "src/QueenEngine/Entity/Model.h"
+
 int main()
 {	
 	//TESING POOL MANAGER = Test of how Pool Manager Works
@@ -66,7 +68,7 @@ int main()
 	*/
 	//END TESTING EVENTS
 
-	Queen::Application::Application app("Main", 1080, 720);
+	Queen::Application::Application app("QueenEngine", 1080, 720);
 	app.InitEngine();
 
 	//app.CreateQuad("quad01");
@@ -75,8 +77,10 @@ int main()
 	Queen::Scenes::Scene test_scene("Test Scene");
 	test_scene.SetDefault(true);
 
-	Queen::Entity::Entity quad("Quad");
-	test_scene.AddEntity(&quad);
+	Queen::Entity::Entity cube("Cube");
+	cube.AddModel("Resources/Model/Test/cube.obj");
+
+	test_scene.AddEntity(&cube);
 
 	Queen::Scenes::Scene test_scene_two("Test Scene 2");
 	Queen::Scenes::Scene test_scene_three("Test Scene 3");

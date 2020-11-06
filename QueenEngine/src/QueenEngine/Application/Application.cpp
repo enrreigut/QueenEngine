@@ -51,7 +51,13 @@ namespace Queen
 			//Render First Scene in Queue
 			m_CurrentScene = Queen::Managers::SceneManager::Get().GetDeafultScene();
 			m_CurrentScene->Load();
-
+			
+			//Frames
+			m_FBO.CreateFrameBuffer();
+			m_FBO.CreateTexture();
+			m_FBO.CreateRenderBuffer();
+			m_FBO.Check();
+			
 			//=================
 			m_LastTime = glfwGetTime();
 		}
@@ -107,6 +113,8 @@ namespace Queen
 		{
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
+				m_FBO.Bind();
+
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
 
 				//Prototipe
@@ -130,12 +138,16 @@ namespace Queen
 				{
 					m_CurrentScene->RenderScene();
 				}
-
+				
 				//Stop Here
 				
+				m_FBO.Unbind();
+
+				Queen::Managers::ImGUIManager::Get().SetFramebuffer(m_FBO.GetFBO());
 				Queen::Managers::ImGUIManager::Get().OnRender();
 				this->OnEvent();
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
+				
 				CalculateFPS();
 			}
 		}
@@ -146,7 +158,7 @@ namespace Queen
 			m_Frames++;
 			if (currentTime - m_LastTime >= 1.0) {
 				// printf and reset
-				QE_LOG_PARAMS(QE_SUCCESS, "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
+				QE_GUI_LOG_PARAMS(QE_SUCCESS, GUI::Logger::Get(), "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
 
 				m_Frames = 0;
 				m_LastTime += 1.0;

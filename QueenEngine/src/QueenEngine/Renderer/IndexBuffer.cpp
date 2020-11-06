@@ -16,11 +16,11 @@ namespace Queen
 
 		}
 
-		bool IndexBuffer::Create(unsigned int* indices, size_t& size)
+		bool IndexBuffer::Create(std::vector<unsigned int>& indices)
 		{
 			glGenBuffers(1, &m_IBO);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 			return true;
 		}
 

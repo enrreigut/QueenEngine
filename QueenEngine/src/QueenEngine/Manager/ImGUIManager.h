@@ -27,6 +27,7 @@ namespace Queen
 
 			void AddContext();
 			void Init(Window::Window* wind, const char* glsl_version);
+			void SetFramebuffer(unsigned int fbo) { m_FBO = fbo; }
 			void OnRender();
 
 		protected:
@@ -34,16 +35,21 @@ namespace Queen
 			bool showDockspace = true;
 			bool showLog = true;
 			bool showConsole = true;
+			bool showImg = true;
+			bool showComponent = true;
 			ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 			bool CreateDockspace(bool* p_open);
 			bool CreateLog(bool* p_open);
 			bool CreateConsole(bool* p_open);
+			bool CreateWindowWithImage(bool* p_open);
+			bool CreateComponent(bool* p_open);
 
 			ImGuiIO m_io;
 
 		private:
 
+			unsigned int m_FBO;
 		};
 	}
 }

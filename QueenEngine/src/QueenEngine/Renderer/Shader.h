@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 #include "../Utils/FileReader.h"
 #include "../Manager/LogManager.h"
@@ -26,6 +27,7 @@ namespace Queen
 			void SetInt(const char* name, int&& value) const;
 			void SetFloat(const char* name, float&& value) const;
 			void SetFloat(const char* name, float& value) const;
+			void SetMat4(const char* name, glm::mat4& value) const;
 
 		protected:
 

@@ -97,6 +97,31 @@ namespace Queen
 
 				printf("%s[%s] %s(%s): %s\033[0m\n", m_Color, m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), s.c_str());
 			}
+
+			template<typename Arg, typename... Args>
+			void GUILogMsgParam(Level l, GUI::Logger& logger, const char* msg, Arg&& w, Args&&... li)
+			{
+				std::ostringstream o;
+				getParams(o, w, li...);
+
+				std::stringstream ss;
+				std::string param;
+				std::string s = msg;
+				size_t pos = 0;
+
+				/*for to replace the {v} with the correct parameters*/
+				for (auto elem : Split(o.str(), "~"))
+				{
+					pos = s.find("{v}");
+
+					if (pos == std::string::npos)
+						break;
+
+					s.replace(pos, 3, elem);
+				}
+
+				logger.AddLog("[%s] %s(%s): %s\n", m_T.getDateAndTime(), m_Name, getLevelRepresentation(l), s.c_str());
+			}
 			
 		private:
 

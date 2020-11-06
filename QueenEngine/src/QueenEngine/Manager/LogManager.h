@@ -21,6 +21,7 @@ namespace Queen
 		#define QE_LOG_NAME_PARAMS(x,y,z,...) Queen::Managers::LogManager::Get().LogParams(x,y,z,__VA_ARGS__)
 
 		#define QE_GUI_LOG(x,y,z) Queen::Managers::LogManager::Get().LogGUI(x,y,z)
+		#define QE_GUI_LOG_PARAMS(x,y,z,w,...) Queen::Managers::LogManager::Get().LogGUIParams(x,y,z,w,__VA_ARGS__)
 
 
 		class LogManager : public Manager, public Utils::Singleton<LogManager>
@@ -60,6 +61,13 @@ namespace Queen
 			{
 				if (m_Running && ExistsLog(log_name))
 					this->GetLog(log_name).LogMsgParam(l, msg, li);
+			}
+
+			template<typename... Args>
+			void LogGUIParams(System::Log::Level l, GUI::Logger& logger, const char* msg, Args&&... li)
+			{
+				if (m_Running && ExistsLog("DEFAULT"))
+					this->GetLog("DEFAULT").GUILogMsgParam(l, logger, msg, li...);
 			}
 
 		private:

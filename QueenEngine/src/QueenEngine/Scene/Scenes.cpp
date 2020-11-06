@@ -19,16 +19,24 @@ namespace Queen
 		{
 			for (auto& elem : m_Entities)
 			{
-				elem.second->LoadEntity(m_VAO, elem.second->m_Data, sizeof(elem.second->m_Data), elem.second->indices, sizeof(elem.second->indices));
-				elem.second->LoadShader("Resources/Shaders/Test/VertexShader.vert",
-					"Resources/Shaders/Test/FragmentShader.frag");
+				elem.second->LoadEntity(m_VAO);
+				elem.second->LoadShader("Resources/Shaders/Test/VertexShader.vert", "Resources/Shaders/Test/FragmentShader.frag");
 			}
 		}
 
 		void Scene::RenderScene()
 		{
+			//TODO: Set Camera // Render Camaera
+			//glm::mat4 proj = glm::perspective(glm::radians(40.0f), 4.0f/3.0f, 0.1f, 100.0f);
+			glm::mat4 proj = glm::ortho(-10.0f, 10.f, 0.0f, 10.f, -1.0f, 10.0f);
+			//glm::mat4 view = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
+			//glm::mat4 MVP = proj * view;
+			
 			for (auto& elem : m_Entities)
+			{
 				elem.second->Draw(m_VAO);
+				elem.second->GetShader().SetMat4("u_MVP", proj);
+			}
 		}
 
 		void Scene::AddEntity(Entity::Entity* e)

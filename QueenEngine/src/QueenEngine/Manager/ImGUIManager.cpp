@@ -179,6 +179,28 @@ namespace Queen
 
 			return true;
 		}
+		
+		bool ImGUIManager::CreateWindowWithImage(bool* p_open)
+		{
+			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+			ImGui::Begin("Viewport", p_open);
+
+			if (&m_FBO != nullptr)
+				ImGui::Image((void*)m_FBO, ImGui::GetWindowSize());
+
+			ImGui::End();
+
+			return true;
+		}
+
+		bool ImGUIManager::CreateComponent(bool* p_open)
+		{
+			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+			ImGui::Begin("Component", p_open);
+			ImGui::End();
+
+			return true;
+		}
 
 		void ImGUIManager::OnRender()
 		{
@@ -187,9 +209,11 @@ namespace Queen
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			//CreateDockspace(&showDockspace);
-			//CreateConsole(&showConsole);
-			//CreateLog(&showLog);
+			CreateDockspace(&showDockspace);
+			CreateWindowWithImage(&showImg);
+			CreateConsole(&showConsole);
+			CreateLog(&showLog);
+			CreateComponent(&showComponent);
 
 			//Render
 			ImGui::Render();

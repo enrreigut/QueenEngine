@@ -14,11 +14,11 @@ namespace Queen
 
 		}
 
-		void Entity::LoadEntity(Renderer::VertexArray& va, float* verts, size_t sizeV, unsigned int* indices, size_t sizeI)
+		void Entity::LoadEntity(Renderer::VertexArray& va)
 		{
 			va.CreateVertexArray();
-			m_VBO.Create(verts, sizeV);
-			m_IBO.Create(indices, sizeI);
+			m_VBO.Create(m_Model.m_Vertices);
+			m_IBO.Create(m_Model.m_Indexes);
 		}
 
 		void Entity::LoadShader(const char* vertFilePath, const char* fragFilePath)
@@ -35,9 +35,14 @@ namespace Queen
 			m_VBO.Bind();
 			m_IBO.Bind();
 
-			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glDrawElements(GL_TRIANGLES, m_Model.m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
 			glDisableVertexAttribArray(0);
+		}
+
+		void Entity::AddModel(const char* filePath)
+		{
+			m_Model.LoadObj(filePath);
 		}
 	}
 }
