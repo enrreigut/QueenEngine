@@ -1,6 +1,5 @@
 #include "VertexBuffer.h"
 
-
 namespace Queen
 {
 	namespace Renderer
@@ -17,11 +16,11 @@ namespace Queen
 
 		}
 
-		bool VertexBuffer::Create(float* vertices, size_t& size)
+		bool VertexBuffer::Create(std::vector<glm::vec3>& vertices)
 		{
 			glGenBuffers(1, &m_VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
 			return true;
 		}

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include "glm/vec3.hpp"
+
 #include "GL/glew.h"
 
 namespace Queen
@@ -13,7 +16,7 @@ namespace Queen
 			VertexBuffer();
 			~VertexBuffer();
 
-			bool Create(float* vertices, size_t& size);
+			bool Create(std::vector<glm::vec3> & vertices);
 			bool Bind();
 			bool Unbind();
 
