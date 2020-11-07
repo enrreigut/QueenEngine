@@ -186,7 +186,9 @@ namespace Queen
 			ImGui::Begin("Viewport", p_open);
 
 			if (&m_FBO != nullptr)
+			{
 				ImGui::Image((void*)m_FBO, ImGui::GetWindowSize());
+			}
 
 			ImGui::End();
 

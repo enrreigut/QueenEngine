@@ -43,9 +43,68 @@ namespace Queen
 			}
 		}
 
+		void RendererManager::SetRenderScene()
+		{
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_REN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				Queen::Managers::SceneManager::Get().GetDeafultScene()->Load();
+			}
+		}
+
+		void RendererManager::CreateFrameBuffer()
+		{
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_REN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				m_FBO.CreateFrameBuffer(1080, 720);
+				m_FBO.CreateTexture();
+				m_FBO.CreateRenderBuffer();
+				m_FBO.Check();
+			}
+		}
+
+		void RendererManager::RenderScene(Window::Window* window)
+		{
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_REN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				Queen::Managers::SceneManager::Get().GetDeafultScene()->RenderScene(window);
+			}
+		}
+
+		void RendererManager::RenderImGUI()
+		{
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_REN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				Queen::Managers::ImGUIManager::Get().SetFramebuffer(m_FBO.GetFBO());
+				Queen::Managers::ImGUIManager::Get().OnRender();
+			}
+		}
+
 		void RendererManager::SetUniformFloat(Renderer::Shader& shader, const char* name, float& value)
 		{
-			glUniform1f(glGetUniformLocation(shader.GetProgramID(), name), value);
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_REN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				glUniform1f(glGetUniformLocation(shader.GetProgramID(), name), value);
+			}
 		}
 	}
 }

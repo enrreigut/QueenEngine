@@ -46,19 +46,12 @@ namespace Queen
 
 		void Application::Start()
 		{
-			//===RENDER START==
+			//Set to render the Scene with the Defult Flag
+			Queen::Managers::RendererManager::Get().SetRenderScene();
 
-			//Render First Scene in Queue
-			m_CurrentScene = Queen::Managers::SceneManager::Get().GetDeafultScene();
-			m_CurrentScene->Load();
-			
-			//Frames
-			m_FBO.CreateFrameBuffer();
-			m_FBO.CreateTexture();
-			m_FBO.CreateRenderBuffer();
-			m_FBO.Check();
-			
-			//=================
+			//Create Frame Buffer
+			//Queen::Managers::RendererManager::Get().CreateFrameBuffer();
+
 			m_LastTime = glfwGetTime();
 		}
 
@@ -113,38 +106,22 @@ namespace Queen
 		{
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
-				m_FBO.Bind();
+				//Start Rendering in FrameBuffer
+				
+				//Queen::Managers::RendererManager::Get().BindFrameBuffer();
 
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
-
-				//Prototipe
-				//We have a scene
-				//Scene has all enetities
-				//for auto* ent: Scene.GeEntities()
-				//	ent->Draw();
-
-				//Process to draw an Entity
 				
-				//Managers::RendererManager::Get().UseProgram();
+				//Render Scene
+				Queen::Managers::RendererManager::Get().RenderScene(Queen::Managers::WindowManager::Get().GetWWindow(m_Title));
 
-				if (xOffset <= -1.0f)
-					increment += 0.1f;
-				else if(xOffset >= 1.0f)
-					increment = -0.1f;
-
-				xOffset += increment * 0.125f;
-
-				if (m_CurrentScene != nullptr && m_CurrentScene->IsDefault())
-				{
-					m_CurrentScene->RenderScene();
-				}
+				//Stop Rendering in Frame Buffer
 				
-				//Stop Here
+				//Queen::Managers::RendererManager::Get().UnbindFrameBuffer();
 				
-				m_FBO.Unbind();
-
-				Queen::Managers::ImGUIManager::Get().SetFramebuffer(m_FBO.GetFBO());
-				Queen::Managers::ImGUIManager::Get().OnRender();
+				//Render UI
+				
+				//Queen::Managers::RendererManager::Get().RenderImGUI();
 				this->OnEvent();
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
 				

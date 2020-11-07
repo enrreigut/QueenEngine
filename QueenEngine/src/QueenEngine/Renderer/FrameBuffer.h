@@ -13,7 +13,7 @@ namespace Queen
 			FrameBuffer();
 			~FrameBuffer();
 
-			void CreateFrameBuffer();
+			void CreateFrameBuffer(unsigned int width, unsigned int height);
 			void CreateTexture();
 			void CreateRenderBuffer();
 
@@ -30,6 +30,9 @@ namespace Queen
 			unsigned int m_FBO;
 			unsigned int m_Texture;
 			unsigned int m_RBO;
+
+			unsigned int m_Width;
+			unsigned int m_Height;
 
 		};
 	}

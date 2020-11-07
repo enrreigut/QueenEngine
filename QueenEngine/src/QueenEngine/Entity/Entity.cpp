@@ -9,6 +9,8 @@ namespace Queen
 			m_Name = name;
 
 			Component::Transform transform;
+			Component::Rotation rotate;
+			Component::Scale scale;
 			AddComponent<Component::Transform>(&transform);
 		}
 
@@ -51,8 +53,19 @@ namespace Queen
 			m_IBO.Bind();
 
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-			glDrawElements(GL_TRIANGLES, GetComponent<Component::Model>()->m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
+
+			if(GetComponent<Component::Model>() != nullptr)
+				glDrawElements(GL_TRIANGLES, GetComponent<Component::Model>()->m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
+			else
+				glDrawElements(GL_TRIANGLES, 0, GL_UNSIGNED_INT, nullptr);
+
 			glDisableVertexAttribArray(0);
+		}
+
+		void Entity::HandleInput()
+		{
+			if (Managers::InputManager::Get().IsKeyDown(GLFW_KEY_D))
+				GetComponent<Component::Transform>()->m_Transform.x += 10.0f;
 		}
 	}
 }

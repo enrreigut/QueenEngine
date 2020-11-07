@@ -24,18 +24,24 @@ namespace Queen
 			}
 		}
 
-		void Scene::RenderScene()
+		void Scene::RenderScene(Window::Window* w)
 		{
-			//TODO: Set Camera // Render Camaera
-			//glm::mat4 proj = glm::perspective(glm::radians(40.0f), 4.0f/3.0f, 0.1f, 100.0f);
-			glm::mat4 proj = glm::ortho(-10.0f, 10.f, 0.0f, 10.f, -1.0f, 10.0f);
-			//glm::mat4 view = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
-			//glm::mat4 MVP = proj * view;
-			
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
+
+			Entity::Component::Camera* c_properties = m_Camera->GetComponent<Entity::Component::Camera>();
+			c_properties->UpdateProjection(c_properties->FOV, (float) w->GetWidth() / (float)w->GetHeight(), c_properties->near, c_properties->far);
+					
 			for (auto& elem : m_Entities)
 			{
-				elem.second->Draw(m_VAO);
-				elem.second->GetShader().SetMat4("u_MVP", proj);
+				if(elem.second->GetComponent<Entity::Component::Model>() != nullptr)
+				{
+					elem.second->GetShader().SetMat4("u_Proj", c_properties->projection);
+					elem.second->GetShader().SetMat4("u_View", view);
+					elem.second->GetShader().SetMat4("u_Model", model);
+					elem.second->Draw(m_VAO);
+				}
 			}
 		}
 

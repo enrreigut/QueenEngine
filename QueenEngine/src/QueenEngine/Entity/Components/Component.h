@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include "../Utils/FileReader.h"
 
@@ -47,6 +48,19 @@ namespace Queen
 			struct Scale : public Component
 			{
 				glm::vec3 m_Transform;
+			};
+
+			struct Camera : public Component
+			{
+				float FOV = 45.0f;
+				float aspectRatio = 3.0f / 2.0f;
+				float near = 0.01f;
+				float far = 100.0f;
+
+				glm::mat4 projection = glm::perspective(glm::radians(FOV), aspectRatio, near, far);
+
+				void UpdateProjection(float FOV, float aspectRatio, float near, float far) { projection = glm::perspective(glm::radians(FOV), aspectRatio, near, far); }
+
 			};
 		}
 	}

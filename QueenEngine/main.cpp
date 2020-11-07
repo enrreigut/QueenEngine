@@ -76,15 +76,21 @@ int main()
 
 	/* Add Camera */
 
+	Queen::Entity::Entity main_camera("Camera");
+	Queen::Entity::Component::Camera cam;
+	cam.projection = glm::perspective(glm::radians(45.0f), 3.0f / 2.0f, 0.1f, 100.0f);
+	main_camera.AddComponent<Queen::Entity::Component::Camera>(&cam);
 
+	test_scene.SetCameraProj(main_camera);
 
 	/* Default Model */
 
 	Queen::Entity::Entity main_cube("Cube");
 	Queen::Entity::Component::Model m;
-	m.LoadObj("Resources/Model/Test/bunny.obj");
+	m.LoadObj("Resources/Model/Test/Mario.obj");
 	main_cube.AddComponent<Queen::Entity::Component::Model>(&m);
 
+	test_scene.AddEntity(&main_camera);
 	test_scene.AddEntity(&main_cube);
 
 	/* Add Scenes */

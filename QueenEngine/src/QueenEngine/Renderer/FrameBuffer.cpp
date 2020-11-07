@@ -15,8 +15,11 @@ namespace Queen
 
 		}
 
-		void FrameBuffer::CreateFrameBuffer()
+		void FrameBuffer::CreateFrameBuffer(unsigned int width, unsigned int height)
 		{
+			m_Width = width;
+			m_Height = height;
+
 			glCreateFramebuffers(1, &m_FBO);
 			glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 		}
@@ -25,7 +28,7 @@ namespace Queen
 		{
 			glCreateTextures(GL_TEXTURE_2D, 1, &m_Texture);
 			glBindTexture(GL_TEXTURE_2D, m_Texture);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1080, 720, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -36,7 +39,7 @@ namespace Queen
 		{
 			glCreateTextures(GL_TEXTURE_2D, 1, &m_RBO);
 			glBindTexture(GL_TEXTURE_2D, m_RBO);
-			glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, 1080, 720);
+			glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Width, m_Height);
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_RBO, 0);
 		}

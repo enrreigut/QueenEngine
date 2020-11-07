@@ -40,9 +40,6 @@ namespace Queen
 			Scenes::Scene* m_CurrentScene;
 			//FRAME BUFFER
 			Renderer::FrameBuffer m_FBO;
-
-			float xOffset = 0.0f;
-			float increment = 0.1f;
 		};
 	}
 }
