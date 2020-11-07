@@ -7,6 +7,9 @@ namespace Queen
 		Entity::Entity(std::string name)
 		{
 			m_Name = name;
+
+			Component::Transform transform;
+			AddComponent<Component::Transform>(&transform);
 		}
 
 		Entity::~Entity()
@@ -17,8 +20,20 @@ namespace Queen
 		void Entity::LoadEntity(Renderer::VertexArray& va)
 		{
 			va.CreateVertexArray();
-			m_VBO.Create(m_Model.m_Vertices);
-			m_IBO.Create(m_Model.m_Indexes);
+			
+			if (GetComponent<Component::Model>() != nullptr)
+			{
+				m_VBO.Create(GetComponent<Component::Model>()->m_Vertices);
+				m_IBO.Create(GetComponent<Component::Model>()->m_Indexes);
+			}
+			else
+			{
+				std::vector<glm::vec3> vert = { glm::vec3(0.0f,0.0f,0.0f) };
+				std::vector<unsigned int> indexes = { 0 };
+
+				m_VBO.Create(vert);
+				m_IBO.Create(indexes);
+			}
 		}
 
 		void Entity::LoadShader(const char* vertFilePath, const char* fragFilePath)
@@ -36,13 +51,8 @@ namespace Queen
 			m_IBO.Bind();
 
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-			glDrawElements(GL_TRIANGLES, m_Model.m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, GetComponent<Component::Model>()->m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
 			glDisableVertexAttribArray(0);
-		}
-
-		void Entity::AddModel(const char* filePath)
-		{
-			m_Model.LoadObj(filePath);
 		}
 	}
 }
