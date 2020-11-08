@@ -4,10 +4,15 @@
 #include "../Vendor/ImGUI/imgui_impl_glfw.h"
 #include "../Vendor/ImGUI/imgui_impl_opengl3.h"
 
+#include "glm/glm.hpp"
+
 #include "Manager.h"
 #include "LogManager.h"
+#include "RendererManager.h"
 #include "../Window/Window.h"
 #include "../GUI/ImGuiLogger.h"
+
+#include "../Renderer/FrameBuffer.h"
 
 namespace Queen
 {
@@ -27,15 +32,21 @@ namespace Queen
 
 			void AddContext();
 			void Init(Window::Window* wind, const char* glsl_version);
-			void SetFramebuffer(unsigned int fbo) { m_FBO = fbo; }
+			
+			void CreateDockingWindows();
+
 			void OnRender();
+
+			inline glm::vec2 GetViewportSize()& { return m_ViewportSize; }
+
+			void SetFramebuffer(Renderer::FrameBuffer* fbo) { m_FBO = fbo; }
 
 		protected:
 
 			bool showDockspace = true;
 			bool showLog = true;
 			bool showConsole = true;
-			bool showImg = true;
+			bool showViewport = true;
 			bool showComponent = true;
 			ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -49,7 +60,8 @@ namespace Queen
 
 		private:
 
-			unsigned int m_FBO;
+			Renderer::FrameBuffer* m_FBO;
+			glm::vec2 m_ViewportSize = { 500.0f, 400.0f };
 		};
 	}
 }

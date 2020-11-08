@@ -27,7 +27,7 @@ namespace Queen
 			
 			void SetContext();
 			void Update();
-			void Render();
+			void Render(bool ImGuiEnabled);
 
 			inline bool isRunning() { return m_Running && !glfwWindowShouldClose(m_Window); }
 			

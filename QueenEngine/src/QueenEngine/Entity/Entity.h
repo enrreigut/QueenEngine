@@ -7,6 +7,8 @@
 #include "../Renderer/IndexBuffer.h"
 #include "Components/Component.h"
 
+#include "../Manager/InputManager.h"
+
 #include "../Renderer/Shader.h"
 
 namespace Queen
@@ -23,6 +25,7 @@ namespace Queen
 			void LoadEntity(Renderer::VertexArray& va);
 			void LoadShader(const char* vertFilePath, const char* fragFilePath);
 			void Draw(Renderer::VertexArray& val);
+			void HandleInput();
 			
 			template<typename T>
 			inline void AddComponent(Component::Component* c) 

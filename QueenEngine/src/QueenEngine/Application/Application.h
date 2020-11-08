@@ -25,6 +25,8 @@ namespace Queen
 			void LoadScene(Scenes::Scene& scene);
 			void CalculateFPS();
 
+			void SetDebugRender(bool&& val) { m_Debug = val; }
+
 		private:
 
 			Window::Window* m_Window = nullptr;
@@ -34,15 +36,13 @@ namespace Queen
 			Window::uint m_Height = 720;
 
 			Window::uint m_Frames = 0;
-			double m_LastTime = 0.0;	
+			double m_LastTime = 0.0;
 
 			//RENDERER STUFF
+			bool m_Debug = false;
 			Scenes::Scene* m_CurrentScene;
 			//FRAME BUFFER
 			Renderer::FrameBuffer m_FBO;
-
-			float xOffset = 0.0f;
-			float increment = 0.1f;
 		};
 	}
 }

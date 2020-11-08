@@ -4,6 +4,9 @@
 
 #include "Manager.h"
 #include "LogManager.h"
+#include "SceneManager.h"
+#include "ImGUIManager.h"
+#include "WindowManager.h"
 
 #include "../Renderer/Shader.h"
 
@@ -11,6 +14,8 @@
 #include "../Renderer/VertexBuffer.h"
 #include "../Renderer/IndexBuffer.h"
 #include "../Renderer/FrameBuffer.h"
+
+#include "glm/glm.hpp"
 
 namespace Queen
 {
@@ -24,12 +29,22 @@ namespace Queen
 			void Start() override;
 			void Shutdown() override;
 
+			void CreateFrameBuffer(float sizeX, float sizeY);
+			inline void BindFrameBuffer() { m_FBO.Bind(); }
+			inline void UnbindFrameBuffer() { m_FBO.Unbind(); }
+
+			void RenderScene(float sizeX, float sizeY);
+			void RenderImGUI();			
+
+			void SetRenderScene();
 			void SetUniformFloat(Renderer::Shader& shader, const char* name, float& value);
 
 		private:
 
 			RendererManager();
 			~RendererManager();
+
+			Renderer::FrameBuffer m_FBO;
 		};
 	}
 }
