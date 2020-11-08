@@ -1106,6 +1106,9 @@
     <ClInclude Include="src\QueenEngine\Entity\Components\Component.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\stbImage\stb_image.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />

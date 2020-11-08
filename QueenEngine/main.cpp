@@ -105,6 +105,8 @@ int main()
 	app.LoadScene(test_scene_two);
 	app.LoadScene(test_scene_three);
 
+	app.SetDebugRender(true);
+
 	app.Start();
 	app.Run();
 	app.Shutdown();

@@ -183,15 +183,22 @@ namespace Queen
 		bool ImGUIManager::CreateWindowWithImage(bool* p_open)
 		{
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-			ImGui::Begin("Viewport", p_open);
 
-			if (&m_FBO != nullptr)
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0.0f, 0.0f });
+			ImGui::Begin("Viewport", p_open);
+			
+			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+					
+			if (m_ViewportSize != *((glm::vec2*)& ImGui::GetContentRegionAvail()))
 			{
-				ImGui::Image((void*)m_FBO, ImGui::GetWindowSize());
+				m_FBO->Resize(m_ViewportSize);
+				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 			}
 
-			ImGui::End();
+			ImGui::Image((void*)m_FBO->GetFBO(), viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
+			ImGui::End();
+			ImGui::PopStyleVar();
 			return true;
 		}
 
@@ -204,6 +211,15 @@ namespace Queen
 			return true;
 		}
 
+		void ImGUIManager::CreateDockingWindows()
+		{
+			CreateDockspace(&showDockspace);
+			CreateConsole(&showConsole);
+			CreateLog(&showLog);
+			CreateComponent(&showComponent);
+			CreateWindowWithImage(&showViewport);
+		}
+
 		void ImGUIManager::OnRender()
 		{
 			//Start Frame
@@ -211,11 +227,7 @@ namespace Queen
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			CreateDockspace(&showDockspace);
-			CreateWindowWithImage(&showImg);
-			CreateConsole(&showConsole);
-			CreateLog(&showLog);
-			CreateComponent(&showComponent);
+			CreateDockingWindows();
 
 			//Render
 			ImGui::Render();

@@ -49,8 +49,8 @@ namespace Queen
 			//Set to render the Scene with the Defult Flag
 			Queen::Managers::RendererManager::Get().SetRenderScene();
 
-			//Create Frame Buffer
-			//Queen::Managers::RendererManager::Get().CreateFrameBuffer();
+			//Create Frame Buffer			
+			Queen::Managers::RendererManager::Get().CreateFrameBuffer(1080.0f, 720.0f);
 
 			m_LastTime = glfwGetTime();
 		}
@@ -106,23 +106,31 @@ namespace Queen
 		{
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
-				//Start Rendering in FrameBuffer
-				
-				//Queen::Managers::RendererManager::Get().BindFrameBuffer();
+				if (!m_Debug)
+				{
+					Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(m_Debug);
 
-				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render();
-				
-				//Render Scene
-				Queen::Managers::RendererManager::Get().RenderScene(Queen::Managers::WindowManager::Get().GetWWindow(m_Title));
+					Queen::Managers::RendererManager::Get().RenderScene((float)Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->GetWidth(), (float)Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->GetHeight());
+				}
+				else
+				{
+					//Start Rendering in FrameBuffer				
+					Queen::Managers::RendererManager::Get().BindFrameBuffer();
 
-				//Stop Rendering in Frame Buffer
+					Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(m_Debug);
 				
-				//Queen::Managers::RendererManager::Get().UnbindFrameBuffer();
+					//Render Scene
+					Queen::Managers::RendererManager::Get().RenderScene((float)Queen::Managers::ImGUIManager::Get().GetViewportSize().x, (float)Queen::Managers::ImGUIManager::Get().GetViewportSize().y);
+
+					//Stop Rendering in Frame Buffer				
+					Queen::Managers::RendererManager::Get().UnbindFrameBuffer();
 				
-				//Render UI
+					//Render UI				
+					Queen::Managers::RendererManager::Get().RenderImGUI();
+				}
 				
-				//Queen::Managers::RendererManager::Get().RenderImGUI();
 				this->OnEvent();
+				
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
 				
 				CalculateFPS();

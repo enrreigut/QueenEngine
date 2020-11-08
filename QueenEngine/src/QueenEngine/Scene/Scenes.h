@@ -5,7 +5,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "../Window/Window.h"
 #include "../Entity/Entity.h"
 #include "../Renderer/VertexArray.h"
 
@@ -21,7 +20,7 @@ namespace Queen
 			~Scene();
 
 			void Load();
-			void RenderScene(Window::Window* w);
+			void RenderScene(float sizeX, float sizeY);
 			void AddEntity(Entity::Entity* e);
 			void DeleteEntity(Entity::Entity* e);
 

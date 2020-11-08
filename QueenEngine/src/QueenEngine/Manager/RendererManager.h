@@ -15,6 +15,8 @@
 #include "../Renderer/IndexBuffer.h"
 #include "../Renderer/FrameBuffer.h"
 
+#include "glm/glm.hpp"
+
 namespace Queen
 {
 	namespace Managers
@@ -27,10 +29,11 @@ namespace Queen
 			void Start() override;
 			void Shutdown() override;
 
-			void CreateFrameBuffer();
+			void CreateFrameBuffer(float sizeX, float sizeY);
 			inline void BindFrameBuffer() { m_FBO.Bind(); }
 			inline void UnbindFrameBuffer() { m_FBO.Unbind(); }
-			void RenderScene(Window::Window* window);
+
+			void RenderScene(float sizeX, float sizeY);
 			void RenderImGUI();			
 
 			void SetRenderScene();
@@ -42,7 +45,6 @@ namespace Queen
 			~RendererManager();
 
 			Renderer::FrameBuffer m_FBO;
-
 		};
 	}
 }

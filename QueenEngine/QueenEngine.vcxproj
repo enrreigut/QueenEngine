@@ -458,6 +458,7 @@
     <ClInclude Include="src\QueenEngine\Utils\StringUtils.h" />
     <ClInclude Include="src\QueenEngine\Utils\Timer.h" />
     <ClInclude Include="src\QueenEngine\Utils\Tuple.h" />
+    <ClInclude Include="src\QueenEngine\Vendor\stbImage\stb_image.h" />
     <ClInclude Include="src\QueenEngine\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>

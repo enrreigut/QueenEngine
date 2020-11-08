@@ -55,7 +55,7 @@ namespace Queen
 			}
 		}
 
-		void RendererManager::CreateFrameBuffer()
+		void RendererManager::CreateFrameBuffer(float sizeX, float sizeY)
 		{
 			if (!m_Running)
 			{
@@ -63,14 +63,14 @@ namespace Queen
 			}
 			else
 			{
-				m_FBO.CreateFrameBuffer(1080, 720);
+				m_FBO.CreateFrameBuffer(sizeX, sizeY);
 				m_FBO.CreateTexture();
 				m_FBO.CreateRenderBuffer();
 				m_FBO.Check();
 			}
 		}
 
-		void RendererManager::RenderScene(Window::Window* window)
+		void RendererManager::RenderScene(float sizeX, float sizeY)
 		{
 			if (!m_Running)
 			{
@@ -78,7 +78,7 @@ namespace Queen
 			}
 			else
 			{
-				Queen::Managers::SceneManager::Get().GetDeafultScene()->RenderScene(window);
+				Queen::Managers::SceneManager::Get().GetDeafultScene()->RenderScene(sizeX, sizeY);
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace Queen
 			}
 			else
 			{
-				Queen::Managers::ImGUIManager::Get().SetFramebuffer(m_FBO.GetFBO());
+				Queen::Managers::ImGUIManager::Get().SetFramebuffer(&m_FBO);
 				Queen::Managers::ImGUIManager::Get().OnRender();
 			}
 		}

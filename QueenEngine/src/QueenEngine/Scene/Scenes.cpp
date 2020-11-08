@@ -24,14 +24,16 @@ namespace Queen
 			}
 		}
 
-		void Scene::RenderScene(Window::Window* w)
+		void Scene::RenderScene(float sizeX, float sizeY)
 		{
+			/*TODO: This needs to be moved*/
+
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
 
 			Entity::Component::Camera* c_properties = m_Camera->GetComponent<Entity::Component::Camera>();
-			c_properties->UpdateProjection(c_properties->FOV, (float) w->GetWidth() / (float)w->GetHeight(), c_properties->near, c_properties->far);
+			c_properties->UpdateProjection(c_properties->FOV, sizeX / sizeY, c_properties->near, c_properties->far);
 					
 			for (auto& elem : m_Entities)
 			{

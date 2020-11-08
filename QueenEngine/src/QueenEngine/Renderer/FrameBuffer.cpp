@@ -12,7 +12,7 @@ namespace Queen
 
 		FrameBuffer::~FrameBuffer()
 		{
-
+			Delete();
 		}
 
 		void FrameBuffer::CreateFrameBuffer(unsigned int width, unsigned int height)
@@ -20,8 +20,13 @@ namespace Queen
 			m_Width = width;
 			m_Height = height;
 
+			if (m_FBO)
+			{
+				Delete();
+			}
+
 			glCreateFramebuffers(1, &m_FBO);
-			glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+			Bind();
 		}
 
 		void FrameBuffer::CreateTexture()
@@ -44,14 +49,26 @@ namespace Queen
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_RBO, 0);
 		}
 
+		void FrameBuffer::Resize(glm::vec2& newSize)
+		{
+			m_Width = newSize.x;
+			m_Height = newSize.y;
+
+			CreateFrameBuffer(m_Width, m_Height);
+			CreateTexture();
+			CreateRenderBuffer();
+			Check();
+		}
+
 		void FrameBuffer::Bind()
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+			glViewport(0, 0, m_Width, m_Height);
 		}
 
 		void FrameBuffer::Unbind()
 		{
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);			
 		}
 
 		bool FrameBuffer::Check()
@@ -63,7 +80,7 @@ namespace Queen
 			}
 			else
 			{
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				Unbind();
 				return true;
 			}
 		}
@@ -71,6 +88,8 @@ namespace Queen
 		void FrameBuffer::Delete()
 		{
 			glDeleteFramebuffers(1, &m_FBO);
+			glDeleteTextures(1, &m_Texture);
+			glDeleteTextures(1, &m_RBO);
 		}
 
 	}
