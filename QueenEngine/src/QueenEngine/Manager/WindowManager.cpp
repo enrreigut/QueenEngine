@@ -118,7 +118,6 @@ namespace Queen
 						return false;
 					}
 
-
 					if (!m_GlewInitialised)
 					{
 						if (!InitGLEW())
@@ -130,6 +129,8 @@ namespace Queen
 					//Set To false if no debug is wanted!
 					NotifyEvents(w->GetWindowHandler(), false);
 					m_Windows[title] = w;
+					
+					glfwSwapInterval(1);
 
 					QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
 				}
@@ -182,6 +183,14 @@ namespace Queen
 			}
 
 			return true;
+		}
+
+		void WindowManager::SetTargetWindow(Window::Window* window)
+		{
+			if (window != nullptr)
+			{
+				m_TargetWindow = window;
+			}
 		}
 
 		void WindowManager::SetWindowWidth(Window::Window& wnd, Window::uint& width) 

@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "ImGUIManager.h"
 #include "WindowManager.h"
+#include "EntityManager.h"
 
 #include "../Renderer/Shader.h"
 
@@ -33,7 +34,7 @@ namespace Queen
 			inline void BindFrameBuffer() { m_FBO.Bind(); }
 			inline void UnbindFrameBuffer() { m_FBO.Unbind(); }
 
-			void RenderScene(float sizeX, float sizeY);
+			void RenderScene(bool debugRender);
 			void RenderImGUI();			
 
 			void SetRenderScene();
@@ -45,6 +46,7 @@ namespace Queen
 			~RendererManager();
 
 			Renderer::FrameBuffer m_FBO;
+
 		};
 	}
 }

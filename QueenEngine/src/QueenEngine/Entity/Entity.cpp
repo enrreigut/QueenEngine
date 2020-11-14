@@ -4,19 +4,22 @@ namespace Queen
 {
 	namespace Entity
 	{
-		Entity::Entity(std::string name)
+		Entity::Entity(const char* name)
 		{
 			m_Name = name;
 
-			Component::Transform transform;
-			Component::Rotation rotate;
-			Component::Scale scale;
-			AddComponent<Component::Transform>(&transform);
+			Component::Transform* transform = new Component::Transform;
+			Component::Rotation* rotate = new Component::Rotation;
+			Component::Scale* scale = new Component::Scale;
+
+			AddComponent<Component::Transform>(transform);
+			AddComponent<Component::Rotation>(rotate);
+			AddComponent<Component::Scale>(scale);
 		}
 
 		Entity::~Entity()
 		{
-
+			RemoveAllComponent();
 		}
 
 		void Entity::LoadEntity(Renderer::VertexArray& va)
@@ -45,6 +48,7 @@ namespace Queen
 
 		void Entity::Draw(Renderer::VertexArray& va)
 		{
+			//Shader and Buffer Operations
 			glUseProgram(m_Shader.GetProgramID());
 
 			glEnableVertexAttribArray(0);
@@ -62,10 +66,9 @@ namespace Queen
 			glDisableVertexAttribArray(0);
 		}
 
-		void Entity::HandleInput()
+		void Entity::SetTransform(glm::vec3 data)
 		{
-			if (Managers::InputManager::Get().IsKeyDown(GLFW_KEY_D))
-				GetComponent<Component::Transform>()->m_Transform.x += 10.0f;
+			GetComponent<Component::Transform>()->SetTransform(data);
 		}
 	}
 }

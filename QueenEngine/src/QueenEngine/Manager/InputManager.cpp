@@ -86,6 +86,11 @@ namespace Queen
 			return checkStatusKey(m_KeyInput, key, 2);
 		}
 
+		bool InputManager::IsKeyPressed(GLFWwindow* win, int&& key)
+		{
+			return glfwGetKey(win, key) == GLFW_PRESS;
+		}
+
 		// Mouse
 		bool InputManager::IsMouseButtonDown(int&& mouseBut)
 		{
@@ -100,6 +105,22 @@ namespace Queen
 		bool InputManager::IsMouseButtonPressed(int&& mouseBut)
 		{
 			return checkStatusMouse(m_MouseInput, mouseBut, 2);
+		}
+
+		bool InputManager::IsScrollUp()
+		{
+			if (m_MouseInput->GetYOffset() > 0.0f)
+				return true;
+			else
+				return false;
+		}
+
+		bool InputManager::IsScrollDown()
+		{
+			if (m_MouseInput->GetYOffset() < 0.0f)
+				return true;
+			else
+				return false;
 		}
 
 		const char* TranslateAction(int& action)

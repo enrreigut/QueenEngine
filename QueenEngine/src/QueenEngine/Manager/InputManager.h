@@ -38,10 +38,16 @@ namespace Queen
 			bool IsMouseButtonDown(int&& mouseBut);
 			bool IsMouseButtonUp(int&& mouseBut);
 			bool IsMouseButtonPressed(int&& mouseBut);
+			bool IsKeyPressed(GLFWwindow* win, int&& key);
+		
+			bool IsScrollUp();
+			bool IsScrollDown();
 
-			inline double GetMousePosX()& { m_MouseInput->GetXPos(); }
-			inline double GetMousePosY()& { m_MouseInput->GetYPos(); }
+			inline double GetMousePosX()& { return m_MouseInput->GetXPos(); }
+			inline double GetMousePosY()& { return m_MouseInput->GetYPos(); }
 
+			inline double GetMouseScrollY()& {return  m_MouseInput->GetYOffset(); }
+			void ResetScrollY() { m_MouseInput->SetYOffset(0.0); }
 			//Callbacks
 
 			static void Window_Keyscan_Callback(GLFWwindow* window, int key, int scancode, int action, int mods);

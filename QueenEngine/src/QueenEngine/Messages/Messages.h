@@ -96,3 +96,11 @@ msg g_SCN_MAN_INFO_DESTROYED = "Scene Manager has been destroyed.";
 
 msg g_SCN_MAN_ERROR_ALREADY_STARTED = "Scene Manager has already been started!";
 msg g_SCN_MAN_ERROR_NOT_STARTED = "Scene Manager has not been started!";
+
+//Entity Manager
+msg g_ENT_MAN_INFO_START = "Entity Manager has started... Hello!";
+msg g_ENT_MAN_INFO_SHUTDOWN = "Entity Manager is shutted down... Bye!";
+msg g_ENT_MAN_INFO_DESTROYED = "Entity Manager has been destroyed.";
+
+msg g_ENT_MAN_ERROR_ALREADY_STARTED = "Entity Manager has already been started!";
+msg g_ENT_MAN_ERROR_NOT_STARTED = "Entity Manager has not been started!";
