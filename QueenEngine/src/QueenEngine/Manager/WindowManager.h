@@ -40,7 +40,11 @@ namespace Queen
 			/*Destroy all Windows in case we need more than one*/
 			bool DestroyAllWWindows();
 
+			/*Getters*/
+			inline Window::Window* GetTargetWindow()& { return m_TargetWindow; }
+
 			/*Setters*/
+			void SetTargetWindow(Window::Window* window);
 			void SetWindowWidth(Window::Window& wnd, Window::uint& width);
 			void SetWindowHeight(Window::Window& wnd, Window::uint& width);
 			void SetWindowWidth(const char* wndName, Window::uint& width);
@@ -54,6 +58,7 @@ namespace Queen
 			bool m_GlewInitialised = false;
 			
 			std::unordered_map<const char*, Window::Window*> m_Windows;		
+			Window::Window* m_TargetWindow = nullptr;
 		};
 	}
 }

@@ -96,9 +96,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\QueenEngine\Application\Application.cpp" />
+    <ClCompile Include="src\QueenEngine\Entity\BaseEnity.cpp" />
     <ClCompile Include="src\QueenEngine\Entity\Components\Component.cpp" />
     <ClCompile Include="src\QueenEngine\Entity\Entity.cpp" />
     <ClCompile Include="src\QueenEngine\Entity\Components\Model.cpp" />
+    <ClCompile Include="src\QueenEngine\Manager\EntityManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\RendererManager.cpp" />
     <ClCompile Include="src\QueenEngine\Manager\SceneManager.cpp" />
     <ClCompile Include="src\QueenEngine\Renderer\FrameBuffer.cpp" />
@@ -134,11 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\QueenEngine\Application\Application.h" />
+    <ClInclude Include="src\QueenEngine\Entity\BaseEnity.h" />
     <ClInclude Include="src\QueenEngine\Entity\Components\Component.h" />
     <ClInclude Include="src\QueenEngine\Entity\Entity.h" />
     <ClInclude Include="src\QueenEngine\Entity\Components\Model.h" />
     <ClInclude Include="src\QueenEngine\Event\ApplicationEvent.h" />
     <ClInclude Include="src\QueenEngine\Event\Event.h" />
+    <ClInclude Include="src\QueenEngine\Manager\EntityManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\RendererManager.h" />
     <ClInclude Include="src\QueenEngine\Manager\SceneManager.h" />
     <ClInclude Include="src\QueenEngine\Renderer\FrameBuffer.h" />

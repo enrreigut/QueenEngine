@@ -16,8 +16,8 @@ namespace Queen
 			inline int GetMouseStatus()& { return m_MouseStatus; }
 			inline double GetXPos()& { return m_xPos; }
 			inline double GetYPos()& { return m_yPos; }
-			inline double GetXPos(double& xOffset) { return m_xOffset; }
-			inline double GetYPos(double& yOffset) { return m_yOffset; }
+			inline double GetXOffset() { return m_xOffset; }
+			inline double GetYOffset() { return m_yOffset; }
 			inline bool IsMouseMoving()& { return m_MouseMove; }
 
 			void SetMouseButton(int& mouseButton) { m_MouseButton = mouseButton; }
@@ -25,7 +25,9 @@ namespace Queen
 			void SetXPos(double& xpos) { m_xPos = xpos; }
 			void SetYPos(double& ypos) { m_yPos = ypos; }
 			void SetXOffset(double& xOffset) { m_xOffset = xOffset; }
+			void SetXOffset(double&& xOffset) { m_xOffset = xOffset; }
 			void SetYOffset(double& yOffset) { m_yOffset = yOffset; }
+			void SetYOffset(double&& yOffset) { m_yOffset = yOffset; }
 			void SetIsMoving(bool& mov) { m_MouseMove = mov; }
 
 		private:

@@ -14,10 +14,12 @@ namespace Queen
 			Application(const char* title, Window::uint&& width, Window::uint&& height);
 			~Application();
 
-
 			void InitEngine();
 			void Shutdown();
 
+			void CameraControls();
+
+			void InitDefaultScene();
 			void Start();
 			void OnEvent();
 			void Run();
@@ -38,11 +40,16 @@ namespace Queen
 			Window::uint m_Frames = 0;
 			double m_LastTime = 0.0;
 
+			float m_CurrentTime = 0.0f;
+			float m_DeltaTime = 0.0f;
+
 			//RENDERER STUFF
 			bool m_Debug = false;
 			Scenes::Scene* m_CurrentScene;
 			//FRAME BUFFER
 			Renderer::FrameBuffer m_FBO;
+
+			bool m_FirstMouse = true;
 		};
 	}
 }

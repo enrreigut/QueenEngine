@@ -8,9 +8,11 @@
 
 #include "Manager.h"
 #include "LogManager.h"
-#include "RendererManager.h"
-#include "../Window/Window.h"
 #include "../GUI/ImGuiLogger.h"
+#include "../Window/Window.h"
+
+#include "RendererManager.h"
+#include "SceneManager.h"
 
 #include "../Renderer/FrameBuffer.h"
 
@@ -47,14 +49,14 @@ namespace Queen
 			bool showLog = true;
 			bool showConsole = true;
 			bool showViewport = true;
-			bool showComponent = true;
+			bool showSceneEntity = true;
 			ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 			bool CreateDockspace(bool* p_open);
 			bool CreateLog(bool* p_open);
 			bool CreateConsole(bool* p_open);
 			bool CreateWindowWithImage(bool* p_open);
-			bool CreateComponent(bool* p_open);
+			bool CreateSceneEntities(bool* p_open);
 
 			ImGuiIO m_io;
 

@@ -5,6 +5,12 @@ namespace Queen
 	namespace Managers
 	{
 
+		void DrawModelComponentInfo(Entity::Component::Component* c);
+		void DrawTransformComponentInfo(Entity::Component::Component* c);
+		void DrawRotationComponentInfo(Entity::Component::Component* c);
+		void DrawScaleComponentInfo(Entity::Component::Component* c);
+		void DrawCameraComponentInfo(Entity::Component::Component* c);
+
 		ImGUIManager::ImGUIManager()
 		{
 
@@ -77,8 +83,6 @@ namespace Queen
 			static bool opt_padding = false;
 			static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
-			// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
-			// because it would be confusing to have two docking targets within each others.
 			ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 			if (opt_fullscreen)
 			{
@@ -96,16 +100,9 @@ namespace Queen
 				dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
 			}
 
-			// When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
-			// and handle the pass-thru hole, so we ask Begin() to not render a background.
 			if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
 				window_flags |= ImGuiWindowFlags_NoBackground;
 
-			// Important: note that we proceed even if Begin() returns false (aka window is collapsed).
-			// This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
-			// all active windows docked into it will lose their parent and become undocked.
-			// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
-			// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
 			if (!opt_padding)
 				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 			ImGui::Begin("DockSpace Demo", p_open, window_flags);
@@ -115,7 +112,6 @@ namespace Queen
 			if (opt_fullscreen)
 				ImGui::PopStyleVar(2);
 
-			// DockSpace
 			if (m_io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 			{
 				ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
@@ -134,8 +130,6 @@ namespace Queen
 			{
 				if (ImGui::BeginMenu("Options"))
 				{
-					// Disabling fullscreen would allow the window to be moved to the front of other windows,
-					// which we can't undo at the moment without finer window depth/z control.
 					ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
 					ImGui::MenuItem("Padding", NULL, &opt_padding);
 					ImGui::Separator();
@@ -151,7 +145,6 @@ namespace Queen
 						*p_open = false;
 					ImGui::EndMenu();
 				}
-
 				ImGui::EndMenuBar();
 			}
 
@@ -183,16 +176,28 @@ namespace Queen
 		bool ImGUIManager::CreateWindowWithImage(bool* p_open)
 		{
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0.0f, 0.0f });
 			ImGui::Begin("Viewport", p_open);
 			
+			ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+			ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+
+			SceneManager::Get().SetRenderSceneLeft(vMin.x + ImGui::GetWindowPos().x);
+			SceneManager::Get().SetRenderSceneTop(vMin.y + ImGui::GetWindowPos().y);
+			SceneManager::Get().SetRenderSceneRight(vMax.x + ImGui::GetWindowPos().x);
+			SceneManager::Get().SetRenderSceneBottom(vMax.y + ImGui::GetWindowPos().y);
+
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-					
+			SceneManager::Get().SetRenderSceneWidth(viewportPanelSize.x);
+			SceneManager::Get().SetRenderSceneHeight(viewportPanelSize.y);
+
 			if (m_ViewportSize != *((glm::vec2*)& ImGui::GetContentRegionAvail()))
 			{
 				m_FBO->Resize(m_ViewportSize);
 				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+
+				SceneManager::Get().SetRenderSceneWidth(viewportPanelSize.x);
+				SceneManager::Get().SetRenderSceneHeight(viewportPanelSize.y);
 			}
 
 			ImGui::Image((void*)m_FBO->GetFBO(), viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -202,10 +207,77 @@ namespace Queen
 			return true;
 		}
 
-		bool ImGUIManager::CreateComponent(bool* p_open)
+		bool ImGUIManager::CreateSceneEntities(bool* p_open)
 		{
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-			ImGui::Begin("Component", p_open);
+			ImGui::Begin("Scene", p_open);
+
+			auto targetScene = SceneManager::Get().GetRenderScene();
+
+			ImGui::Text(targetScene->GetSceneConfiguration()->m_SceneName);
+			
+			ImGui::Separator();
+
+			if (ImGui::CollapsingHeader("Camera Entities"))
+			{
+				for (auto& cam : targetScene->GetSceneConfiguration()->m_SceneCameras)
+				{
+					if (cam.second != targetScene->GetSceneConfiguration()->m_TargetCamera)
+					{
+						if (ImGui::TreeNode(cam.second->GetName()))
+						{
+							if (cam.second->GetComponent<Entity::Component::Transform>())
+							{
+								DrawTransformComponentInfo(cam.second->GetComponent<Entity::Component::Transform>());
+							}
+
+							if (cam.second->GetComponent<Entity::Component::Rotation>())
+							{
+								DrawRotationComponentInfo(cam.second->GetComponent<Entity::Component::Rotation>());
+							}
+
+							if (cam.second->GetComponent<Entity::Component::Scale>())
+							{
+								DrawScaleComponentInfo(cam.second->GetComponent<Entity::Component::Scale>());
+							}
+
+							if (cam.second->GetComponent<Entity::Component::Camera>())
+							{
+								DrawCameraComponentInfo(cam.second->GetComponent<Entity::Component::Camera>());
+							}
+
+							ImGui::TreePop();
+						}
+					}
+				}
+			}				
+
+			if (ImGui::CollapsingHeader("Entities"))
+			{
+				for (auto ent : targetScene->GetSceneConfiguration()->m_SceneEntities)
+				{
+					if (ImGui::TreeNode(ent.second->GetName()))
+					{
+						if (ent.second->GetComponent<Entity::Component::Transform>())
+						{
+							DrawTransformComponentInfo(ent.second->GetComponent<Entity::Component::Transform>());
+						}
+
+						if (ent.second->GetComponent<Entity::Component::Rotation>())
+						{
+							DrawRotationComponentInfo(ent.second->GetComponent<Entity::Component::Rotation>());
+						}
+
+						if (ent.second->GetComponent<Entity::Component::Scale>())
+						{
+							DrawScaleComponentInfo(ent.second->GetComponent<Entity::Component::Scale>());
+						}
+
+						ImGui::TreePop();
+					}
+				}
+			}
+			
 			ImGui::End();
 
 			return true;
@@ -216,7 +288,7 @@ namespace Queen
 			CreateDockspace(&showDockspace);
 			CreateConsole(&showConsole);
 			CreateLog(&showLog);
-			CreateComponent(&showComponent);
+			CreateSceneEntities(&showSceneEntity);
 			CreateWindowWithImage(&showViewport);
 		}
 
@@ -239,6 +311,109 @@ namespace Queen
 				ImGui::UpdatePlatformWindows();
 				ImGui::RenderPlatformWindowsDefault();
 				glfwMakeContextCurrent(backup_current_context);
+			}
+		}
+
+
+		void DrawModelComponentInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Model* comp = (Entity::Component::Model*)c;
+
+			if (ImGui::TreeNode("Model"))
+			{
+				ImGui::Text("Name: %s", comp->m_Name);
+
+				ImGui::TreePop();
+			}
+		}
+
+		void DrawTransformComponentInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Transform* comp = (Entity::Component::Transform*)c;
+
+			if (ImGui::TreeNode("Transform"))
+			{
+				ImGui::PushItemWidth(-1);
+
+				ImGui::Text("x");
+				ImGui::InputFloat("x", &comp->m_Transform.x);
+
+				ImGui::Text("y");
+				ImGui::InputFloat("y", &comp->m_Transform.y);
+
+				ImGui::Text("z");
+				ImGui::InputFloat("z", &comp->m_Transform.z);
+
+				ImGui::PopItemWidth();
+				ImGui::TreePop();
+			}			
+		}
+
+		void DrawRotationComponentInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Rotation* comp = (Entity::Component::Rotation*)c;
+
+			if (ImGui::TreeNode("Rotation"))
+			{
+				ImGui::PushItemWidth(-1);
+
+				ImGui::Text("x");
+				ImGui::InputFloat("x", &comp->m_Rotation.x);
+
+				ImGui::Text("y");
+				ImGui::InputFloat("y", &comp->m_Rotation.y);
+
+				ImGui::Text("z");
+				ImGui::InputFloat("z", &comp->m_Rotation.z);
+
+				ImGui::PopItemWidth();
+				ImGui::TreePop();
+			}
+		}
+
+		void DrawScaleComponentInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Scale* comp = (Entity::Component::Scale*)c;
+
+			if (ImGui::TreeNode("Scale"))
+			{
+				ImGui::PushItemWidth(-1);
+
+				ImGui::Text("x");
+				ImGui::InputFloat("x", &comp->m_Scale.x);
+
+				ImGui::Text("y");
+				ImGui::InputFloat("y", &comp->m_Scale.y);
+
+				ImGui::Text("z");
+				ImGui::InputFloat("z", &comp->m_Scale.z);
+
+				ImGui::PopItemWidth();
+				ImGui::TreePop();
+			}
+		}
+
+		void DrawCameraComponentInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Camera* comp = (Entity::Component::Camera*)c;
+
+			if (ImGui::TreeNode("Configuration"))
+			{
+				ImGui::PushItemWidth(-1);
+
+				ImGui::Text("FOV");
+				ImGui::SliderFloat("FOV", &comp->m_FOV, 1.0f, 90.0f);
+
+				ImGui::Text("Near");
+				ImGui::InputFloat("Near", &comp->m_Near);
+
+				ImGui::Text("Far");
+				ImGui::InputFloat("Far", &comp->m_Far);
+
+				ImGui::Checkbox("MainCamera", &comp->m_IsMainCamera);
+
+				ImGui::PopItemWidth();
+				ImGui::TreePop();
 			}
 		}
 	}

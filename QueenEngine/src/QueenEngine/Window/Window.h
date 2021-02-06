@@ -32,9 +32,10 @@ namespace Queen
 			inline bool isRunning() { return m_Running && !glfwWindowShouldClose(m_Window); }
 			
 			//Getters
-			inline GLFWwindow* GetWindowHandler() { return m_Window; }
-			inline uint& GetWidth() { return m_Width; }
-			inline uint& GetHeight() { return m_Height; }
+			inline GLFWwindow* GetWindowHandler()& { return m_Window; }
+			inline uint& GetWidth()& { return m_Width; }
+			inline uint& GetHeight()& { return m_Height; }
+			inline const char* GetWindowName()& { return m_Title; }
 
 			//Setters
 			inline void SetWidth(uint& width) { m_Width = width; }

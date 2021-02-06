@@ -4,9 +4,11 @@ namespace Queen
 {
 	namespace Scenes
 	{
-		Scene::Scene(std::string name)
+		Scene::Scene(const char* name)
 		{
-			m_SceneName = name;
+			m_SceneConfiguration = new SceneComponentElement;
+			m_SceneConfiguration->m_SceneName = name;
+
 			m_VAO = Renderer::VertexArray();
 		}
 
@@ -17,20 +19,23 @@ namespace Queen
 
 		void Scene::Load()
 		{
-			for (auto& elem : m_Entities)
+			for (auto& elem : m_SceneConfiguration->m_SceneEntities)
 			{
 				elem.second->LoadEntity(m_VAO);
 				elem.second->LoadShader("Resources/Shaders/Test/VertexShader.vert", "Resources/Shaders/Test/FragmentShader.frag");
 			}
 		}
 
+		/*
+		
 		void Scene::RenderScene(float sizeX, float sizeY)
 		{
-			/*TODO: This needs to be moved*/
+			TODO: This needs to be moved
 
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-			glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
+			
+			glm::mat4 view = glm::translate(glm::mat4(1.0f), m_Camera->GetComponent<Entity::Component::Transform>()->m_Transform);
 
 			Entity::Component::Camera* c_properties = m_Camera->GetComponent<Entity::Component::Camera>();
 			c_properties->UpdateProjection(c_properties->FOV, sizeX / sizeY, c_properties->near, c_properties->far);
@@ -46,20 +51,7 @@ namespace Queen
 				}
 			}
 		}
-
-		void Scene::AddEntity(Entity::Entity* e)
-		{
-			if (m_Entities.find(e->GetName()) == m_Entities.end())
-			{
-				m_Entities[e->GetName()] = e;
-			}
-		}
-
-		void Scene::DeleteEntity(Entity::Entity* e)
-		{
-			if (m_Entities.find(e->GetName()) != m_Entities.end())
-				m_Entities.erase(e->GetName());
-		}
+		
+		*/
 	}
-
 }

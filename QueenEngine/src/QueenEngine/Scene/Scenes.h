@@ -12,33 +12,38 @@ namespace Queen
 {
 	namespace Scenes
 	{
+		struct SceneComponentElement
+		{
+			std::unordered_map<const char*, Entity::Entity*> m_SceneEntities;
+			std::unordered_map<const char*, Entity::Entity*> m_SceneCameras;
+			Entity::Entity* m_TargetCamera;
+			Entity::Entity* m_MainCamera;
+			const char* m_SceneName = "Default";
+			float m_Width = 0.0f;
+			float m_Height = 0.0f;
+
+			float m_Left = 0.0f;
+			float m_Right = 0.0f;
+			float m_Top = 0.0f;
+			float m_Bottom = 0.0f;
+		};
+
 		class Scene
 		{
 		public:
 
-			Scene(std::string name);
+			Scene(const char* name);
 			~Scene();
 
-			void Load();
-			void RenderScene(float sizeX, float sizeY);
-			void AddEntity(Entity::Entity* e);
-			void DeleteEntity(Entity::Entity* e);
-
-			inline std::string& GetSceneName() { return m_SceneName; }
+			inline SceneComponentElement* GetSceneConfiguration()& { return m_SceneConfiguration; }
 			inline Renderer::VertexArray& GetVAO(){ return m_VAO; }
 
-			inline bool IsDefault()& { return m_Default; }
-			inline void SetDefault(bool b) { m_Default = b; }
-			inline void SetCameraProj(Entity::Entity& camera) { m_Camera = &camera; }
+			void Load();
 
 		private:
 
-			bool m_Default = false;
-			std::string m_SceneName;
+			SceneComponentElement* m_SceneConfiguration;
 			Renderer::VertexArray m_VAO;
-			
-			std::unordered_map<std::string, Entity::Entity*> m_Entities;
-			Entity::Entity* m_Camera;
 		};
 	}
 }

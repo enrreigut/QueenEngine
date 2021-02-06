@@ -68,44 +68,14 @@ int main()
 	*/
 	//END TESTING EVENTS
 
-	//app.CreateQuad("quad01");
-	//intantiate a Quad with a transform component
-
-	Queen::Scenes::Scene test_scene("Test Scene");
-	test_scene.SetDefault(true);
-
-	/* Add Camera */
-
-	Queen::Entity::Entity main_camera("Camera");
-	Queen::Entity::Component::Camera cam;
-	cam.projection = glm::perspective(glm::radians(45.0f), 3.0f / 2.0f, 0.1f, 100.0f);
-	main_camera.AddComponent<Queen::Entity::Component::Camera>(&cam);
-
-	test_scene.SetCameraProj(main_camera);
-
-	/* Default Model */
-
-	Queen::Entity::Entity main_cube("Cube");
-	Queen::Entity::Component::Model m;
-	m.LoadObj("Resources/Model/Test/Mario.obj");
-	main_cube.AddComponent<Queen::Entity::Component::Model>(&m);
-
-	test_scene.AddEntity(&main_camera);
-	test_scene.AddEntity(&main_cube);
-
-	/* Add Scenes */
-
-	Queen::Scenes::Scene test_scene_two("Test Scene 2");
-	Queen::Scenes::Scene test_scene_three("Test Scene 3");
-
 	Queen::Application::Application app("QueenEngine", 1080, 720);
+	app.SetDebugRender(true);
 	app.InitEngine();
 
-	app.LoadScene(test_scene);
-	app.LoadScene(test_scene_two);
-	app.LoadScene(test_scene_three);
-
-	app.SetDebugRender(true);
+	Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Cube");
+	Queen::Entity::Component::Model m;
+	m.LoadObj("Resources/Model/Test/cube.obj");
+	e->AddComponent<Queen::Entity::Component::Model>(&m);
 
 	app.Start();
 	app.Run();

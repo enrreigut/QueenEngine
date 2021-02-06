@@ -51,7 +51,7 @@ namespace Queen
 			}
 			else
 			{
-				Queen::Managers::SceneManager::Get().GetDeafultScene()->Load();
+				Queen::Managers::SceneManager::Get().GetRenderScene()->Load();
 			}
 		}
 
@@ -70,7 +70,7 @@ namespace Queen
 			}
 		}
 
-		void RendererManager::RenderScene(float sizeX, float sizeY)
+		void RendererManager::RenderScene(bool debugRender)
 		{
 			if (!m_Running)
 			{
@@ -78,7 +78,18 @@ namespace Queen
 			}
 			else
 			{
-				Queen::Managers::SceneManager::Get().GetDeafultScene()->RenderScene(sizeX, sizeY);
+				Scenes::Scene* renderScene = Queen::Managers::SceneManager::Get().GetRenderScene();
+				
+				if (renderScene != nullptr)
+				{
+					
+					Entity::Entity* camera = renderScene->GetSceneConfiguration()->m_TargetCamera;
+
+					EntityManager::Get().CalculateCamera(debugRender);
+
+					for (auto& entity : renderScene->GetSceneConfiguration()->m_SceneEntities)
+						Managers::EntityManager::Get().DrawEntity(entity.second);
+				}
 			}
 		}
 
