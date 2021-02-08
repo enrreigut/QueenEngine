@@ -126,10 +126,25 @@
     <ClCompile Include="src\QueenEngine\Entity\Components\Component.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\QueenEngine\Entity\BaseEnity.cpp">
+    <ClCompile Include="src\QueenEngine\Manager\EntityManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\QueenEngine\Manager\EntityManager.cpp">
+    <ClCompile Include="src\QueenEngine\Vendor\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGuizmo\ImGradient.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGuizmo\ImGuizmo.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\ImGuizmo\ImSequencer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Vendor\stbImage\stb_image.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QueenEngine\Renderer\Texture.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -198,9 +213,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\QueenEngine\Manager\ImGUIManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imconfig.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imgui.h">
@@ -1115,17 +1127,39 @@
     <ClInclude Include="src\QueenEngine\Vendor\stbImage\stb_image.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\QueenEngine\Entity\BaseEnity.h">
+    <ClInclude Include="src\QueenEngine\Manager\EntityManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\QueenEngine\Manager\EntityManager.h">
+    <ClInclude Include="src\QueenEngine\Vendor\ImGUI\imconfig.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGuizmo\ImApp.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGuizmo\ImCurveEdit.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGuizmo\ImGradient.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGuizmo\ImGuizmo.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Vendor\ImGuizmo\ImSequencer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Entity\Components\Grid.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Scene\SceneDebugElements\Grid.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QueenEngine\Renderer\Texture.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
-    <None Include="Resources\Shaders\Test\VertexShader.vert" />
-    <None Include="Resources\Shaders\Test\FragmentShader.frag" />
     <None Include="Resources\Shaders\FrameRenderBuffer\FragmentShader.frag" />
     <None Include="Resources\Shaders\FrameRenderBuffer\VertexShader.vert" />
     <None Include="src\QueenEngine\Vendor\glm\detail\func_common.inl">
@@ -1536,6 +1570,12 @@
     <None Include="src\QueenEngine\Vendor\glm\gtx\wrap.inl">
       <Filter>Archivos de encabezado</Filter>
     </None>
+    <None Include="Resources\Shaders\Grid\VertexShader.vert" />
+    <None Include="Resources\Shaders\Grid\FragmentShader.frag" />
+    <None Include="Resources\Shaders\Test\VertexShader.vert" />
+    <None Include="Resources\Shaders\Test\FragmentShader.frag" />
+    <None Include="Resources\Shaders\TextureShader\FragmentShader.frag" />
+    <None Include="Resources\Shaders\TextureShader\VertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="src\QueenEngine\Vendor\ImGUI\imgui.natvis" />

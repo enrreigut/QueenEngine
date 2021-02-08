@@ -228,9 +228,7 @@ namespace Queen
 						return camera;
 					}
 				}
-
-			}
-			
+			}			
 			return nullptr;
 		}
 
@@ -317,20 +315,16 @@ namespace Queen
 			}
 			else
 			{
-				SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_View = glm::lookAt(
-					SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform,
-					SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform + SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation,
-					glm::vec3(0.0f, 1.0f, 0.0f)
-				);
-
 				//Set Correct Aspect Ratio if we are in debugMode or not
 				if (debugRender)
+				{
 					SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->UpdateProjection(
 						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_FOV, 
 						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Width / SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Height, 
 						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Near, 
 						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Far
-					);
+					);					
+				}
 				else
 					SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->UpdateProjection(
 						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_FOV,
@@ -348,16 +342,29 @@ namespace Queen
 			}
 			else
 			{
+				glUseProgram(entity->GetShader().GetProgramID());
+
 				glm::mat4 model = glm::mat4(1.0f);
-			
+				
 				if (entity->GetComponent<Entity::Component::Model>() != nullptr)
 				{
 					entity->GetShader().SetMat4("u_Proj", SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Projection);
 					entity->GetShader().SetMat4("u_View", SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_View);
+					
+					model = glm::translate(model, entity->GetComponent<Entity::Component::Transform>()->m_Transform);
+					model = glm::scale(model, entity->GetComponent<Entity::Component::Scale>()->m_Scale);
+					//model = glm::rotate(model, 1.0f, entity->GetComponent<Entity::Component::Rotation>()->m_Rotation);
 					entity->GetShader().SetMat4("u_Model", model);
 				}
-				
-				entity->Draw(SceneManager::Get().GetRenderScene()->GetVAO());
+
+				if (entity->GetComponent<Entity::Component::Texture>() != nullptr)
+				{
+					entity->GetComponent<Entity::Component::Texture>()->Bind(0);
+				}
+
+				entity->Draw();
+
+				glUseProgram(0);
 			}
 		}
 	}

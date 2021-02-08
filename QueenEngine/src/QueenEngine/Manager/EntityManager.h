@@ -12,6 +12,8 @@
 #include "SceneManager.h"
 #include "../Entity/Entity.h"
 
+#include "ImGuizmo/ImGuizmo.h"
+
 namespace Queen
 {
 	namespace Managers

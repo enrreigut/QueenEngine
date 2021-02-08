@@ -55,7 +55,8 @@ namespace Queen
 
 			if (Queen::Managers::InputManager::Get().IsMouseButtonDown(GLFW_MOUSE_BUTTON_2))
 			{
-				int x = 0.0f, y = 0.0f;
+				int x = 0, y = 0;
+				int w = 0, h = 0;
 
 				if (m_FirstMouse)
 				{
@@ -63,6 +64,7 @@ namespace Queen
 					glfwSetInputMode(Queen::Managers::WindowManager::Get().GetWWindow(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowName())->GetWindowHandler(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 					glfwGetWindowPos(Queen::Managers::WindowManager::Get().GetWWindow(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowName())->GetWindowHandler(), &x, &y);
+					glfwGetWindowSize(Queen::Managers::WindowManager::Get().GetWWindow(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowName())->GetWindowHandler(), &w, &h);
 
 					float centerMousePosX = (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Left + (float)Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Right) / 2.0f - (float)x;
 					float centerMousePosY = (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Bottom + (float)Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Top) / 2.0f - (float)y;
@@ -77,8 +79,21 @@ namespace Queen
 
 					glfwGetWindowPos(Queen::Managers::WindowManager::Get().GetWWindow(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowName())->GetWindowHandler(), &x, &y);
 
-					float centerMousePosX = (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Left + (float)Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Right) / 2.0f - (float)x;
-					float centerMousePosY = (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Bottom + (float)Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Top) / 2.0f - (float)y;
+					float centerMousePosX;
+					float centerMousePosY;
+					
+					if (m_Debug)
+					{
+						centerMousePosX = (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Left + (float)Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Right) / 2.0f - (float)x;
+						centerMousePosY = (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Bottom + (float)Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Top) / 2.0f - (float)y;
+					}
+					else
+					{
+						centerMousePosX = (w + x) / 2;
+						centerMousePosY = (h + y) / 2;
+					}
+					
+					
 					glfwSetCursorPos(Queen::Managers::WindowManager::Get().GetWWindow(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowName())->GetWindowHandler(), centerMousePosX, centerMousePosY);
 
 					float precision = 0.5f;
@@ -94,6 +109,26 @@ namespace Queen
 
 					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation = glm::normalize(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation);
 				}
+
+				//Movement
+				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_W))
+					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
+
+				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_A))
+					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::normalize(glm::cross(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * m_DeltaTime * camComponent->m_MoveSpeed;
+
+				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_S))
+					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
+
+				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_D))
+					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += glm::normalize(glm::cross(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * m_DeltaTime * camComponent->m_MoveSpeed;
+
+
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_View = glm::lookAt(
+					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform,
+					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform + Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation,
+					glm::vec3(0.0f, 1.0f, 0.0f)
+				);
 			}
 
 			if (Queen::Managers::InputManager::Get().IsMouseButtonUp(GLFW_MOUSE_BUTTON_2))
@@ -113,26 +148,12 @@ namespace Queen
 				//reset scroll input
 				Queen::Managers::InputManager::Get().ResetScrollY();
 			}
-			else
-			{
-				//Movement
-				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_W))
-					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
-
-				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_A))
-					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::normalize(glm::cross(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * m_DeltaTime * camComponent->m_MoveSpeed;
-
-				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_S))
-					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
-
-				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_D))
-					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += glm::normalize(glm::cross(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * m_DeltaTime * camComponent->m_MoveSpeed;
-			}
 		}
 
 		void Application::InitDefaultScene()
 		{
 			//Init Configuration
+			//Scene COnfiguration
 			//Create Target Camera
 			Entity::Entity* camera = Queen::Managers::EntityManager::Get().CreateCameraInRenderScene("QueenEngineCamera");
 			camera->SetTransform(glm::vec3(7.0f, 5.0f, 5.0f));
@@ -141,16 +162,19 @@ namespace Queen
 			camera->GetComponent<Entity::Component::Rotation>()->SetPitch(-25);
 			Queen::Managers::SceneManager::Get().SetRenderCamera("QueenEngineCamera");
 
+			//Entities
 			//Create Main Camera
 			Entity::Entity* mainCamera = Queen::Managers::EntityManager::Get().CreateCameraInRenderScene("Camera");
 			mainCamera->SetTransform(glm::vec3(0.0f, 0.0f, 5.0f));
 			Queen::Managers::SceneManager::Get().SetMainCamera("Camera");
 
 			//Create Entity
+			/*
 			Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Mario");
 			Queen::Entity::Component::Model* m = new Queen::Entity::Component::Model;
 			m->LoadObj("Resources/Model/Test/Mario.obj");
 			e->AddComponent<Queen::Entity::Component::Model>(m);
+			*/
 		}
 
 		void Application::Start()
@@ -191,12 +215,6 @@ namespace Queen
 
 			/*Scene Controls*/
 			CameraControls();
-			
-			for (auto& ent : Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities)
-			{
-				ent.second->OnInput();
-			}
-
 		}
 
 		void Application::Run()
@@ -216,7 +234,7 @@ namespace Queen
 					//Start Rendering in FrameBuffer				
 					Queen::Managers::RendererManager::Get().BindFrameBuffer();
 					Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(m_Debug);
-					
+				
 					//Render Scene
 					//TODO: Change to Queen::Managers::RendererManager::Get().RenderScene(m_Debug, SceneManager::Get().GetDefaultScene())
 					Queen::Managers::RendererManager::Get().RenderScene(m_Debug);

@@ -8,6 +8,7 @@ namespace Queen
 		{
 			m_Name = name;
 
+			// Adding default Components
 			Component::Transform* transform = new Component::Transform;
 			Component::Rotation* rotate = new Component::Rotation;
 			Component::Scale* scale = new Component::Scale;
@@ -22,23 +23,27 @@ namespace Queen
 			RemoveAllComponent();
 		}
 
-		void Entity::LoadEntity(Renderer::VertexArray& va)
+		void Entity::LoadEntity()
 		{
-			va.CreateVertexArray();
+			m_VAO.CreateVertexArray();
 			
 			if (GetComponent<Component::Model>() != nullptr)
 			{
-				m_VBO.Create(GetComponent<Component::Model>()->m_Vertices);
-				m_IBO.Create(GetComponent<Component::Model>()->m_Indexes);
+				m_VBO.Create(GetComponent<Component::Model>()->m_Data);
+				//m_IBO.Create(GetComponent<Component::Model>()->m_Indexes);
 			}
 			else
 			{
-				std::vector<glm::vec3> vert = { glm::vec3(0.0f,0.0f,0.0f) };
+				std::vector<Queen::Renderer::Vertex> vert2;
 				std::vector<unsigned int> indexes = { 0 };
 
-				m_VBO.Create(vert);
-				m_IBO.Create(indexes);
+				m_VBO.Create(vert2);
+				//m_IBO.Create(indexes);
 			}
+
+			m_VAO.Unbind();
+			//m_IBO.Unbind();
+			m_VBO.Unbind();
 		}
 
 		void Entity::LoadShader(const char* vertFilePath, const char* fragFilePath)
@@ -46,24 +51,36 @@ namespace Queen
 			m_Shader.LoadShaders(vertFilePath, fragFilePath);
 		}
 
-		void Entity::Draw(Renderer::VertexArray& va)
+		void Entity::Draw()
 		{
 			//Shader and Buffer Operations
-			glUseProgram(m_Shader.GetProgramID());
 
-			glEnableVertexAttribArray(0);
-
+			//m_VAO.Bind();
+			//m_IBO.Bind();
 			m_VBO.Bind();
-			m_IBO.Bind();
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, 0);
 
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (void*)(sizeof(float) * 6));
 
-			if(GetComponent<Component::Model>() != nullptr)
-				glDrawElements(GL_TRIANGLES, GetComponent<Component::Model>()->m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
+			if (GetComponent<Component::Model>() != nullptr) 
+			{
+				Component::Model* m = GetComponent<Component::Model>();
+
+				glDrawArrays(GL_TRIANGLES, 0, m->m_Data.size());
+				//glDrawElements(GL_TRIANGLES, GetComponent<Component::Model>()->m_Indexes.size(), GL_UNSIGNED_INT, nullptr);
+			}
 			else
-				glDrawElements(GL_TRIANGLES, 0, GL_UNSIGNED_INT, nullptr);
+			{
+				glDrawArrays(GL_TRIANGLES, 0 ,0);
+			}
+				//glDrawElements(GL_TRIANGLES, 0, GL_UNSIGNED_INT, nullptr);
 
-			glDisableVertexAttribArray(0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+			m_VBO.Unbind();
+			//m_IBO.Unbind();
 		}
 
 		void Entity::SetTransform(glm::vec3 data)

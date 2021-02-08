@@ -5,8 +5,6 @@
 //#include "src/QueenEngine/MemoryPool/Pool.h"
 //#include "src/QueenEngine/Event/ApplicationEvent.h"
 
-#include "src/QueenEngine/Entity/Components/Component.h"
-
 int main()
 {	
 	//TESING POOL MANAGER = Test of how Pool Manager Works
@@ -53,11 +51,11 @@ int main()
 		test[i] = new Test();
 		std::cout << "new[" << i << "] = " << test[i] << " test" << std::endl;
 	}
-	*/
+	
 	//END TESTING POOL MANAGER
 
 	//TESTIN EVENTS
-	/*
+
 	Queen::System::Log l;
 	l.setName("EVENTS");
 
@@ -72,12 +70,20 @@ int main()
 	app.SetDebugRender(true);
 	app.InitEngine();
 
-	Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Cube");
+	Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Mario");
 	Queen::Entity::Component::Model m;
-	m.LoadObj("Resources/Model/Test/cube.obj");
+	m.LoadObj("Resources/Model/Test/Mario.obj");
 	e->AddComponent<Queen::Entity::Component::Model>(&m);
+	e->SetTransform(glm::vec3(0.0f, 0.0f, 0.0f));
 
+	// This shoul be on top of creating the entities, however, is in charge on loading entities. Nedd to FIX this.
 	app.Start();
+
+	// Add textures after FrameBuffer Creation so they do not render on top of the location assigned to them	
+	// Entity 1
+	e->AddComponent<Queen::Entity::Component::Texture>(&m);
+	e->GetComponent<Queen::Entity::Component::Texture>()->LoadTexture("Resources/Textures/Mario/mario_main.png");
+
 	app.Run();
 	app.Shutdown();
 	

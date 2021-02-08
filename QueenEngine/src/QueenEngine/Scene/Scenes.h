@@ -6,7 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "../Entity/Entity.h"
-#include "../Renderer/VertexArray.h"
+#include "SceneDebugElements/Grid.h"
 
 namespace Queen
 {
@@ -18,6 +18,8 @@ namespace Queen
 			std::unordered_map<const char*, Entity::Entity*> m_SceneCameras;
 			Entity::Entity* m_TargetCamera;
 			Entity::Entity* m_MainCamera;
+			Debug::Grid* m_Grid;
+			
 			const char* m_SceneName = "Default";
 			float m_Width = 0.0f;
 			float m_Height = 0.0f;
@@ -35,15 +37,16 @@ namespace Queen
 			Scene(const char* name);
 			~Scene();
 
-			inline SceneComponentElement* GetSceneConfiguration()& { return m_SceneConfiguration; }
-			inline Renderer::VertexArray& GetVAO(){ return m_VAO; }
-
 			void Load();
+			
+			inline SceneComponentElement* GetSceneConfiguration()& { return m_SceneConfiguration; }
+
+			//Debug
+			void DrawDebug();
 
 		private:
 
 			SceneComponentElement* m_SceneConfiguration;
-			Renderer::VertexArray m_VAO;
 		};
 	}
 }
