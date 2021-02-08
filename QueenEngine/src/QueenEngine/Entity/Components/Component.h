@@ -7,6 +7,7 @@
 #include "../Renderer/VertexArray.h"
 #include "../Renderer/VertexBuffer.h"
 #include "../Renderer/IndexBuffer.h"
+#include "../Renderer/Texture.h"
 
 #include "../Utils/FileReader.h"
 
@@ -29,6 +30,7 @@ namespace Queen
 				std::vector<glm::vec3> m_Normals;
 				std::vector<glm::vec2> m_Uvs;
 				std::vector<unsigned int> m_Indexes;
+				std::vector<Queen::Renderer::Vertex> m_Data;
 
 				/*Renderer::VertexBuffer m_VBO;
 				Renderer::IndexBuffer m_IBO;
@@ -36,9 +38,27 @@ namespace Queen
 
 				const char* m_Name;
 
+				void ProcessData()
+				{
+					Queen::Renderer::Vertex v;
+					for (int i = 0; i < m_Vertices.size(); i++)
+					{
+						v.position = m_Vertices.at(i);
+
+						if(m_Normals.size() != 0)
+							v.normals = m_Normals.at(i);
+						
+						if(m_Uvs.size() != 0)
+							v.uvs = m_Uvs.at(i);
+
+						m_Data.push_back(v);
+					}
+				}
+
 				void LoadObj(const char* filePath)
 				{
 					m_Reader.GetModelData(filePath, m_Vertices, m_Indexes, m_Uvs, m_Normals);
+					ProcessData();
 				}
 
 			};
@@ -98,7 +118,41 @@ namespace Queen
 				void SetFov(float FOV) { if (m_FOV + FOV > 90.0F) m_FOV = 90.0f; else if (m_FOV + FOV < 1.0f) m_FOV = 1.0f; else m_FOV += FOV; }
 				void UpdateProjection(float FOV, float aspectRatio, float near, float far) { m_Projection = glm::perspective(glm::radians(FOV), aspectRatio, near, far); }
 			};
+
+			struct Texture : public Component
+			{
+				Renderer::Texture* m_Texture = nullptr;
+
+				void LoadTexture(const char* filePath)
+				{
+					m_Texture = new Renderer::Texture(filePath);
+				}
+
+				void Bind(unsigned int slot)
+				{
+					m_Texture->Bind(slot);
+				}
+
+				void Unbind()
+				{
+					m_Texture->Unbind();
+				}
+			};
 		}
+		/*
+		
+		void OnStart()
+		{
+		fksofkseo
+		}
+
+		void OnUpdate()
+		{
+		fklskfsñ
+		}
+		
+		
+		*/
 	}
 }
 

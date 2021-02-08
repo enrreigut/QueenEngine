@@ -8,12 +8,11 @@ msg g_ERROR_INIT_WIN_GLFW =					"GLFW could not be initialised!";
 msg g_INIT_SUCCESS_WIN_GLFW =				"Initialised GLFW!";
 
 //GLEW
-msg g_INIT_WIN_GLEW = "Initialising GLEW...";
-msg g_ERROR_INIT_WIN_GLEW = "GLEW could not be initialised!";
-msg g_INIT_SUCCESS_WIN_GLEW = "Initialised GLEW!";
+msg g_INIT_WIN_GLEW =						"Initialising GLEW...";
+msg g_ERROR_INIT_WIN_GLEW =					"GLEW could not be initialised!";
+msg g_INIT_SUCCESS_WIN_GLEW =				"Initialised GLEW!";
 
 //Log Manager
-
 msg g_LOG_MAN_INFO_START =					"Log Manager has started... Hello!";
 msg g_LOG_MAN_INFO_CREATE =					"Logger with name '{v}' has been created";
 msg g_LOG_MAN_INFO_SHUTDOWN =				"Log Manager is shutted down... Bye!";

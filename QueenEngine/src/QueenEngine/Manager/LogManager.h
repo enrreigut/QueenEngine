@@ -15,6 +15,13 @@ namespace Queen
 		*/
 
 		//Some defines to help with code clearness, coherence and cohesion
+		#define QE_TRACE	Queen::System::Log::Level::TRACE
+		#define QE_INFO		Queen::System::Log::Level::INFO
+		#define QE_SUCCESS	Queen::System::Log::Level::SUCCESS
+		#define QE_WARN		Queen::System::Log::Level::WARN
+		#define QE_ERROR	Queen::System::Log::Level::ERROR
+
+		//Some defines to help with code clearness, coherence and cohesion
 		#define QE_LOG(x,y) Queen::Managers::LogManager::Get().Log(x,y)
 		#define QE_LOG_NAME(x,y,z) Queen::Managers::LogManager::Get().Log(x,y,z)
 		#define QE_LOG_PARAMS(x,y,...) Queen::Managers::LogManager::Get().LogParams(x,y,__VA_ARGS__)

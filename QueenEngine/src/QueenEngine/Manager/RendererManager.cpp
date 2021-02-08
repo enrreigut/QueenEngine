@@ -66,7 +66,9 @@ namespace Queen
 				m_FBO.CreateFrameBuffer(sizeX, sizeY);
 				m_FBO.CreateTexture();
 				m_FBO.CreateRenderBuffer();
-				m_FBO.Check();
+				
+				if(m_FBO.Check())
+					Queen::Managers::ImGUIManager::Get().SetFramebuffer(&m_FBO);
 			}
 		}
 
@@ -82,13 +84,17 @@ namespace Queen
 				
 				if (renderScene != nullptr)
 				{
-					
 					Entity::Entity* camera = renderScene->GetSceneConfiguration()->m_TargetCamera;
 
 					EntityManager::Get().CalculateCamera(debugRender);
 
+					if(debugRender)
+						renderScene->DrawDebug();
+
 					for (auto& entity : renderScene->GetSceneConfiguration()->m_SceneEntities)
+					{ 
 						Managers::EntityManager::Get().DrawEntity(entity.second);
+					}
 				}
 			}
 		}
@@ -101,7 +107,6 @@ namespace Queen
 			}
 			else
 			{
-				Queen::Managers::ImGUIManager::Get().SetFramebuffer(&m_FBO);
 				Queen::Managers::ImGUIManager::Get().OnRender();
 			}
 		}

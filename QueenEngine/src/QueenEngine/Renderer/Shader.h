@@ -3,6 +3,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include "Texture.h"
 
 #include "../Utils/FileReader.h"
 #include "../Manager/LogManager.h"

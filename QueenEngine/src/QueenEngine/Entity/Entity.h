@@ -2,8 +2,6 @@
 
 #include <string.h>
 
-#include "BaseEnity.h"
-
 #include "Components/Component.h"
 
 #include "../Manager/InputManager.h"
@@ -14,23 +12,19 @@ namespace Queen
 {
 	namespace Entity
 	{
-		class Entity : public BaseEnity
+		class Entity
 		{
 		public:
 
 			Entity(const char* name);
 			~Entity();
 
-			void OnUpdate() override {};
-			void OnInput() override {};
-			void OnDestroy() override {};
-
-			void LoadEntity(Renderer::VertexArray& va);
+			void LoadEntity();
+			void Draw();
 			void LoadShader(const char* vertFilePath, const char* fragFilePath);
-			void Draw(Renderer::VertexArray& val);
 			
 			inline Renderer::Shader& GetShader() { return m_Shader; }
-			inline const char*& GetName() { return m_Name; }
+			inline const char* GetName()& { return m_Name; }
 
 			template<typename T>
 			inline void AddComponent(Component::Component* c) 
@@ -79,6 +73,7 @@ namespace Queen
 
 		private:
 
+			Renderer::VertexArray m_VAO;
 			Renderer::VertexBuffer m_VBO;
 			Renderer::IndexBuffer m_IBO;
 			Renderer::Shader m_Shader;
