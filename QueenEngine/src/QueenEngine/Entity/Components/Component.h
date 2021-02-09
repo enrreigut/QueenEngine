@@ -79,7 +79,7 @@ namespace Queen
 
 				//driections
 				glm::vec3 m_VecUp = glm::vec3(0.0f, 1.0f, 0.0f);
-				glm::vec3 m_Rotation = glm::vec3(0.0f, 0.0, 0.0f);
+				glm::vec3 m_Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
 				void SetRotation(glm::vec3 data) { m_Rotation = data; }
 				void SetPitch(float pitch) { if (m_Pitch + pitch > 89.0f) m_Pitch = 89.0f; else if (m_Pitch + pitch < -89.0f) m_Pitch = -89.0f; else m_Pitch += pitch; }

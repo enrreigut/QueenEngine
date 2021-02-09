@@ -76,13 +76,24 @@ int main()
 	e->AddComponent<Queen::Entity::Component::Model>(&m);
 	e->SetTransform(glm::vec3(0.0f, 0.0f, 0.0f));
 
+	Queen::Entity::Entity* e2 = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Carlos");
+	Queen::Entity::Component::Model m2;
+	m2.LoadObj("Resources/Model/Test/cube.obj");
+	e2->AddComponent<Queen::Entity::Component::Model>(&m2);
+	e2->SetTransform(glm::vec3(3.0f, 0.0f, 0.0f));
+
+
 	// This shoul be on top of creating the entities, however, is in charge on loading entities. Nedd to FIX this.
 	app.Start();
 
 	// Add textures after FrameBuffer Creation so they do not render on top of the location assigned to them	
 	// Entity 1
 	e->AddComponent<Queen::Entity::Component::Texture>(&m);
-	e->GetComponent<Queen::Entity::Component::Texture>()->LoadTexture("Resources/Textures/Mario/mario_main.png");
+	e->GetComponent<Queen::Entity::Component::Texture>()->LoadTexture("Resources/Textures/Mario/mario_mime.png");
+
+	// Entity 2
+	e2->AddComponent<Queen::Entity::Component::Texture>(&m2);
+	e2->GetComponent<Queen::Entity::Component::Texture>()->LoadTexture("Resources/Textures/Mario/test.png");
 
 	app.Run();
 	app.Shutdown();

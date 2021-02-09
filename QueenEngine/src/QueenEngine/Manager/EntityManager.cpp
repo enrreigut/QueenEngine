@@ -353,7 +353,14 @@ namespace Queen
 					
 					model = glm::translate(model, entity->GetComponent<Entity::Component::Transform>()->m_Transform);
 					model = glm::scale(model, entity->GetComponent<Entity::Component::Scale>()->m_Scale);
-					//model = glm::rotate(model, 1.0f, entity->GetComponent<Entity::Component::Rotation>()->m_Rotation);
+
+					//RotateX
+					model = glm::rotate(model, entity->GetComponent<Entity::Component::Rotation>()->m_Rotation.x * glm::pi<float>() / 180.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+					//RotateY
+					model = glm::rotate(model, entity->GetComponent<Entity::Component::Rotation>()->m_Rotation.y * glm::pi<float>() / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+					//Rotate Z
+					model = glm::rotate(model, entity->GetComponent<Entity::Component::Rotation>()->m_Rotation.z * glm::pi<float>() / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+					
 					entity->GetShader().SetMat4("u_Model", model);
 				}
 
