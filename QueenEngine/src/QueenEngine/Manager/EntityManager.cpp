@@ -4,6 +4,10 @@ namespace Queen
 {
 	namespace Managers
 	{
+
+		glm::vec3 g_globalLightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::vec3 g_globalLightPos = glm::vec3(1.0f, 1.0f, 1.0f);
+
 		EntityManager::EntityManager()
 		{
 
@@ -350,7 +354,9 @@ namespace Queen
 				{
 					entity->GetShader().SetMat4("u_Proj", SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Projection);
 					entity->GetShader().SetMat4("u_View", SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_View);
-					
+					entity->GetShader().SetVec3("gLightColor", g_globalLightColor);
+					entity->GetShader().SetVec3("gLightPos", g_globalLightPos);
+
 					model = glm::translate(model, entity->GetComponent<Entity::Component::Transform>()->m_Transform);
 					model = glm::scale(model, entity->GetComponent<Entity::Component::Scale>()->m_Scale);
 
@@ -362,6 +368,13 @@ namespace Queen
 					model = glm::rotate(model, entity->GetComponent<Entity::Component::Rotation>()->m_Rotation.z * glm::pi<float>() / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 					
 					entity->GetShader().SetMat4("u_Model", model);
+				}
+
+				if (entity->GetComponent<Entity::Component::PointLight>() != nullptr)
+				{
+					entity->GetShader().SetVec3("lightColor", entity->GetComponent<Entity::Component::PointLight>()->lightColor);
+					g_globalLightColor = entity->GetComponent<Entity::Component::PointLight>()->lightColor;
+					g_globalLightPos = entity->GetComponent<Entity::Component::Transform>()->m_Transform;
 				}
 
 				if (entity->GetComponent<Entity::Component::Texture>() != nullptr)

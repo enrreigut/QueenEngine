@@ -64,6 +64,9 @@ namespace Queen
 			glEnableVertexAttribArray(1);
 			glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (void*)(sizeof(float) * 6));
 
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (void*)(sizeof(float) * 3));
+
 			if (GetComponent<Component::Model>() != nullptr) 
 			{
 				Component::Model* m = GetComponent<Component::Model>();

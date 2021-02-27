@@ -28,6 +28,8 @@ namespace Queen
 			void SetInt(const char* name, int&& value) const;
 			void SetFloat(const char* name, float&& value) const;
 			void SetFloat(const char* name, float& value) const;
+			void SetVec3(const char* name, glm::vec3& value) const;
+			void SetVec3(const char* name, glm::vec3&& value) const;
 			void SetMat4(const char* name, glm::mat4& value) const;
 
 		protected:
