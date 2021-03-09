@@ -4,6 +4,10 @@ namespace Queen
 {
 	namespace Managers
 	{
+
+		glm::vec4 g_globalLightColor = glm::vec4(1.0f, 1.0f, 1.0f, 255.0f);
+		glm::vec3 g_globalLightPos = glm::vec3(1.0f, 1.0f, 1.0f);
+
 		EntityManager::EntityManager()
 		{
 
@@ -350,7 +354,9 @@ namespace Queen
 				{
 					entity->GetShader().SetMat4("u_Proj", SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Projection);
 					entity->GetShader().SetMat4("u_View", SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_View);
-					
+					entity->GetShader().SetVec4("gLightColor", g_globalLightColor);
+					entity->GetShader().SetVec3("gLightPos", g_globalLightPos);
+
 					model = glm::translate(model, entity->GetComponent<Entity::Component::Transform>()->m_Transform);
 					model = glm::scale(model, entity->GetComponent<Entity::Component::Scale>()->m_Scale);
 
@@ -364,10 +370,26 @@ namespace Queen
 					entity->GetShader().SetMat4("u_Model", model);
 				}
 
-				if (entity->GetComponent<Entity::Component::Texture>() != nullptr)
+				if (entity->GetComponent<Entity::Component::PointLight>() != nullptr)
 				{
-					entity->GetComponent<Entity::Component::Texture>()->Bind(0);
+					entity->GetShader().SetVec4("lightColor", entity->GetComponent<Entity::Component::PointLight>()->lightColor);
+					g_globalLightColor = entity->GetComponent<Entity::Component::PointLight>()->lightColor;
+					g_globalLightPos = entity->GetComponent<Entity::Component::Transform>()->m_Transform;
 				}
+
+				if (entity->GetComponent<Entity::Component::Material>() != nullptr)
+				{
+					entity->GetShader().SetFloat("ambientStrength", entity->GetComponent<Entity::Component::Material>()->ambientStrength);
+					entity->GetShader().SetFloat("specularStrength", entity->GetComponent<Entity::Component::Material>()->specularStrength);
+
+					if(entity->GetComponent<Queen::Entity::Component::Material>()->texture)
+
+					entity->GetComponent<Queen::Entity::Component::Material>()->texture->Bind(0);
+				}
+
+				// This only happens for Entities with models and are not:
+				//		- Lights
+				//		- Cameras
 
 				entity->Draw();
 

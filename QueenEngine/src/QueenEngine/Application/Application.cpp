@@ -153,7 +153,18 @@ namespace Queen
 		void Application::InitDefaultScene()
 		{
 			//Init Configuration
-			//Scene COnfiguration
+			//Scene Configuration
+			
+			//Create a Light Source
+			Entity::Entity* lightSource = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Light");
+			lightSource->SetTransform(glm::vec3(2.0f, 2.0f, 2.0f));
+			lightSource->GetComponent<Entity::Component::Scale>()->SetScale(glm::vec3(0.25f, 0.25f, 0.25f));
+			Queen::Entity::Component::Model* m = new Queen::Entity::Component::Model;
+			m->LoadObj("Resources/Model/Test/cube.obj");
+			lightSource->AddComponent<Queen::Entity::Component::Model>(m);
+			Queen::Entity::Component::PointLight* l = new Queen::Entity::Component::PointLight;
+			lightSource->AddComponent<Queen::Entity::Component::PointLight>(l);
+			
 			//Create Target Camera
 			Entity::Entity* camera = Queen::Managers::EntityManager::Get().CreateCameraInRenderScene("QueenEngineCamera");
 			camera->SetTransform(glm::vec3(7.0f, 5.0f, 5.0f));
@@ -162,11 +173,12 @@ namespace Queen
 			camera->GetComponent<Entity::Component::Rotation>()->SetPitch(-25);
 			Queen::Managers::SceneManager::Get().SetRenderCamera("QueenEngineCamera");
 
-			//Entities
+			//Default forced Entities
 			//Create Main Camera
 			Entity::Entity* mainCamera = Queen::Managers::EntityManager::Get().CreateCameraInRenderScene("Camera");
 			mainCamera->SetTransform(glm::vec3(0.0f, 0.0f, 5.0f));
 			Queen::Managers::SceneManager::Get().SetMainCamera("Camera");
+
 
 			//Create Entity
 			/*
@@ -222,7 +234,7 @@ namespace Queen
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
 				CalculateFPS();
-	
+
 				if (!m_Debug)
 				{
 					Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(m_Debug);

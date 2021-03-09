@@ -37,7 +37,11 @@ namespace Queen
 			for (auto& elem : m_SceneConfiguration->m_SceneEntities)
 			{
 				elem.second->LoadEntity();
-				elem.second->LoadShader("Resources/Shaders/TextureShader/VertexShader.vert", "Resources/Shaders/TextureShader/FragmentShader.frag");
+
+				if(elem.second->GetComponent<Queen::Entity::Component::PointLight>() != nullptr)
+					elem.second->LoadShader("Resources/Shaders/LightShader/VertexShader.vert", "Resources/Shaders/LightShader/FragmentShader.frag");
+				else
+					elem.second->LoadShader("Resources/Shaders/TextureShader/VertexShader.vert", "Resources/Shaders/TextureShader/FragmentShader.frag");
 			}
 		}
 

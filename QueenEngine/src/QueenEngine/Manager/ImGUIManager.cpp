@@ -6,8 +6,10 @@ namespace Queen
 	{
 		void DrawModelComponentInfo(Entity::Component::Component* c);
 		void DrawVec3ComponentInfo(const char*label, glm::vec3& transform, float resetValue = 0.0f);
+		void DrawLightColorComponentInfo(const char* label, Entity::Component::Component* c, float resetValue = 0.0f);
 		void DrawCameraComponentInfo(Entity::Component::Component* c);
 		void DrawGridInfo(Scenes::Debug::Grid* grid);
+		void DrawMaterialInfo(Entity::Component::Component* c);
 
 		ImGUIManager::ImGUIManager()
 		{
@@ -404,6 +406,27 @@ namespace Queen
 						}
 
 						ImGui::Separator();
+
+						if (ent.second->GetComponent<Entity::Component::Material>())
+						{
+							if (ImGui::CollapsingHeader("Material"))
+							{							
+								DrawMaterialInfo(ent.second->GetComponent<Entity::Component::Material>());
+							}
+						}
+
+						ImGui::Separator();
+
+						if (ent.second->GetComponent<Queen::Entity::Component::PointLight>())
+						{
+							if (ImGui::CollapsingHeader("Light Properties"))
+							{
+								DrawLightColorComponentInfo("Color", ent.second->GetComponent<Entity::Component::PointLight>(), 0.5f);
+							}
+						}
+
+						ImGui::Separator();
+
 						ImGui::End();
 					}
 				}
@@ -647,6 +670,33 @@ namespace Queen
 			ImGui::Checkbox("MainCamera", &comp->m_IsMainCamera);
 
 			ImGui::PopItemWidth();
+		}
+
+		void DrawLightColorComponentInfo(const char* label, Entity::Component::Component* c, float resetValue)
+		{
+			Entity::Component::PointLight* comp = (Entity::Component::PointLight*)c;
+
+			if (ImGui::TreeNode(label))
+			{
+				ImGui::ColorPicker4("Color", &comp->lightColor[0]);
+
+				ImGui::TreePop();
+			}
+		}
+
+		void DrawMaterialInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Material* comp = (Entity::Component::Material*)c;
+
+			ImGui::PushItemWidth(-1);
+
+			ImGui::Text("Ambient Strength");
+			ImGui::SliderFloat("##ambStr", &comp->ambientStrength, 0.0f, 1.0f);
+
+			ImGui::Text("Specular Strength");
+			ImGui::SliderFloat("##specStr", &comp->specularStrength, 0.0f, 1.0f);
+
+			ImGui::Image((void*)(intptr_t)comp->texture->m_Texture->GetTextureId(), ImVec2{ 255.0f, 255.0f });
 		}
 	}
 }

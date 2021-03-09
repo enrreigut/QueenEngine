@@ -89,7 +89,7 @@ namespace Queen
 			{
 				glm::vec3 m_Scale = glm::vec3(1.0f, 1.0, 1.0f);
 
-				void SetTransform(glm::vec3 data) { m_Scale = data; }
+				void SetScale(glm::vec3 data) { m_Scale = data; }
 			};
 
 			struct Camera : public Component
@@ -113,7 +113,7 @@ namespace Queen
 				glm::mat4 m_View = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 				
 				//This should be in a system: Discussion to implemented or not because pattern says that component just contains data
-				//Maybe move all this operatins to entity manager
+				//Maybe move all this operations to entity manager
 
 				void SetFov(float FOV) { if (m_FOV + FOV > 90.0F) m_FOV = 90.0f; else if (m_FOV + FOV < 1.0f) m_FOV = 1.0f; else m_FOV += FOV; }
 				void UpdateProjection(float FOV, float aspectRatio, float near, float far) { m_Projection = glm::perspective(glm::radians(FOV), aspectRatio, near, far); }
@@ -137,6 +137,31 @@ namespace Queen
 				{
 					m_Texture->Unbind();
 				}
+			};
+
+			struct PointLight : public Component
+			{
+				// Preset to white
+				glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 255.0f);
+			};
+
+			struct Material : public Component
+			{
+				float ambientStrength = 0.1f;
+				float specularStrength = 0.5f;
+
+				Texture *texture = new Texture;
+				
+				void LoadTexture(const char* filepath)
+				{
+					if (filepath == nullptr)
+					{
+						texture->LoadTexture("Resources/Textures/Default/default01.png");
+					}
+					else
+						texture->LoadTexture(filepath);
+				}
+
 			};
 		}
 		/*
