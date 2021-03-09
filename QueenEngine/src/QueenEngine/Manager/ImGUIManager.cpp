@@ -9,6 +9,7 @@ namespace Queen
 		void DrawLightColorComponentInfo(const char* label, Entity::Component::Component* c, float resetValue = 0.0f);
 		void DrawCameraComponentInfo(Entity::Component::Component* c);
 		void DrawGridInfo(Scenes::Debug::Grid* grid);
+		void DrawMaterialInfo(Entity::Component::Component* c);
 
 		ImGUIManager::ImGUIManager()
 		{
@@ -406,9 +407,19 @@ namespace Queen
 
 						ImGui::Separator();
 
+						if (ent.second->GetComponent<Entity::Component::Material>())
+						{
+							if (ImGui::CollapsingHeader("Material"))
+							{							
+								DrawMaterialInfo(ent.second->GetComponent<Entity::Component::Material>());
+							}
+						}
+
+						ImGui::Separator();
+
 						if (ent.second->GetComponent<Queen::Entity::Component::PointLight>())
 						{
-							if (ImGui::CollapsingHeader("Light"))
+							if (ImGui::CollapsingHeader("Light Properties"))
 							{
 								DrawLightColorComponentInfo("Color", ent.second->GetComponent<Entity::Component::PointLight>(), 0.5f);
 							}
@@ -665,59 +676,27 @@ namespace Queen
 		{
 			Entity::Component::PointLight* comp = (Entity::Component::PointLight*)c;
 
-			float buttonHeight = ImGui::GetFont()->FontSize + ImGui::GetStyle().FramePadding.y * 2.0f;
-			float buttonWidth = buttonHeight + 3.0f;
-
-			ImColor r = ImColor(239, 118, 122);
-			ImColor g = ImColor(73, 190, 170);
-			ImColor b = ImColor(69, 105, 144);
-
 			if (ImGui::TreeNode(label))
 			{
-				ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 10 });
+				ImGui::ColorPicker4("Color", &comp->lightColor[0]);
 
-				//X
-				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)r);
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)r);
-				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)r);
-				if (ImGui::Button("R", ImVec2{ buttonWidth, buttonHeight }))
-					comp->lightColor.x = resetValue;
-				ImGui::PopStyleColor(3);
-
-				ImGui::SameLine();
-				//ImGui::PushItemWidth(-1);
-				ImGui::SliderFloat("##R", &comp->lightColor.x, 0.0f, 1.0f);
-				//ImGui::PopItemWidth();
-
-				//Y
-				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)g);
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)g);
-				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)g);
-				if (ImGui::Button("G", ImVec2{ buttonWidth, buttonHeight }))
-					comp->lightColor.y = resetValue;
-				ImGui::PopStyleColor(3);
-
-				ImGui::SameLine();
-				//ImGui::PushItemWidth(-1);
-				ImGui::SliderFloat("##G", &comp->lightColor.y, 0.0f, 1.0f);
-				//ImGui::PopItemWidth();
-
-				//Z
-				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)b);
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)b);
-				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)b);
-				if (ImGui::Button("B", ImVec2{ buttonWidth, buttonHeight }))
-					comp->lightColor.z = resetValue;
-				ImGui::PopStyleColor(3);
-
-				ImGui::SameLine();
-				//ImGui::PushItemWidth(-1);
-				ImGui::SliderFloat("##B", &comp->lightColor.z, 0.0f, 1.0f);
-				//ImGui::PopItemWidth();
-
-				ImGui::PopStyleVar();
 				ImGui::TreePop();
 			}
+		}
+
+		void DrawMaterialInfo(Entity::Component::Component* c)
+		{
+			Entity::Component::Material* comp = (Entity::Component::Material*)c;
+
+			ImGui::PushItemWidth(-1);
+
+			ImGui::Text("Ambient Strength");
+			ImGui::SliderFloat("##ambStr", &comp->ambientStrength, 0.0f, 1.0f);
+
+			ImGui::Text("Specular Strength");
+			ImGui::SliderFloat("##specStr", &comp->specularStrength, 0.0f, 1.0f);
+
+			ImGui::Image((void*)(intptr_t)comp->texture->m_Texture->GetTextureId(), ImVec2{ 255.0f, 255.0f });
 		}
 	}
 }

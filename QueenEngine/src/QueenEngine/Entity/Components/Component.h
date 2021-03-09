@@ -142,7 +142,26 @@ namespace Queen
 			struct PointLight : public Component
 			{
 				// Preset to white
-				glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+				glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 255.0f);
+			};
+
+			struct Material : public Component
+			{
+				float ambientStrength = 0.1f;
+				float specularStrength = 0.5f;
+
+				Texture *texture = new Texture;
+				
+				void LoadTexture(const char* filepath)
+				{
+					if (filepath == nullptr)
+					{
+						texture->LoadTexture("Resources/Textures/Default/default01.png");
+					}
+					else
+						texture->LoadTexture(filepath);
+				}
+
 			};
 		}
 		/*
