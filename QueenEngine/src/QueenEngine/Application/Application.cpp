@@ -4,7 +4,6 @@ namespace Queen
 {
 	namespace Application
 	{
-
 		Application::Application()
 		{
 
@@ -155,6 +154,8 @@ namespace Queen
 			//Init Configuration
 			//Scene Configuration
 			
+			//Default forced Entities
+
 			//Create a Light Source
 			Entity::Entity* lightSource = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Light");
 			lightSource->SetTransform(glm::vec3(2.0f, 2.0f, 2.0f));
@@ -173,10 +174,12 @@ namespace Queen
 			camera->GetComponent<Entity::Component::Rotation>()->SetPitch(-25);
 			Queen::Managers::SceneManager::Get().SetRenderCamera("QueenEngineCamera");
 
-			//Default forced Entities
 			//Create Main Camera
 			Entity::Entity* mainCamera = Queen::Managers::EntityManager::Get().CreateCameraInRenderScene("Camera");
-			mainCamera->SetTransform(glm::vec3(0.0f, 0.0f, 5.0f));
+			mainCamera->SetTransform(glm::vec3(10.0f, 5.0f, 5.0f));
+			mainCamera->GetComponent<Entity::Component::Rotation>()->SetRotation(glm::vec3(-0.8f, -0.4f, -0.4f));
+			mainCamera->GetComponent<Entity::Component::Rotation>()->m_Yaw = -140.0f;
+			mainCamera->GetComponent<Entity::Component::Rotation>()->SetPitch(-25);
 			Queen::Managers::SceneManager::Get().SetMainCamera("Camera");
 
 
@@ -234,17 +237,45 @@ namespace Queen
 
 			/* HANDLE EVENTS WHEN GAME IS BEING PLAYED */
 
+			/* Mario Entity */
+
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_W))
 				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_A))
-				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_S))
 				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_D))
-				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+				
+			
+			/* Camera Follow Mario */
+
+			glm::vec3* entityTransform = &Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform;
+			float angle = 90.0f;
+			float distance = 5.0f;
+			float rotateSpeed = 0.5f;
+
+			double mpX = Queen::Managers::InputManager::Get().GetMousePosX() * rotateSpeed * m_DeltaTime;
+
+			Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->SetTransform(
+				glm::vec3(
+					entityTransform->x,
+					entityTransform->y + distance,
+					entityTransform->z - distance
+				)
+			);
+
+			Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_View = glm::lookAt(
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform,
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform,
+				glm::vec3(0.0f, 1.0f, 0.0f)
+			);
+
+
 		}
 
 		void Application::Run(bool& isPlayingGame)
@@ -252,6 +283,11 @@ namespace Queen
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
 				CalculateFPS();
+
+				if (isPlayingGame)
+				{
+					Queen::Managers::SceneManager::Get().SetRenderCamera("Camera");
+				}
 
 				if (!m_Debug)
 				{
@@ -274,13 +310,14 @@ namespace Queen
 				
 					//Render UI				
 					Queen::Managers::RendererManager::Get().RenderImGUI();
-				}
-				
+				}				
 
 				if (!isPlayingGame)
 					this->OnEvent();
 				else
+				{
 					this->OnPlayingEvent();
+				}
 
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
 			}
@@ -292,7 +329,7 @@ namespace Queen
 			m_Frames++;
 			if (currentTime - m_LastTime >= 1.0) {
 				// printf and reset
-				QE_GUI_LOG_PARAMS(QE_SUCCESS, GUI::Logger::Get(), "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
+				//QE_GUI_LOG_PARAMS(QE_SUCCESS, GUI::Logger::Get(), "FPS: {v}, {v} ms per frame", m_Frames, 1000.0 / double(m_Frames));
 
 				m_DeltaTime = 1 / (float)m_Frames;
 

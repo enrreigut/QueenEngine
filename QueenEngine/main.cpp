@@ -78,15 +78,6 @@ int main()
 	Queen::Entity::Component::Material mat;
 	e->AddComponent<Queen::Entity::Component::Material>(&mat);
 
-	Queen::Entity::Entity* e2 = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Casco");
-	Queen::Entity::Component::Model m2;
-	m2.LoadObj("Resources/Model/Test/duck.obj");
-	e2->AddComponent<Queen::Entity::Component::Model>(&m2);
-	e2->SetTransform(glm::vec3(3.0f, 0.0f, 0.0f));
-	e2->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	Queen::Entity::Component::Material mat2;
-	e2->AddComponent<Queen::Entity::Component::Material>(&mat2);
-
 	// This should be on top of creating the entities, however, is in charge on loading entities. Need to FIX this.
 	app.Start();
 
@@ -94,10 +85,6 @@ int main()
 	// Entity 1
 	mat.LoadTexture("Resources/Textures/Mario/mario_mime.png");
 	
-	//Entity2
-	mat2.LoadTexture("Resources/Textures/Duck/duck.png");
-
-
 	bool isPlayingGame = true;
 
 	app.Run(isPlayingGame);
