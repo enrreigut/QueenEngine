@@ -90,5 +90,10 @@ namespace Queen
 		{
 			GetComponent<Component::Transform>()->SetTransform(data);
 		}
+
+		void Entity::SetScale(glm::vec3 data)
+		{
+			GetComponent<Component::Scale>()->SetScale(data);
+		}
 	}
 }

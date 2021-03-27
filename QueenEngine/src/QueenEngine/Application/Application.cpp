@@ -229,7 +229,25 @@ namespace Queen
 			CameraControls();
 		}
 
-		void Application::Run()
+		void Application::OnPlayingEvent()
+		{
+
+			/* HANDLE EVENTS WHEN GAME IS BEING PLAYED */
+
+			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_W))
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
+
+			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_A))
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+
+			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_S))
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
+
+			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_D))
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+		}
+
+		void Application::Run(bool& isPlayingGame)
 		{
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
@@ -258,8 +276,12 @@ namespace Queen
 					Queen::Managers::RendererManager::Get().RenderImGUI();
 				}
 				
-				this->OnEvent();
-				
+
+				if (!isPlayingGame)
+					this->OnEvent();
+				else
+					this->OnPlayingEvent();
+
 				Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Update();
 			}
 		}

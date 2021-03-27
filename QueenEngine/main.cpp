@@ -78,12 +78,12 @@ int main()
 	Queen::Entity::Component::Material mat;
 	e->AddComponent<Queen::Entity::Component::Material>(&mat);
 
-
 	Queen::Entity::Entity* e2 = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Casco");
 	Queen::Entity::Component::Model m2;
-	m2.LoadObj("Resources/Model/Test/Casco.obj");
+	m2.LoadObj("Resources/Model/Test/duck.obj");
 	e2->AddComponent<Queen::Entity::Component::Model>(&m2);
-	e2->SetTransform(glm::vec3(10.0f, 0.0f, 0.0f));
+	e2->SetTransform(glm::vec3(3.0f, 0.0f, 0.0f));
+	e2->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	Queen::Entity::Component::Material mat2;
 	e2->AddComponent<Queen::Entity::Component::Material>(&mat2);
 
@@ -93,9 +93,14 @@ int main()
 	// Add textures after FrameBuffer Creation so they do not render on top of the location assigned to them	
 	// Entity 1
 	mat.LoadTexture("Resources/Textures/Mario/mario_mime.png");
-	mat2.LoadTexture(nullptr);
+	
+	//Entity2
+	mat2.LoadTexture("Resources/Textures/Duck/duck.png");
 
-	app.Run();
+
+	bool isPlayingGame = true;
+
+	app.Run(isPlayingGame);
 	app.Shutdown();
 	
 	return 0;
