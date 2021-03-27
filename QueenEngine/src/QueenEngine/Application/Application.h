@@ -22,7 +22,9 @@ namespace Queen
 			void InitDefaultScene();
 			void Start();
 			void OnEvent();
-			void Run();
+			void OnPlayingEvent();
+
+			void Run(bool& isPlayingGame);
 
 			void LoadScene(Scenes::Scene& scene);
 			void CalculateFPS();

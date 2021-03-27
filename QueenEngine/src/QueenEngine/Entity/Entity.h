@@ -70,6 +70,7 @@ namespace Queen
 			inline std::unordered_map<const char*, Component::Component*> GetAllComponents()& { return m_Components; }
 
 			void SetTransform(glm::vec3 data);
+			void SetScale(glm::vec3 data);
 
 		private:
 
