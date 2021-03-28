@@ -278,21 +278,27 @@ namespace Queen
 
 		}
 
-		void Application::Run(bool& isPlayingGame)
+		void Application::Run()
 		{
 			while (Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->isRunning())
 			{
 				CalculateFPS();
 
-				if (isPlayingGame)
+				if (Queen::Managers::ImGUIManager::Get().m_isPlayingGame)
 				{
 					Queen::Managers::SceneManager::Get().SetRenderCamera("Camera");
+				}
+				else
+				{
+					Queen::Managers::SceneManager::Get().SetRenderCamera("QueenEngineCamera");
 				}
 
 				if (!m_Debug)
 				{
-					Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(m_Debug);
+					Queen::Managers::ImGUIManager::Get().m_isPlayingGame = true;
+					Queen::Managers::SceneManager::Get().SetRenderCamera("Camera");
 
+					Queen::Managers::WindowManager::Get().GetWWindow(m_Title)->Render(m_Debug);
 					Queen::Managers::RendererManager::Get().RenderScene(m_Debug);
 				}
 				else
@@ -312,7 +318,7 @@ namespace Queen
 					Queen::Managers::RendererManager::Get().RenderImGUI();
 				}				
 
-				if (!isPlayingGame)
+				if (!Queen::Managers::ImGUIManager::Get().m_isPlayingGame)
 					this->OnEvent();
 				else
 				{

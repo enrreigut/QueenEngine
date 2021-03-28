@@ -153,6 +153,34 @@ namespace Queen
 			return true;
 		}
 
+		bool ImGUIManager::CreateRunStop(bool* p_open)
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+			ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar;
+
+			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+			ImGui::Begin("Play/Run", p_open, window_flags);
+
+
+			if (ImGui::Button("Play"))
+			{
+				m_isPlayingGame = true;
+			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Stop"))
+			{
+				m_isPlayingGame = false;
+			}
+
+			ImGui::PopStyleVar();
+			ImGui::End();
+
+			return true;
+		}
+
 		bool ImGUIManager::CreateLog(bool* p_open)
 		{
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);			
@@ -168,6 +196,7 @@ namespace Queen
 		{
 			ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 			ImGui::Begin("QueenConsole", p_open);
+
 			ImGui::End();
 
 			return true;
@@ -440,6 +469,7 @@ namespace Queen
 		void ImGUIManager::CreateDockingWindows()
 		{
 			CreateDockspace(&showDockspace);
+			CreateRunStop(&showRunStop);
 			CreateConsole(&showConsole);
 			CreateLog(&showLog);
 			CreateEntitiySpecifications(&showEntitySpec);

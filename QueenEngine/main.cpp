@@ -67,7 +67,7 @@ int main()
 	//END TESTING EVENTS
 
 	Queen::Application::Application app("QueenEngine", 1080, 720);
-	app.SetDebugRender(true);
+	app.SetDebugRender(false);
 	app.InitEngine();
 
 	Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Mario");
@@ -85,9 +85,7 @@ int main()
 	// Entity 1
 	mat.LoadTexture("Resources/Textures/Mario/mario_mime.png");
 	
-	bool isPlayingGame = true;
-
-	app.Run(isPlayingGame);
+	app.Run();
 	app.Shutdown();
 	
 	return 0;

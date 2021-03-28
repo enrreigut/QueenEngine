@@ -50,9 +50,13 @@ namespace Queen
 
 			void SetFramebuffer(Renderer::FrameBuffer* fbo) { m_FBO = fbo; }
 
+			// Control Bools
+			bool m_isPlayingGame = false;
+
 		protected:
 
 			bool showDockspace = true;
+			bool showRunStop = true;
 			bool showLog = true;
 			bool showConsole = true;
 			bool showViewport = true;
@@ -64,6 +68,7 @@ namespace Queen
 			const char* m_Selected = "";
 
 			bool CreateDockspace(bool* p_open);
+			bool CreateRunStop(bool* p_open);
 			bool CreateLog(bool* p_open);
 			bool CreateConsole(bool* p_open);
 			bool CreateWindowWithImage(bool* p_open);
