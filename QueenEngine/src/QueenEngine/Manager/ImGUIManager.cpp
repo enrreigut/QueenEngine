@@ -191,9 +191,11 @@ namespace Queen
 			SceneManager::Get().SetRenderSceneWidth(viewportPanelSize.x);
 			SceneManager::Get().SetRenderSceneHeight(viewportPanelSize.y);
 
-			if (m_ViewportSize != *((glm::vec2*) &ImGui::GetContentRegionAvail()))
+			ImVec2 auxAvailRegion = ImGui::GetContentRegionAvail();
+			glm::vec2 availRegion = *(glm::vec2*) &auxAvailRegion;
+			if (m_ViewportSize != availRegion)
 			{
-				m_FBO->Resize(*((glm::vec2*) &ImGui::GetContentRegionAvail()));
+				m_FBO->Resize(availRegion);
 				m_ViewportSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
 
 				SceneManager::Get().SetRenderSceneWidth(m_ViewportSize.x);
