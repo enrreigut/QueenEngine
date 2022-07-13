@@ -659,17 +659,51 @@ namespace Queen
 			Entity::Component::Camera* comp = (Entity::Component::Camera*)c;
 
 			ImGui::PushItemWidth(-1);
+			
+			ImGui::Checkbox("MainCamera", &comp->m_IsMainCamera);
 
-			ImGui::Text("FOV");
-			ImGui::SliderFloat("##FOV", &comp->m_FOV, 1.0f, 90.0f);
+			
+			ImGui::Checkbox("Orthographic", &comp->m_isOrthographic);
+			if(ImGui::IsItemClicked(0))
+			{
+				bool ortho = !comp->isOrthographic();
+				comp->SetProjectionOrthographic(ortho);
+			}
+
+			if (!comp->isOrthographic())
+			{
+				ImGui::Separator();
+
+				ImGui::Text("FOV");
+				ImGui::SliderFloat("##FOV", &comp->m_FOV, 1.0f, 90.0f);
+			}
+			else
+			{
+				ImGui::Separator();
+
+				ImGui::Text("Zoom");
+				ImGui::SliderFloat("##Zoom", &comp->m_zoom, 0.0f, 10.0f);
+
+				ImGui::Text("Left");
+				ImGui::SliderFloat("##Left", &comp->m_left, -100.0f, 100.0f);
+
+				ImGui::Text("Right");
+				ImGui::SliderFloat("##Right", &comp->m_right, -100.0f, 100.0f);
+
+				ImGui::Text("Bottom");
+				ImGui::SliderFloat("##Bottom", &comp->m_bottom, -100.0f, 100.0f);
+
+				ImGui::Text("Top");
+				ImGui::SliderFloat("##Top", &comp->m_top, -100.0f, 100.0f);
+			}
+			
+			ImGui::Separator();
 
 			ImGui::Text("Near");
 			ImGui::InputFloat("##Near", &comp->m_Near);
 
 			ImGui::Text("Far");
 			ImGui::InputFloat("##Far", &comp->m_Far);
-
-			ImGui::Checkbox("MainCamera", &comp->m_IsMainCamera);
 
 			ImGui::PopItemWidth();
 		}

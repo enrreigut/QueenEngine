@@ -130,7 +130,7 @@ namespace Queen
 					NotifyEvents(w->GetWindowHandler(), false);
 					m_Windows[title] = w;
 					
-					// glfwSwapInterval(1);
+					glfwSwapInterval(1);
 
 					QE_LOG(QE_SUCCESS, g_WIN_INIT_SUCCESS);
 				}

@@ -100,8 +100,18 @@ namespace Queen
 				float m_Near = 0.01f;
 				float m_Far = 100.0f;
 
+				float m_left = -1.0f;
+				float m_right = 1.0f;
+				float m_bottom = -1.0f;
+				float m_top = 1.0f;
+
+				float m_zoom = 1.0f;
+
 				//Main Camera
 				bool m_IsMainCamera = false;
+				
+				//Is orthopgrahic
+				bool m_isOrthographic = false;
 
 				//Movement
 				float m_MoveSpeed = 10.0f;
@@ -109,14 +119,30 @@ namespace Queen
 				float m_Sensitivity = 1.0f;
 				
 				//Matrixes
-				glm::mat4 m_Projection = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_Near, m_Far);
+				glm::mat4 m_perspective = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_Near, m_Far);
+				glm::mat4 m_orthographic = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, m_Near, m_Far);
+
+				glm::mat4 m_Projection = m_isOrthographic ? m_orthographic : m_perspective;
+				
 				glm::mat4 m_View = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 				
 				//This should be in a system: Discussion to implemented or not because pattern says that component just contains data
 				//Maybe move all this operations to entity manager
 
+				bool isOrthographic() { return m_isOrthographic; }
+				void SetProjectionOrthographic(bool& isOrtho) { this->m_isOrthographic = isOrtho; }
 				void SetFov(float FOV) { if (m_FOV + FOV > 90.0F) m_FOV = 90.0f; else if (m_FOV + FOV < 1.0f) m_FOV = 1.0f; else m_FOV += FOV; }
-				void UpdateProjection(float FOV, float aspectRatio, float near, float far) { m_Projection = glm::perspective(glm::radians(FOV), aspectRatio, near, far); }
+				
+				void UpdateProjection(float FOV, float aspectRatio, float near, float far) 
+				{
+					m_Projection = glm::perspective(glm::radians(FOV), aspectRatio, near, far);
+				}
+
+				void UpdateOrtho() {
+
+					m_Projection = glm::ortho(m_left * m_zoom, m_right * m_zoom, m_bottom * m_zoom, m_top * m_zoom, -100.0f, m_Far);
+				}
+
 			};
 
 			struct Texture : public Component

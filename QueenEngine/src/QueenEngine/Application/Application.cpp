@@ -112,13 +112,32 @@ namespace Queen
 
 				//Movement
 				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_W))
-					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
+				{
+					if (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->isOrthographic())
+					{
+						Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_top += m_DeltaTime * camComponent->m_MoveSpeed * 0.5f;
+						Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_bottom += m_DeltaTime * camComponent->m_MoveSpeed * 0.5f;
+
+					}
+					else
+						Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
+
+				}
 
 				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_A))
 					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::normalize(glm::cross(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * m_DeltaTime * camComponent->m_MoveSpeed;
 
 				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_S))
-					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
+				{
+					if (Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->isOrthographic())
+					{
+						Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_top -= m_DeltaTime * camComponent->m_MoveSpeed * 0.5f;
+						Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_bottom -= m_DeltaTime * camComponent->m_MoveSpeed * 0.5f;
+
+					}
+					else
+						Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform -= Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation * m_DeltaTime * camComponent->m_MoveSpeed;
+				}
 
 				if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_D))
 					Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Transform>()->m_Transform += glm::normalize(glm::cross(Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Rotation>()->m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * m_DeltaTime * camComponent->m_MoveSpeed;
@@ -235,16 +254,16 @@ namespace Queen
 			/* HANDLE EVENTS WHEN GAME IS BEING PLAYED */
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_W))
-				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("ETSII")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_A))
-				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("ETSII")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_S))
-				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("ETSII")->second->GetComponent<Entity::Component::Transform>()->m_Transform -= glm::vec3(0.0f, 0.0f, 1.0f) * m_DeltaTime * 5.0f;
 
 			if (Queen::Managers::InputManager::Get().IsKeyPressed(Queen::Managers::WindowManager::Get().GetTargetWindow()->GetWindowHandler(), GLFW_KEY_D))
-				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("Mario")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
+				Queen::Managers::SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_SceneEntities.find("ETSII")->second->GetComponent<Entity::Component::Transform>()->m_Transform += glm::vec3(1.0f, 0.0f, 0.0f) * m_DeltaTime * 5.0f;
 		}
 
 		void Application::Run(bool& isPlayingGame)

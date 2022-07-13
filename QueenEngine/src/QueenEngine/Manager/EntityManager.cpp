@@ -319,15 +319,23 @@ namespace Queen
 			}
 			else
 			{
+				Queen::Entity::Entity* camera = SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera;
 				//Set Correct Aspect Ratio if we are in debugMode or not
 				if (debugRender)
 				{
-					SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->UpdateProjection(
-						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_FOV, 
-						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Width / SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Height, 
-						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Near, 
-						SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Far
-					);					
+					if (camera->GetComponent<Entity::Component::Camera>()->isOrthographic())
+					{
+						camera->GetComponent<Entity::Component::Camera>()->UpdateOrtho();
+					}
+					else
+					{
+						camera->GetComponent<Entity::Component::Camera>()->UpdateProjection(
+							SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_FOV, 
+							SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Width / SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_Height, 
+							SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Near, 
+							SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->m_Far
+						);					
+					}
 				}
 				else
 					SceneManager::Get().GetRenderScene()->GetSceneConfiguration()->m_TargetCamera->GetComponent<Entity::Component::Camera>()->UpdateProjection(

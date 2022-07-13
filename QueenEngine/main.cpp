@@ -70,35 +70,22 @@ int main()
 	app.SetDebugRender(true);
 	app.InitEngine();
 
-	Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Mario");
+	Queen::Entity::Entity* e = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("ETSII");
 	Queen::Entity::Component::Model m;
-	m.LoadObj("Resources/Model/Test/Mario.obj");
+	m.LoadObj("Resources/Model/Test/etsii.obj");
 	e->AddComponent<Queen::Entity::Component::Model>(&m);
 	e->SetTransform(glm::vec3(0.0f, 0.0f, 0.0f));
 	Queen::Entity::Component::Material mat;
 	e->AddComponent<Queen::Entity::Component::Material>(&mat);
-
-	Queen::Entity::Entity* e2 = Queen::Managers::EntityManager::Get().CreateEntityInRenderScene("Casco");
-	Queen::Entity::Component::Model m2;
-	m2.LoadObj("Resources/Model/Test/duck.obj");
-	e2->AddComponent<Queen::Entity::Component::Model>(&m2);
-	e2->SetTransform(glm::vec3(3.0f, 0.0f, 0.0f));
-	e2->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	Queen::Entity::Component::Material mat2;
-	e2->AddComponent<Queen::Entity::Component::Material>(&mat2);
 
 	// This should be on top of creating the entities, however, is in charge on loading entities. Need to FIX this.
 	app.Start();
 
 	// Add textures after FrameBuffer Creation so they do not render on top of the location assigned to them	
 	// Entity 1
-	mat.LoadTexture("Resources/Textures/Mario/mario_mime.png");
+	mat.LoadTexture("Resources/Textures/ETSII/etsii.png");
 	
-	//Entity2
-	mat2.LoadTexture("Resources/Textures/Duck/duck.png");
-
-
-	bool isPlayingGame = true;
+	bool isPlayingGame = false;
 
 	app.Run(isPlayingGame);
 	app.Shutdown();
