@@ -4,9 +4,12 @@ namespace Queen
 {
 	namespace Utils
 	{
-		/*Genetic Singleton class. Considered a bad practice due to thread issues and redundancy. However for the thought design it will not affect much.
+		/*
+		
+		Generic Singleton class. Considered a bad practice due to thread issues and redundancy. However for the thought design it will not affect much.
 		Maybe just could try to only instantiate once the class and be careful but since the Singleton pattern can be made thread safe and this GameEngine
 		will run just in one thread, and for the sake of the project there is no problem.
+		
 		*/
 		template<class T>
 		class Singleton

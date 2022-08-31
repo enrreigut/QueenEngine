@@ -22,7 +22,7 @@ namespace Queen
 			void Start() override;
 			void Shutdown() override;
 
-			void CreateScene(const char* sceneName);
+			void CreateScene(const char* sceneName, const char* path);
 
 			void AddSceneToQueue(Scenes::Scene* scene);
 			void RemoveSceneFromQueue(const char* sceneName);
@@ -54,6 +54,9 @@ namespace Queen
 			//Sets Render Camera of Render Scene
 			void SetRenderCamera(const char* cameraName);
 			void SetMainCamera(const char* cameraName);
+
+			//Derived
+			void SaveRenderScene();
 
 		private:
 

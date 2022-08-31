@@ -34,7 +34,7 @@ namespace Queen
 		{
 		public:
 
-			Scene(const char* name);
+			Scene(const char* name, const char* path);
 			~Scene();
 
 			void Load();
@@ -47,6 +47,7 @@ namespace Queen
 		private:
 
 			SceneComponentElement* m_SceneConfiguration;
+			const char* path = "";
 		};
 	}
 }

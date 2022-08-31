@@ -1,13 +1,38 @@
 #include "Scenes.h"
+#include <string.h>
+#include <fstream>
 
 namespace Queen
 {
 	namespace Scenes
 	{
-		Scene::Scene(const char* name)
+		void replaceChars(std::string* str, char&& ch1, char&& ch2)
+		{
+			for (int i = 0; i < str->length(); i++)
+			{
+				/*if (str[i] == ch1)
+				{
+
+				}*/
+			}
+		}
+
+		Scene::Scene(const char* name, const char* path)
 		{
 			m_SceneConfiguration = new SceneComponentElement;
 			m_SceneConfiguration->m_SceneName = name;
+
+			// Saving Scene configuration
+
+			// reformat name if needed
+			std::string str_name = name;
+			
+
+			std::ofstream sceneFile(path);
+
+			sceneFile << m_SceneConfiguration->m_SceneName << " scene configuration";
+
+			sceneFile.close();
 		}
 
 		Scene::~Scene()

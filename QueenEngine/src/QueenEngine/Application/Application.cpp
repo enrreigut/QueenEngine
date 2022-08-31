@@ -41,7 +41,8 @@ namespace Queen
 			Managers::ImGUIManager::Get().Init(m_Window, "#version 410");
 
 			//Create Default Scene
-			Queen::Managers::SceneManager::Get().CreateScene("Test Scene");
+			Queen::Managers::SceneManager::Get().CreateScene("Test Scene", 
+				"C:\\Users\\enri8\Desktop\\Universidad\\4to\\TFG\\Workspace\\QueenEngine\\QueenEngine\\Resources\\Scenes\\Scene1\\");
 			Queen::Managers::WindowManager::Get().SetTargetWindow(Queen::Managers::WindowManager::Get().GetWWindow(m_Title));
 			InitDefaultScene();
 		}

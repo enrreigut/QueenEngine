@@ -45,7 +45,7 @@ namespace Queen
 			}
 		}
 
-		void SceneManager::CreateScene(const char* sceneName)
+		void SceneManager::CreateScene(const char* sceneName, const char* path)
 		{
 			if (!m_Running)
 			{
@@ -59,7 +59,7 @@ namespace Queen
 				}
 				else
 				{
-					Scenes::Scene* scene = new Scenes::Scene(sceneName);
+					Scenes::Scene* scene = new Scenes::Scene(sceneName, path);
 					m_SceneQueue[sceneName] = scene;
 
 					if (m_RenderScene == nullptr)
@@ -359,6 +359,18 @@ namespace Queen
 					m_RenderScene->GetSceneConfiguration()->m_MainCamera = m_RenderScene->GetSceneConfiguration()->m_SceneCameras.find(cameraName)->second;
 					m_RenderScene->GetSceneConfiguration()->m_SceneCameras.find(cameraName)->second->GetComponent<Entity::Component::Camera>()->m_IsMainCamera = true;
 				}
+			}
+		}
+
+		void SceneManager::SaveRenderScene()
+		{
+			if (!m_Running)
+			{
+				QE_LOG(QE_ERROR, g_SCN_MAN_ERROR_NOT_STARTED);
+			}
+			else
+			{
+				
 			}
 		}
 	}
