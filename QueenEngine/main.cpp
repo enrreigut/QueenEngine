@@ -84,6 +84,7 @@ int main()
 	// Add textures after FrameBuffer Creation so they do not render on top of the location assigned to them	
 	// Entity 1
 	mat.LoadTexture("Resources/Textures/ETSII/etsii.png");
+
 	
 	bool isPlayingGame = false;
 
